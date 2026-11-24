@@ -857,6 +857,41 @@
 <link rel="apple-touch-icon" href="icon-180.png" />
 <script src="config.js"></script>
 <script>if("serviceWorker" in navigator && (location.protocol==="https:" || location.hostname==="localhost" || location.hostname==="127.0.0.1")){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
+
+<style id="rbUiStreamline">
+/* ===== UI STREAMLINE (v2.0.1) — home declutter, presentation only.
+   Appended last so it wins the cascade over the layered menu paints.
+   No layout system, panel, mode or option is removed by these rules. ===== */
+/* --- mode list: one clean column of hairline rows at every width --- */
+#menu .menuNav{display:flex !important;flex-direction:column;flex-wrap:nowrap;gap:0;margin-top:clamp(10px,2vh,16px);}
+#menu.atHome .menuNav button.mnav.mode{display:grid;grid-template-columns:1fr 14px;grid-template-rows:auto auto;column-gap:8px;align-items:center;width:100%;min-height:52px;padding:8px 4px 8px 12px;background:none;border:none;border-bottom:1px solid rgba(216,191,138,.22);border-radius:0;box-shadow:none;text-align:left;position:relative;}
+#menu.atHome .menuNav button.mnav.mode:first-child{border-top:1px solid rgba(216,191,138,.22);}
+#menu.atHome .menuNav button.mnav.mode::before{display:none;}
+#menu.atHome .menuNav button.mnav.mode .mnName{grid-column:1;grid-row:1;font-family:"Cinzel",serif;font-size:clamp(15.5px,4vw,19px);font-weight:700;letter-spacing:.1em;color:var(--cream);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#menu.atHome .menuNav button.mnav.mode .mnSub{grid-column:1;grid-row:2;display:block;font-family:"Rajdhani",sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.05em;color:var(--mut);line-height:1.25;margin-top:1px;}
+#menu.atHome .menuNav button.mnav.mode .mnChev{grid-column:2;grid-row:1 / span 2;align-self:center;justify-self:end;font-size:20px;line-height:1;color:var(--mgold);opacity:.75;}
+#menu.atHome .menuNav button.mnav.mode:hover,#menu.atHome .menuNav button.mnav.mode:focus-visible{background:linear-gradient(90deg, rgba(216,191,138,.13), rgba(216,191,138,0) 75%);color:#fff;outline:none;}
+#menu.atHome .menuNav button.mnav.mode:hover .mnChev,#menu.atHome .menuNav button.mnav.mode:focus-visible .mnChev{opacity:1;}
+#menu.atHome .menuNav button.mnav.mode.sel{background:linear-gradient(90deg, rgba(216,191,138,.16), rgba(216,191,138,0) 75%);box-shadow:none;color:var(--cream);}
+#menu.atHome .menuNav button.mnav.mode.sel .mnName{color:#fff;}
+#menu.atHome .menuNav button.mnav.mode:last-child{grid-column:auto;}
+/* --- CONTINUE pill: slimmer, one quiet bar under the header --- */
+#menu.atHome #startDuelBtn{min-height:50px;padding:7px 14px;border-radius:10px;margin-top:clamp(10px,2vh,16px);}
+#menu.atHome .hmPillLab{font-size:10.5px;}
+#menu.atHome .hmPillTxt .startSub{font-size:13.5px;}
+/* --- quiet footer: smaller, tighter --- */
+#menu .menuFoot{gap:clamp(18px,6vw,38px);margin-top:12px;padding-top:8px;}
+#menu .mnav.foot{min-height:30px;font-size:11.5px;}
+#menu .hmVer{margin-top:6px;}
+/* --- fighter select declutter: flavour text only on the selected card;
+       name, role line, stats and the PLAY AS button stay on every card --- */
+#panelVersus .pick p{display:none;}
+#panelVersus .pick[class*="sel"] p{display:block;}
+#panelVersus .pick{padding:8px 10px 10px;}
+#panelVersus .pick canvas{width:132px;height:167px;}
+#panelVersus #showcaseCap{font-size:11px;letter-spacing:.14em;}
+#panelVersus .setupSummary{font-size:13px;line-height:1.45;}
+</style>
 </head>
   <body>
     <div id="wrap">
@@ -1098,15 +1133,15 @@
                 <svg class="hmPillArrow" viewBox="0 0 12 14" width="13" height="15" aria-hidden="true" focusable="false"><path d="M1 1.2v11.6c0 .9 1 1.5 1.8 1L11.4 8a1.15 1.15 0 0 0 0-2L2.8.2C2-.3 1 .3 1 1.2z" fill="currentColor"/></svg>
               </button>
               <nav class="menuNav" aria-label="Main menu">
-                <button class="mnav mode" data-panel="panelLadder">ARCADE LADDER</button>
-                <button class="mnav mode" data-panel="panelGrimoire">✦ GRIMOIRE DUEL</button>
-                <button class="mnav mode" data-panel="panelChronicle">♜ STORY CAMPAIGN</button>
-                <button class="mnav mode" data-panel="panelVersus">CLASSIC DUEL · VS CPU</button>
-                <button class="mnav mode" data-panel="panelLocal">LOCAL VERSUS</button>
-                <button class="mnav mode" data-panel="panelOnline">ONLINE DUEL</button>
-                <button class="mnav mode" data-panel="panelTraining">TRAINING</button>
-                <button class="mnav mode" data-panel="panelSurvival">SURVIVAL</button>
-                <button class="mnav mode" data-panel="panelBoss">BOSS RUSH</button>
+                <button class="mnav mode" data-panel="panelChronicle"><span class="mnName">♜ STORY CAMPAIGN</span><small class="mnSub">THE SHATTERED CROWN · 5 CHAPTERS</small><span class="mnChev" aria-hidden="true">›</span></button>
+                <button class="mnav mode" data-panel="panelGrimoire"><span class="mnName">✦ GRIMOIRE DUEL</span><small class="mnSub">SPELL CARDS · BUILD YOUR GRIMOIRE</small><span class="mnChev" aria-hidden="true">›</span></button>
+                <button class="mnav mode" data-panel="panelVersus"><span class="mnName">CLASSIC DUEL</span><small class="mnSub">VS CPU · YOUR SETUP, YOUR RIVAL</small><span class="mnChev" aria-hidden="true">›</span></button>
+                <button class="mnav mode" data-panel="panelLadder"><span class="mnName">ARCADE LADDER</span><small class="mnSub">A LADDER OF DUELS, ONE AFTER ANOTHER</small><span class="mnChev" aria-hidden="true">›</span></button>
+                <button class="mnav mode" data-panel="panelLocal"><span class="mnName">LOCAL VERSUS</span><small class="mnSub">TWO PLAYERS · ONE SCREEN</small><span class="mnChev" aria-hidden="true">›</span></button>
+                <button class="mnav mode" data-panel="panelOnline"><span class="mnName">ONLINE DUEL</span><small class="mnSub">ROOMS · FIGHT A FRIEND ANYWHERE</small><span class="mnChev" aria-hidden="true">›</span></button>
+                <button class="mnav mode" data-panel="panelTraining"><span class="mnName">TRAINING</span><small class="mnSub">DRILLS &amp; THE PRACTICE LAB</small><span class="mnChev" aria-hidden="true">›</span></button>
+                <button class="mnav mode" data-panel="panelSurvival"><span class="mnName">SURVIVAL</span><small class="mnSub">HOW LONG CAN YOU LAST?</small><span class="mnChev" aria-hidden="true">›</span></button>
+                <button class="mnav mode" data-panel="panelBoss"><span class="mnName">BOSS RUSH</span><small class="mnSub">EVERY BOSS, BACK TO BACK</small><span class="mnChev" aria-hidden="true">›</span></button>
               </nav>
               <div class="menuFoot">
                 <button class="mnav foot" data-panel="panelSettings">SETTINGS</button>
@@ -1118,7 +1153,7 @@
             <div class="menuPanelWrap">
               <section class="mpanel on" id="panelHome">
                 <h2 class="ptitle"><span class="sw">YOUR LAST DUEL</span> &mdash; READY WHEN YOU ARE</h2>
-                <p class="psub">START DUEL replays this exact setup in one tap. To change anything, open VS CPU &mdash; Fighter Select.</p>
+                <p class="psub">CONTINUE replays this exact setup in one tap. To change anything, open CLASSIC DUEL &mdash; Fighter Select.</p>
                 <div class="ldGrid" id="lastDuelGrid">
                   <div><span>YOU</span><b>DRAKTHAR</b></div>
                   <div><span>CPU</span><b>ELDRYN</b></div>
@@ -1145,8 +1180,8 @@
 <button class="modeStart" id="grStart">ENTER GRIMOIRE DUEL</button></section>
 <section class="mpanel" id="panelVersus">
                 <div class="phead"><button class="backBtn" type="button">&#8249; MENU</button><h2 class="ptitle"><span class="sw">VS CPU</span> &mdash; FIGHTER SELECT</h2></div>
-                <p class="psub">Tap a fighter to choose your side. Set the CPU RIVAL below — anyone, even your own duelist — or leave AUTO for the classic rival. Set the setup, then BEGIN DUEL. Tapping a preview never starts the match.</p>
-                <div id="showcase"><canvas id="pedCanvas" width="720" height="440"></canvas><div id="showcaseCap">THE FIGHTERS — TURN THE FORM PICKER AND THE PEDESTAL ANSWERS · CUSTOMIZE THE SABER BELOW AND WATCH IT IGNITE</div></div>
+                <p class="psub">Tap a fighter to choose your side, set the rival, difficulty and arena below, then BEGIN DUEL.</p>
+                <div id="showcase"><canvas id="pedCanvas" width="720" height="440"></canvas><div id="showcaseCap">THE FIGHTERS — THE PEDESTAL SHOWS YOUR SELECTED DUELIST</div></div>
                 <div class="vsRow">
                   <div class="pick" id="pickVader">
                     <canvas id="prevVader" width="300" height="380"></canvas>
@@ -9783,6 +9818,7 @@
     const SETUP_VERSION=1;
     const BEST_OF=3; /* the shipped match format: first to 2 rounds */
     var chosenRival=null; /* ROSTER: the player's picked CPU rival (VS CPU + training dummy); null = AUTO classic rival */
+    var rbSetupWasSaved=false, rbBootRestoring=true; /* UI STREAMLINE: CONTINUE pill shows only when a setup was actually saved (loaded from storage, or persisted after boot) */
     function snapshotSetup(){
       const sfSnap={}; for(const ch of CHAR_IDS)sfSnap[ch]=(G.startForms&&G.startForms[ch])||PROFILES[ch].affinityForm;
       return {v:SETUP_VERSION,playerChar:G.playerChar,diff:CHRUN?CHRUN.old.diff:G.diff,arch:CHRUN?CHRUN.old.arch:aiArchSel,arena:CHRUN?CHRUN.old.arena:G.arena,
@@ -9791,12 +9827,12 @@
     }
     function persistLastSetup(){
       if(!saveReady)return;
-      try{ window.localStorage.setItem(SETUP_KEY,JSON.stringify(snapshotSetup())); }catch(e){ /* session-only */ }
+      try{ window.localStorage.setItem(SETUP_KEY,JSON.stringify(snapshotSetup())); if(!rbBootRestoring)rbSetupWasSaved=true; }catch(e){ /* session-only */ }
       refreshSetupSummary();
     }
     function loadLastSetup(){
       try{ const raw=window.localStorage.getItem(SETUP_KEY); if(!raw)return null;
-        const s=JSON.parse(raw); return (s&&typeof s==='object')?s:null; }catch(e){ return null; }
+        const s=JSON.parse(raw); if(s&&typeof s==='object'){ rbSetupWasSaved=true; return s; } return null; }catch(e){ return null; }
     }
     function applyLastSetup(s){
       if(!s)return;
@@ -9828,6 +9864,7 @@
         +' &middot; CPU STYLE <b>'+archTxt+'</b> &middot; ARENA <b>'+ARENA_NAMES[G.arena].toUpperCase()+'</b>'
         +' &middot; FORM <b>'+form+(fdef?' · '+fdef.name.toUpperCase():'')+'</b>'
         +' &middot; SABER <b>'+(HILT_NAMES[cfg.hilt]||'STANDARD')+' / '+String(cfg.color).toUpperCase()+'</b> &middot; <b>BEST OF 3</b>';
+      const _cbtn=$('startDuelBtn'); if(_cbtn)_cbtn.style.display=rbSetupWasSaved?'':'none'; /* UI STREAMLINE: no saved setup, no pill */
       const sub=$('startDuelSub');
       if(sub)sub.textContent=CHARS[you].short+' vs '+CHARS[cpu].short+' · '+DIFF[G.diff].name+' · '+ARENA_NAMES[G.arena]+' · Best of 3';
       const grid=$('lastDuelGrid');
@@ -11361,6 +11398,7 @@
     try{ applyLastSetup(loadLastSetup()); }catch(e){}
     saveReady=true; persistSave();
     persistLastSetup();
+    refreshSetupSummary(); /* UI STREAMLINE: the CONTINUE pill is settled at gate entry (dismissGate) — boot-time wiring persists must not mark a setup 'saved' */
     /* ---- STAGE 3: drill launchers + drill result buttons ---- */
     document.querySelectorAll('.drillBtn').forEach(b=>b.addEventListener('click',()=>{ startTraining(b.dataset.drill); }));
     $('drillRetryBtn').addEventListener('click',()=>{ if(TR)startTraining(TR.id); });
@@ -11527,6 +11565,7 @@
     let gateGone=false;
     function dismissGate(){
       if(gateGone)return; gateGone=true; window.__gateGone=true;
+      rbBootRestoring=false; try{ refreshSetupSummary(); }catch(e){} /* UI STREAMLINE: settle the CONTINUE pill now the menu is actually entered */
       /* visuals FIRST, each step isolated: a failure anywhere in the audio
          stack must never leave the gate standing with gateGone already
          latched (the old order set the latch, then let audioInit() run
@@ -11542,7 +11581,7 @@
        booting — the early handler beside the gate markup records that on
        window.__gateGone and has already done the visuals; adopt the state
        so the theme retry and the keyboard path stay in sync */
-    if(window.__gateGone){ gateGone=true; try{ $('menu').classList.remove('hidden'); }catch(e){} const g0=$('gate'); if(g0)g0.style.display='none'; }
+    if(window.__gateGone){ gateGone=true; rbBootRestoring=false; try{ refreshSetupSummary(); }catch(e){} try{ $('menu').classList.remove('hidden'); }catch(e){} const g0=$('gate'); if(g0)g0.style.display='none'; }
     const gateBtn=$('gateBtn');
     if(gateBtn){ gateBtn.addEventListener('click',dismissGate); gateBtn.addEventListener('pointerdown',dismissGate); }
     const gateEl=$('gate');
