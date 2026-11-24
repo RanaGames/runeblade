@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "Runeblade Duelists",
-  "short_name": "Runeblade",
+  "name": "RuneBlade",
+  "short_name": "RuneBlade",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

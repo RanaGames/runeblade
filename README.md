@@ -1,4 +1,4 @@
-# RUNEBLADE DUELISTS
+# RUNEBLADE
 ## Masterwork · v1.0.0
 
 Independent medieval-fantasy edition of the original duel engine. Seven fighters, eight arenas, arcade ladder, CPU, local versus, training, survival, boss rush and optional online duels. This is a release candidate, not a published or store-certified game.
