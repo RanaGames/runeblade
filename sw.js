@@ -1,5 +1,27 @@
-const CACHE='runeblade-v1.0.0';
-const FILES=['./','./index.html','./config.js','./manifest.webmanifest','./icon-192.png','./icon-512.png','./icon-180.png'];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES))));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('runeblade-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(e.request.method!=='GET'||u.origin!==location.origin||!['http:','https:'].includes(u.protocol)||u.pathname.endsWith('/runeblade'))return; if(e.request.mode==='navigate'){e.respondWith(fetch(e.request).catch(()=>caches.match('./index.html')));return;} e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)));});
+/* RuneBlade 5.0 RC1 — offline shell only. Never caches account, API or match traffic. */
+const CACHE = 'runeblade-shell-5.0-rc1';
+const ROOT = new URL('./', self.registration.scope);
+const SHELL = ['', 'config.js', 'manifest.webmanifest', 'icon-180.png', 'icon-192.png', 'icon-512.png'];
+const urls = SHELL.map(p => new URL(p, ROOT).href);
+self.addEventListener('install', event => {
+  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(urls)));
+});
+self.addEventListener('activate', event => {
+  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k.startsWith('runeblade-shell-') && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+});
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  if (request.method !== 'GET' || request.headers.has('Authorization')) return;
+  const url = new URL(request.url);
+  if (url.origin !== ROOT.origin) return;
+  const isGame = request.mode === 'navigate' && (url.pathname === ROOT.pathname || url.pathname === new URL('index.html', ROOT).pathname);
+  if (!isGame && !urls.includes(url.href)) return;
+  const key = isGame ? ROOT.href : url.href;
+  event.respondWith(fetch(request).then(response => {
+    if (response.ok && !response.redirected) {
+      const copy = response.clone();
+      event.waitUntil(caches.open(CACHE).then(cache => cache.put(key, copy)).catch(() => {}));
+    }
+    return response;
+  }).catch(async () => (await caches.open(CACHE)).match(key).then(cached => cached || Response.error())));
+});
