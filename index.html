@@ -4433,6 +4433,7 @@
         setState(def,'hitstun'); def.stateT=-stunT; def.vx=att.facing*atkDef.kb;
         if(opts.push){ def.pushSlide=true; def.vx=att.facing*640; }
       }
+      ccOnLandedHit(att,def); /* __CARDCLASH_HOOK: Card Clash blade enchantments (no-op unless a trump enchantment is live) */
       recordExchange(att,def,atkDef,'hit',stunT);
       if(def.hp<=0)koRound(att);
       return 'hit';
@@ -4450,6 +4451,8 @@
        The loser pays posture and staggers briefly; both attacks end
        and both fighters reset toward neutral. */
     function resolveClash(a,b){
+      /* __CARDCLASH_HOOK: Card Clash escalation (local only) — see the __CARDCLASH module */
+      if(ccTryStart(a,b))return 'cardclash';
       /* BLADE LOCK escalation: a dead-even HEAVY bind can lock instead
          of resolving instantly (local play only — bladeLockEligible) */
       if(bladeLockEligible(a,b)){
@@ -4678,6 +4681,606 @@
       if(fc)fc.style.width=LOCK.powerC+'%';
       if(lt)lt.style.width=Math.max(0,(1-LOCK.t/LOCK.dur)*100)+'%';
     }
+
+    /* __CARDCLASH_START =====================================================
+       CARD CLASH — a removable feature layer (added after v1.0 at the
+       user's order; the user may delete it if it doesn't feel right).
+       Everything the feature needs lives between the __CARDCLASH_START /
+       __CARDCLASH_END markers, plus four one-line hooks marked
+       __CARDCLASH_HOOK (in resolveClash, tickSim, startRound and
+       resolveStrike). Strip the module + those hook lines and the game
+       is byte-behaviour-identical to v1.0.
+
+       Design: at most ONCE per round, when a real blade clash
+       (resolveClash) fires AND either fighter is at/below 50% HP, the
+       clash escalates into a card fight instead of the instant bind —
+       the same escalation slot BLADE LOCK occupies, and LOCAL PLAY ONLY
+       for the same reason Blade Lock is: card picks are not part of the
+       lockstep input payload, so Online Duel keeps the instant
+       deterministic bind and this module never activates there.
+       Flag: localStorage 'runeblade.cardclash.v1' ('0' = OFF, anything
+       else / absent = ON, the default). Settings toggle: CARD CLASH.
+       When OFF, ccTryStart returns false instantly and resolveClash
+       runs exactly as v1.0. ================================================= */
+    const CC_KEY='runeblade.cardclash.v1';
+    let ccEnabled=true; try{ ccEnabled=window.localStorage.getItem(CC_KEY)!=='0'; }catch(e){ ccEnabled=true; }
+    const CC_PICK_TIME=3.0;
+    const CC_SUITS={
+      ember:{name:'EMBER',color:'#ff7a3c',glyph:'\u16d6',beats:'frost'},
+      frost:{name:'FROST',color:'#9fd8ff',glyph:'\u16a0',beats:'storm'},
+      storm:{name:'STORM',color:'#ffe81f',glyph:'\u16cb',beats:'grave'},
+      grave:{name:'GRAVE',color:'#b48cff',glyph:'\u16b7',beats:'ember'}
+    };
+    const CC_SUIT_KEYS=['ember','frost','storm','grave'];
+    const CC={active:false,usedRound:false,phase:'pick',t:0,revealT:0,
+      handP:[],handC:[],pickP:-1,pickC:-1,selP:1,selC:1,
+      cpuAt:0,cpuPicked:false,atkP:null,atkC:null,x:0,y:0,
+      judge:null,applied:false,outcome:null,prevP:{},prevC:{},el:null,styleEl:null};
+    /* per-round deterministic shuffle: an LCG seeded from the match
+       seed / round / clash tick — the same family as the engine's own
+       texture RNG. Local play only, so no cross-client contract; the
+       seed just keeps a round's deal reproducible. */
+    function ccRng(seed){
+      let s=(seed>>>0)||1;
+      return function(){ s=(Math.imul(s,1664525)+1013904223)>>>0; return s/4294967296; };
+    }
+    function ccDeal(){
+      const rnd=ccRng(((typeof G!=='undefined'&&G?G.seed|0:0)^Math.imul(G.round||1,2654435761)^(G.tick|0))>>>0);
+      const deck=[];
+      for(const sk of CC_SUIT_KEYS)for(let n=1;n<=9;n++)deck.push({suit:sk,num:n});
+      for(let i=deck.length-1;i>0;i--){ const j=Math.floor(rnd()*(i+1)); const tmp=deck[i]; deck[i]=deck[j]; deck[j]=tmp; }
+      CC.handP=deck.slice(0,3); CC.handC=deck.slice(3,6);
+    }
+    function ccSetEnabled(v){
+      ccEnabled=!!v;
+      try{ window.localStorage.setItem(CC_KEY,ccEnabled?'1':'0'); }catch(e){ /* storage blocked — session only */ }
+      const b=document.getElementById('setCardClash');
+      if(b){ b.textContent='CARD CLASH: '+(ccEnabled?'ON':'OFF'); b.classList.toggle('off',!ccEnabled); }
+      if(!ccEnabled)ccCancel();
+    }
+    function ccEdge(store,name,down){ const was=!!store[name]; store[name]=!!down; return !!down&&!was; }
+    function ccTryStart(a,b){
+      if(!ccEnabled||CC.active||CC.usedRound)return false;
+      if(typeof G==='undefined'||!G||G.online||G.phase!=='fight')return false; /* online: instant bind, exactly like Blade Lock */
+      if(typeof TR!=='undefined'&&TR&&TR.id!=='free')return false; /* scored drills never clash-card */
+      if(!a.atk||!b.atk)return false;
+      if(!((a.hp<=(a.maxHp||100)*0.5)||(b.hp<=(b.maxHp||100)*0.5)))return false; /* only once a fighter is bloodied */
+      CC.atkP=(a===P)?(a.atk.def||null):(b.atk.def||null);
+      CC.atkC=(a===C)?(a.atk.def||null):(b.atk.def||null);
+      CC.x=(a.x+b.x)/2; CC.y=Math.min(a.y,b.y)-100;
+      const _ct=(typeof bladeContact==='function')?bladeContact(a,b):null; if(_ct){ CC.x=_ct.x; CC.y=_ct.y; }
+      for(const f of [a,b]){
+        const s=(typeof bladeSegment==='function')?bladeSegment(f):null;
+        if(s)f.bindAng=Math.atan2(CC.y-s.hy,(CC.x-s.hx)*f.facing);
+        f.bindX=CC.x; f.bindY=CC.y; f.bindT=0.45; f.atk=null; f.blocking=false; f.vx=0;
+        setState(f,'lock',true);
+      }
+      ccDeal();
+      CC.active=true; CC.usedRound=true; CC.phase='pick'; CC.t=0; CC.revealT=0;
+      CC.pickP=-1; CC.pickC=-1; CC.selP=1; CC.selC=1;
+      CC.cpuPicked=false; CC.cpuAt=0.55+Math.random()*0.7; CC.judge=null; CC.applied=false; CC.outcome=null;
+      CC.prevP={}; CC.prevC={};
+      SFX.clash(CC.x); contactFX('clash',CC.x,CC.y,true);
+      addFloat(CC.x,CC.y-72,'CARD CLASH!','#ffe9a8',24); showCallout('CARD CLASH!','#ffe9a8');
+      DIRECTOR.kick=Math.max(DIRECTOR.kick,.2); /* the easy camera push-in: the Director kick the lock also uses */
+      ccHudShow();
+      return true;
+    }
+    function ccCpuPick(){
+      /* basic heuristic: usually the highest number in hand; sometimes
+         (25%) a random card instead, so the CPU is not a solved read */
+      const hand=CC.handC; if(!hand.length)return 0;
+      if(Math.random()<0.25)return Math.floor(Math.random()*hand.length);
+      let best=0; for(let i=1;i<hand.length;i++)if(hand[i].num>hand[best].num)best=i;
+      return best;
+    }
+    function ccJudge(p,c){
+      if(CC_SUITS[p.suit].beats===c.suit)return {w:'P',trump:true};
+      if(CC_SUITS[c.suit].beats===p.suit)return {w:'C',trump:true};
+      if(p.num!==c.num)return {w:p.num>c.num?'P':'C',trump:false};
+      return {w:'tie',trump:false};
+    }
+    function ccReveal(){
+      CC.phase='reveal'; CC.revealT=0;
+      CC.judge=ccJudge(CC.handP[CC.pickP],CC.handC[CC.pickC]);
+      const jp=CC.handP[CC.pickP], jc=CC.handC[CC.pickC];
+      let msg;
+      if(CC.judge.w==='tie')msg='DEAD EVEN — BOTH CARDS BURN';
+      else{
+        const wc=CC.judge.w==='P'?jp:jc, lc=CC.judge.w==='P'?jc:jp;
+        msg=CC.judge.trump?(CC_SUITS[wc.suit].name+' TRUMPS '+CC_SUITS[lc.suit].name+'!'):(CC_SUITS[wc.suit].name+' '+wc.num+' TAKES IT');
+      }
+      showCallout(msg,'#ffe9a8');
+      SFX.parry(CC.x);
+      ccHudUpdate();
+    }
+    function ccApplyOutcome(){
+      const j=CC.judge; if(!j)return;
+      if(j.w==='tie'){ CC.outcome='tie'; SFX.clash(CC.x); return; }
+      const W=j.w==='P'?P:C, L=j.w==='P'?C:P;
+      const atkDef=j.w==='P'?CC.atkP:CC.atkC;
+      const dmg=atkDef?(atkDef.damage!=null?atkDef.damage:(atkDef.dmg||8)):8;
+      const stun=atkDef?(atkDef.stun||0.35):0.35;
+      const kb=atkDef?(atkDef.kb||160):160;
+      const mx=(W.x+L.x)/2, my=L.y-92;
+      L.hp=Math.max(0,L.hp-dmg); L.hurtFlash=.18;
+      SFX.hit(mx); sparks(mx,my,bladeCol(W),18,420);
+      if(typeof G!=='undefined'&&G&&G.gore&&typeof bloodBurst==='function')bloodBurst(mx,my,W.facing,-0.25,dmg); /* a blade hit bleeds, like every clean hit */
+      addFloat(L.x,L.y-208,'CLASH THROUGH! -'+dmg,'#ffd76a',22);
+      if(W.stats)W.stats.hits++;
+      setHitstop(3); shake=Math.max(shake,4);
+      if(j.trump){
+        const wc=j.w==='P'?CC.handP[CC.pickP]:CC.handC[CC.pickC];
+        W.ccEnch={suit:wc.suit,hits:3}; /* blade enchantment: next 3 landed hits, applied in ccOnLandedHit */
+        addFloat(W.x,W.y-214,CC_SUITS[wc.suit].name+' BLADE x3',CC_SUITS[wc.suit].color,18);
+      }
+      CC.outcome={W:W,L:L,stun:stun,kb:kb};
+    }
+    function ccEnd(){
+      CC.active=false; ccHudHide();
+      if(!P||!C)return;
+      const o=CC.outcome;
+      if(o&&o!=='tie'){
+        if(o.W.state==='lock')setState(o.W,'idle',true);
+        o.W.vx=-o.W.facing*40;
+        if(o.L.hp<=0){ koRound(o.W); } /* the follow-through can end the round — the normal KO path owns it */
+        else{ setState(o.L,'hitstun',true); o.L.stateT=-o.stun; o.L.vx=o.W.facing*o.kb; }
+      }else if(o==='tie'){
+        for(const f of [P,C]){ if(f.state==='lock')setState(f,'stagger',true); f.stateT=-0.3; f.vx=-f.facing*140; }
+      }
+      P.clashCd=0.6; C.clashCd=0.6; P.lastClashTick=G.tick; C.lastClashTick=G.tick;
+      breakCombo(P); breakCombo(C);
+      CC.outcome=null;
+    }
+    function ccCancel(){
+      if(!CC.active)return;
+      CC.active=false; ccHudHide();
+      if(P&&C)for(const f of [P,C])if(f.state==='lock')setState(f,'idle',true);
+      CC.outcome=null;
+    }
+    function ccRoundReset(){ CC.active=false; CC.usedRound=false; CC.outcome=null; ccHudHide(); }
+    /* blade enchantments from a trump win — called by the one-line hook
+       in resolveStrike's clean-hit branch, before the engine's own KO
+       check, so a lethal bonus is still the engine's koRound. No
+       elemental status system exists in the engine, so these are the
+       simplest honest versions: flat numbers, documented here.
+       EMBER +3 damage, STORM +2 damage, GRAVE +2 HP drained,
+       FROST slows recovery: +0.12s hitstun and 4 posture. */
+    function ccOnLandedHit(att,def){
+      const e=att?att.ccEnch:null; if(!e||e.hits<=0)return;
+      if(e.suit==='ember'){ def.hp=Math.max(0,def.hp-3); emberBurst(def.x,def.y-100,'#ff7a3c',6); addFloat(def.x,def.y-196,'BURN +3','#ff7a3c',15); }
+      else if(e.suit==='storm'){ def.hp=Math.max(0,def.hp-2); sparks(def.x,def.y-100,'#ffe81f',10,300); addFloat(def.x,def.y-196,'ZAP +2','#ffe81f',15); }
+      else if(e.suit==='grave'){ att.hp=Math.min(att.maxHp||100,att.hp+2); addFloat(att.x,att.y-196,'DRAIN +2','#b48cff',15); }
+      else if(e.suit==='frost'){ if(def.state==='hitstun'||def.state==='hitstun_air'||def.state==='stagger')def.stateT-=0.12; def.posture=clamp(def.posture-4,0,def.maxPosture||100); addFloat(def.x,def.y-196,'CHILLED','#9fd8ff',15); }
+      e.hits--; if(e.hits<=0)att.ccEnch=null;
+    }
+    function ccTick(dt){
+      if(!CC.active)return;
+      if(CC.phase==='pick'){
+        CC.t+=dt;
+        /* P1: tap a card (pointer, below), or cycle with A/D / the
+           on-screen Left/Right buttons and confirm with J / LIGHT */
+        if(ccEdge(CC.prevP,'l',keys.KeyA||btnState.left))CC.selP=(CC.selP+2)%3;
+        if(ccEdge(CC.prevP,'r',keys.KeyD||btnState.right))CC.selP=(CC.selP+1)%3;
+        if(ccEdge(CC.prevP,'ok',keys.KeyJ||btnState.light))CC.pickP=CC.selP;
+        if(!G.versus){
+          if(!CC.cpuPicked&&CC.t>=CC.cpuAt){ CC.pickC=ccCpuPick(); CC.cpuPicked=true; }
+        }else{
+          /* P2 (Local Versus): Arrow keys / P2 touch cluster cycle,
+             Comma (P2 Light) / P2 LIGHT button confirms */
+          if(ccEdge(CC.prevC,'l',keys.ArrowLeft||btnState2.left))CC.selC=(CC.selC+2)%3;
+          if(ccEdge(CC.prevC,'r',keys.ArrowRight||btnState2.right))CC.selC=(CC.selC+1)%3;
+          if(ccEdge(CC.prevC,'ok',keys.Comma||btnState2.light))CC.pickC=CC.selC;
+        }
+        const pDone=CC.pickP>=0, cDone=G.versus?(CC.pickC>=0):CC.cpuPicked;
+        if((pDone&&cDone)||CC.t>=CC_PICK_TIME){
+          if(CC.pickP<0)CC.pickP=CC.selP; /* no tap in ~3s: the middle / highlighted card plays */
+          if(CC.pickC<0)CC.pickC=CC.selC;
+          ccReveal();
+        }
+        ccHudUpdate();
+      }else if(CC.phase==='reveal'){
+        CC.revealT+=dt;
+        if(!CC.applied&&CC.revealT>=0.45){ CC.applied=true; ccApplyOutcome(); }
+        if(CC.revealT>=1.25)ccEnd();
+        ccHudUpdate();
+      }
+    }
+    /* ---- Card Clash HUD (DOM built by the module; no markup edits) ---- */
+    function ccCardEl(card,opts){
+      const d=document.createElement('div');
+      const su=CC_SUITS[card.suit];
+      d.className='ccCard'+(opts.back?' back':'')+(opts.sel?' sel':'')+(opts.picked?' picked':'')+(opts.burn?' burn':'');
+      if(!opts.back)d.style.borderColor=su.color;
+      d.innerHTML=opts.back
+        ?'<div class="ccBack">\u16b1</div>'
+        :('<div class="ccGlyph" style="color:'+su.color+'">'+su.glyph+'</div><div class="ccNum">'+card.num+'</div><div class="ccSuit" style="color:'+su.color+'">'+su.name+'</div>');
+      return d;
+    }
+    function ccHudBuild(){
+      if(CC.el)return CC.el;
+      if(!CC.styleEl){
+        CC.styleEl=document.createElement('style');
+        CC.styleEl.textContent=
+          '#ccHud{position:fixed;inset:0;z-index:60;pointer-events:none;display:none;font-family:inherit;}'+
+          '#ccHud.on{display:block;}'+
+          '#ccHud .ccTitle{position:absolute;top:9%;left:0;right:0;text-align:center;font-size:30px;letter-spacing:.35em;color:#ffe9a8;text-shadow:0 2px 14px #000;}'+
+          '#ccHud .ccTimer{position:absolute;top:calc(9% + 44px);left:50%;transform:translateX(-50%);width:220px;height:5px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden;}'+
+          '#ccHud .ccTimer i{display:block;height:100%;background:#ffe9a8;}'+
+          '.ccFan{position:absolute;display:flex;gap:10px;}'+
+          '#ccFanP{left:4%;bottom:6%;}'+
+          '#ccFanC{right:4%;top:14%;}'+
+          '.ccFanLab{position:absolute;width:100%;text-align:center;font-size:12px;letter-spacing:.25em;color:#cfc7ae;top:-20px;}'+
+          '.ccCard{width:64px;height:92px;border:2px solid #8a7a52;border-radius:9px;background:linear-gradient(160deg,#1d1710,#100d09);color:#efe6cf;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:0 6px 18px rgba(0,0,0,.55);pointer-events:auto;transition:transform .15s,box-shadow .15s;}'+
+          '#ccFanP .ccCard{cursor:pointer;}'+
+          '.ccCard.sel{transform:translateY(-12px) scale(1.06);box-shadow:0 10px 24px rgba(0,0,0,.7),0 0 0 2px #ffe9a8 inset;}'+
+          '.ccCard.picked{transform:translateY(-16px) scale(1.1);}'+
+          '.ccCard.back{background:linear-gradient(160deg,#241a2e,#120d18);color:#b48cff;}'+
+          '.ccCard.burn{animation:ccBurn .8s forwards;}'+
+          '@keyframes ccBurn{40%{filter:brightness(1.9) sepia(1) hue-rotate(-30deg);}100%{transform:translateY(10px) scale(.82) rotate(4deg);opacity:.25;filter:brightness(.4);}}'+
+          '.ccGlyph{font-size:24px;line-height:1;}'+
+          '.ccNum{font-size:30px;font-weight:700;line-height:1;}'+
+          '.ccSuit{font-size:11px;letter-spacing:.2em;}'+
+          '.ccBack{font-size:30px;}'+
+          '#ccHud .ccMsg{position:absolute;left:0;right:0;bottom:26%;text-align:center;font-size:15px;letter-spacing:.22em;color:#efe6cf;text-shadow:0 2px 10px #000;}';
+        document.head.appendChild(CC.styleEl);
+      }
+      const el=document.createElement('div'); el.id='ccHud';
+      el.innerHTML='<div class="ccTitle">CARD CLASH</div><div class="ccTimer"><i id="ccTimerFill"></i></div>'+
+        '<div class="ccFan" id="ccFanP"><div class="ccFanLab">YOUR HAND — TAP A CARD</div></div>'+
+        '<div class="ccFan" id="ccFanC"><div class="ccFanLab" id="ccFanCLab">RIVAL</div></div>'+
+        '<div class="ccMsg" id="ccMsg">FIRST CLASH AFTER A FIGHTER IS BLOODIED — TRUMP SUIT BEATS ANY NUMBER</div>';
+      document.body.appendChild(el);
+      el.querySelector('#ccFanP').addEventListener('click',ev=>{
+        const cardEl=ev.target.closest('.ccCard'); if(!cardEl)return;
+        const ix=[...ev.currentTarget.querySelectorAll('.ccCard')].indexOf(cardEl);
+        if(ix>=0&&CC.active&&CC.phase==='pick'&&CC.pickP<0){ CC.pickP=ix; CC.selP=ix; ccHudUpdate(); }
+      });
+      CC.el=el; return el;
+    }
+    function ccHudShow(){ ccHudBuild().classList.add('on'); ccHudUpdate(); }
+    function ccHudHide(){ if(CC.el)CC.el.classList.remove('on'); }
+    function ccHudUpdate(){
+      if(!CC.el||!CC.active)return;
+      const fp=CC.el.querySelector('#ccFanP'), fc=CC.el.querySelector('#ccFanC');
+      fp.querySelectorAll('.ccCard').forEach(n=>n.remove());
+      fc.querySelectorAll('.ccCard').forEach(n=>n.remove());
+      const reveal=CC.phase==='reveal';
+      const tieBurn=reveal&&CC.judge&&CC.judge.w==='tie'&&CC.revealT>0.4;
+      CC.handP.forEach((c,i)=>{ fp.appendChild(ccCardEl(c,{sel:CC.pickP<0&&CC.selP===i,picked:CC.pickP===i,burn:tieBurn&&CC.pickP===i})); });
+      CC.handC.forEach((c,i)=>{
+        const showFace=(typeof G!=='undefined'&&G&&G.versus)||reveal;
+        fc.appendChild(ccCardEl(c,{back:!showFace,sel:G.versus&&CC.pickC<0&&CC.selC===i,picked:CC.pickC===i,burn:tieBurn&&CC.pickC===i}));
+      });
+      const cl=CC.el.querySelector('#ccFanCLab'); if(cl)cl.textContent=G.versus?'P2 HAND':'RIVAL';
+      const tf=CC.el.querySelector('#ccTimerFill');
+      if(tf)tf.style.width=(CC.phase==='pick'?Math.max(0,(1-CC.t/CC_PICK_TIME)*100):0)+'%';
+      const msg=CC.el.querySelector('#ccMsg');
+      if(msg){
+        if(CC.phase==='reveal'&&CC.judge){
+          msg.textContent=CC.judge.w==='tie'?'DEAD EVEN — BOTH CARDS BURN':((CC.judge.w==='P'?(G.versus?'P1':'YOU'):(G.versus?'P2':'RIVAL'))+(CC.judge.trump?' WIN BY TRUMP — BLADE ENCHANTED x3':' WIN THE CLASH'));
+        }else if(G.versus){
+          msg.textContent='P1: TAP OR A/D + J · P2: ARROWS + COMMA';
+        }else{
+          msg.textContent=CC.pickC>=0||CC.cpuPicked?'RIVAL HAS CHOSEN…':'CHOOSE — TRUMP SUIT BEATS ANY NUMBER';
+        }
+      }
+    }
+    function ccBuildSettingsRow(){
+      if(document.getElementById('setCardClash'))return;
+      const anchor=document.getElementById('setBladeLock'); if(!anchor)return;
+      const row=anchor.closest('.setRow'); if(!row||!row.parentNode)return;
+      const r=document.createElement('div'); r.className='setRow';
+      r.innerHTML='<span class="slab">CARD CLASH</span><button class="togBtn" id="setCardClash">CARD CLASH: ON</button><span class="sdesc">Once a round, when a blade clash lands after either fighter is below half health, the clash becomes a CARD CLASH: each side plays one of 3 rune cards (Ember trumps Frost, Frost trumps Storm, Storm trumps Grave, Grave trumps Ember; a trump beats any number, otherwise the higher number wins). The winner&rsquo;s swing follows through unblockable; a trump win enchants their blade for 3 hits. A tie burns both cards. Local play only — online duels keep the instant bind. OFF = clashes always resolve instantly, exactly as before.</span>';
+      row.parentNode.insertBefore(r,row.nextSibling);
+      r.querySelector('#setCardClash').addEventListener('click',()=>{ try{ audioInit(); }catch(e){} ccSetEnabled(!ccEnabled); });
+      const b=r.querySelector('#setCardClash');
+      b.textContent='CARD CLASH: '+(ccEnabled?'ON':'OFF'); b.classList.toggle('off',!ccEnabled);
+    }
+    try{ ccBuildSettingsRow(); }catch(e){ /* settings row is cosmetic; the flag still works */ }
+    window.__CC={CC:CC,tryStart:ccTryStart,tick:ccTick,cancel:ccCancel,roundReset:ccRoundReset,onLandedHit:ccOnLandedHit,judge:ccJudge,
+      get enabled(){return ccEnabled;},setEnabled:ccSetEnabled,pickP:function(i){ if(CC.active&&CC.phase==='pick'){ CC.pickP=i; CC.selP=i; ccHudUpdate(); } }};
+    /* __CARDCLASH_END ======================================================= */
+
+    /* __FINISHER_START ======================================================
+       FINISHING MOVES — a second removable feature layer (added after
+       v1.0 at the user's order, on top of Card Clash; independent of it).
+       Everything lives between __FINISHER_START / __FINISHER_END plus
+       three one-line hooks marked __FINISHER_HOOK (tickSim top guard,
+       the roundEnd update branch, and the roundEnd match-end branch).
+       Strip the module + those hooks and match end is exactly v1.0
+       (which already has its own short FIN presentation cinematic —
+       this module layers AFTER it, it does not replace it).
+
+       Design: MATCH END ONLY (the deciding round's KO, never a plain
+       round, never a timeout, never a double KO). When the normal
+       round-end beat would hand over to the results, the loser is
+       stood back up DIZZIED for a 3.5s window: screen edges darken,
+       "END IT" shows a 3-input rune sequence unique to the winner's
+       fighter (drawn from Up / Down / Light / Heavy only, so Left /
+       Right stay free for movement — the winner may walk into
+       mid-range, <=280 units, during the window; sequence inputs only
+       register in range). Complete it: the parametric finisher
+       cinematic plays (dash-in, oversized strike, the kill moment,
+       collapse, RUNEBLADE FINISH banner). Wrong input / timeout:
+       the loser simply collapses and results proceed as v1.0.
+       CPU winners (VS CPU / Arcade / runs) attempt it ~50% of the
+       time after a short stagger, so the player sees finishers
+       against them too. Training: never (TR check). ONLINE: DISABLED
+       in this version — the winner's input window is a local,
+       wall-clock interaction; even a cosmetic-only version would
+       hold one client's results hostage to the other's window, so
+       online match end stays exactly v1.0. The result is never in
+       doubt either way: wins were already counted in koRound.
+
+       GORE (user-specified, super gory): the kill moment reuses the
+       engine's own blood system at an order of magnitude more —
+       five bloodBurst fountains + a 26-particle arterial spray
+       (engine 'blood' particles), goreSever, spreading ground pools
+       via bloodDecal that persist (20s decal life) into the results
+       screen, blood dripping off the winner, plus this module's own
+       screen-space camera splatter overlay that fades slowly.
+       Per-fighter element (from their character) tints the extra FX
+       and picks the collapse: Ember / Storm launch the loser,
+       Frost / Grave drop them in two stages (hitstun kneel, then
+       fall). Sound: the engine's clash + hit + KO SFX layered at
+       the kill moment; no new audio files.
+       Flag: localStorage 'runeblade.finisher.v1' ('0' = OFF, else ON,
+       the default). Settings toggle: FINISHING MOVES. ================ */
+    const FINX_KEY='runeblade.finisher.v1';
+    let finxEnabled=true; try{ finxEnabled=window.localStorage.getItem(FINX_KEY)!=='0'; }catch(e){ finxEnabled=true; }
+    const FINX_WINDOW=3.5, FINX_RANGE=280;
+    const FINX_ELEM={maul:'ember',sidious:'storm',dooku:'storm',vader:'grave',ahsoka:'frost',obi:'frost',inaam:'ember'};
+    const FINX_POOL=['up','down','light','heavy'];
+    const FINX_ICON={up:'\u25b2 UP',down:'\u25bc DOWN',light:'LIGHT',heavy:'HEAVY'};
+    const FINX={active:false,phase:'window',t:0,cineT:0,endT:0,winner:null,loser:null,
+      seq:[],prog:0,cpu:false,cpuWill:false,cpuStepT:0,baseX:0,doneKey:'',
+      struck:false,launched:false,landed:false,bannerShown:false,prev:{},el:null,styleEl:null};
+    function finxSetEnabled(v){
+      finxEnabled=!!v;
+      try{ window.localStorage.setItem(FINX_KEY,finxEnabled?'1':'0'); }catch(e){ /* storage blocked — session only */ }
+      const b=document.getElementById('setFinisher');
+      if(b){ b.textContent='FINISHING MOVES: '+(finxEnabled?'ON':'OFF'); b.classList.toggle('off',!finxEnabled); }
+      if(!finxEnabled)finxCancel();
+    }
+    function finxKey(){ return (typeof G!=='undefined'&&G)?(G.winsP+'-'+G.winsC+'-'+G.round):''; }
+    function finxSeqFor(char){
+      let h=0; const s=String(char||''); for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;
+      const start=h%FINX_POOL.length;
+      return [FINX_POOL[start],FINX_POOL[(start+1)%FINX_POOL.length],FINX_POOL[(start+2)%FINX_POOL.length]];
+    }
+    function finxShouldRun(){
+      if(!finxEnabled||FINX.active)return false;
+      if(typeof G==='undefined'||!G||G.online)return false; /* online: disabled in v1 (see header) */
+      if(typeof TR!=='undefined'&&TR)return false; /* training: never */
+      if(!G.winner||G.winner.hp<=0)return false; /* no winner / double KO */
+      const loser=(typeof foe==='function')?foe(G.winner):null;
+      if(!loser||loser.hp>0)return false; /* KO only — a timeout finish is v1.0's */
+      if(!(G.winsP>=(G.winTarget||2)||G.winsC>=(G.winTarget||2)))return false; /* deciding round only */
+      if(FINX.doneKey===finxKey())return false;
+      return true;
+    }
+    function finxBegin(){
+      const W=G.winner, L=(typeof foe==='function')?foe(W):null;
+      if(!W||!L){ FINX.doneKey=finxKey(); return; }
+      FINX.active=true; FINX.phase='window'; FINX.t=0; FINX.cineT=0; FINX.endT=0;
+      FINX.winner=W; FINX.loser=L; FINX.prog=0; FINX.baseX=L.x;
+      FINX.seq=finxSeqFor(W.char);
+      FINX.cpu=!G.versus&&(W===C); /* a CPU winner in VS CPU / runs */
+      FINX.cpuWill=FINX.cpu&&Math.random()<0.5; /* ~50%: sometimes it just lets you fall */
+      FINX.cpuStepT=0; FINX.struck=false; FINX.launched=false; FINX.landed=false; FINX.bannerShown=false;
+      FINX.prev={};
+      L.y=GROUND; L.vy=0; L.vx=0; L.blocking=false; L.atk=null; setState(L,'stagger',true); L.stateT=0; /* dizzied, swaying */
+      W.vx=0; if(W.state!=='idle')setState(W,'idle',true);
+      announce('END IT!<small>'+W.cfg.short+' — FINISH THE DUEL</small>',1700);
+      finxHudShow();
+    }
+    function finxEdge(name,down){ const was=!!FINX.prev[name]; FINX.prev[name]=!!down; return !!down&&!was; }
+    function finxCtlFor(W){
+      if(W===C&&typeof G!=='undefined'&&G&&G.versus){
+        return {left:!!(keys.ArrowLeft||btnState2.left),right:!!(keys.ArrowRight||btnState2.right),
+          up:!!(keys.ArrowUp||btnState2.up),down:!!(keys.ArrowDown||btnState2.down),
+          light:!!(keys.Comma||btnState2.light),heavy:!!(keys.Period||btnState2.heavy)};
+      }
+      return {left:!!(keys.KeyA||btnState.left),right:!!(keys.KeyD||btnState.right),
+        up:!!(keys.KeyW||btnState.up),down:!!(keys.KeyS||btnState.down),
+        light:!!(keys.KeyJ||btnState.light),heavy:!!(keys.KeyK||btnState.heavy)};
+    }
+    function finxFail(){
+      if(FINX.phase!=='window')return;
+      FINX.phase='fail'; FINX.endT=0;
+      const L=FINX.loser;
+      if(L){ setState(L,'defeated',true); L.vy=0; } /* normal KO collapse — results proceed as v1.0 */
+      finxHudHide();
+    }
+    function finxStartCine(){
+      FINX.phase='cine'; FINX.cineT=0;
+      finxHudHide();
+      DIRECTOR.kick=Math.max(DIRECTOR.kick,.3); /* camera pushes in for the execution */
+    }
+    function finxKillMoment(){
+      const W=FINX.winner, L=FINX.loser; if(!W||!L)return;
+      const elem=FINX_ELEM[W.char]||'grave';
+      const cx=L.x, cy=L.y-95;
+      SFX.clash(cx); SFX.hit(cx); SFX.ko();
+      shake=Math.max(shake,9); setHitstop(4);
+      sparks(cx,cy,bladeCol(W),30,520); ring(cx,cy,bladeCol(W),110); emberBurst(cx,cy,bladeCol(W),14);
+      /* ---- GORE: an order of magnitude past a normal hit ---- */
+      if(typeof bloodBurst==='function'){
+        for(let i=0;i<5;i++)bloodBurst(cx+rand(-8,8),cy+rand(-14,14),W.facing,-0.35,20); /* fountains */
+      }
+      for(let i=0;i<26;i++){ /* arterial spray, engine blood particles */
+        particles.push({x:cx,y:cy,vx:W.facing*rand(40,190),vy:-rand(160,380),t:0,life:rand(.5,1.05),
+          color:(typeof BLOOD_COLS!=='undefined'?BLOOD_COLS[i%3]:'#8f1212'),size:rand(2.2,5),grav:900,type:'blood'});
+      }
+      if(typeof goreSever==='function')goreSever(L); /* no-op if the KO already severed */
+      if(typeof bloodDecal==='function'){ bloodDecal(cx,2.4); bloodDecal(cx+rand(-30,30),1.8); } /* the pool starts spreading */
+      finxSplatterShow();
+      /* blood on the winner: drips off their side of the arena */
+      for(let i=0;i<7;i++)particles.push({x:W.x+W.facing*rand(16,30),y:W.y-rand(60,110),vx:rand(-12,12),vy:rand(8,42),t:0,life:rand(.4,.8),color:'#8f1212',size:rand(1.8,3.4),grav:340,type:'blood'});
+      if(elem==='ember')emberBurst(cx,cy,'#ff7a3c',22); /* burning blood / embers */
+      if(elem==='storm')sparks(cx,cy,'#ffe81f',24,560);
+      if(elem==='frost')sparks(cx,cy,'#9fd8ff',20,380);
+      addFloat(cx,cy-84,'FINISH HIM','#ff5a4e',20);
+      if(elem==='ember'||elem==='storm'){
+        FINX.launched=true; L.vx=W.facing*330; L.vy=-320; setState(L,'hitstun_air',true); /* launched by the strike */
+      }else{
+        setState(L,'hitstun',true); L.stateT=-0.55; L.vx=W.facing*90; /* kneel first — the drop comes at cine t>=1.05 */
+      }
+    }
+    function finxFinish(){
+      FINX.active=false; FINX.doneKey=finxKey();
+      finxHudHide(); finxBannerHide();
+      /* the tickSim match-end branch runs later this same tick and,
+         with FINX inactive and doneKey set, falls through to the
+         normal endMatch() — results flow is v1.0's own. */
+    }
+    function finxCancel(){
+      if(!FINX.active)return;
+      FINX.active=false; FINX.doneKey=finxKey();
+      finxHudHide(); finxBannerHide(); finxSplatterHide();
+    }
+    /* called by the __FINISHER_HOOK on the startRound hook line: the
+       doneKey is a wins/round pair, which a REMATCH can legitimately
+       reproduce — so a new match (round 1) always clears it, and a
+       finisher window can never leak into a fresh round. */
+    function finxRoundReset(){
+      if(typeof G!=='undefined'&&G&&G.round===1)FINX.doneKey='';
+      if(FINX.active)finxCancel();
+    }
+    function finxTick(dt){
+      if(!FINX.active)return;
+      const W=FINX.winner, L=FINX.loser;
+      if(!W||!L){ finxCancel(); return; }
+      W.facing=(L.x>=W.x)?1:-1;
+      if(FINX.phase==='window'){
+        FINX.t+=dt;
+        L.x=FINX.baseX+Math.sin(FINX.t*3.2)*4; /* the dizzy sway */
+        L.facing=(W.x<L.x)?-1:1;
+        const inRange=Math.abs(W.x-L.x)<=FINX_RANGE;
+        if(FINX.cpu){
+          /* CPU winner: walk in, then either perform it (step every
+             0.4s after a short stagger) or hesitate and let them fall */
+          FINX.cpuStepT+=dt;
+          if(!inRange){ W.x+=((L.x>W.x)?1:-1)*230*dt; }
+          else if(FINX.cpuWill){
+            if(FINX.t>0.8&&FINX.cpuStepT>=0.4){ FINX.cpuStepT=0; FINX.prog++; if(FINX.prog>=FINX.seq.length)finxStartCine(); }
+          }else if(FINX.t>=1.6){ finxFail(); }
+        }else{
+          const ctl=finxCtlFor(W);
+          const mx=(ctl.left?-1:0)+(ctl.right?1:0);
+          if(mx)W.x=clamp(W.x+mx*230*dt,WALL_L,WALL_R);
+          if(inRange){
+            for(const inp of FINX_POOL){
+              if(finxEdge(inp,!!ctl[inp])){
+                if(inp===FINX.seq[FINX.prog]){ FINX.prog++; SFX.parry(W.x); if(FINX.prog>=FINX.seq.length)finxStartCine(); }
+                else { finxFail(); } /* wrong input: normal KO */
+                break;
+              }
+            }
+          }else{
+            for(const inp of FINX_POOL)FINX.prev[inp]=!!ctl[inp]; /* out of range: inputs are movement time, not attempts */
+          }
+        }
+        if(FINX.phase==='window'&&FINX.t>=FINX_WINDOW)finxFail(); /* too slow: normal KO */
+        finxHudUpdate(inRange);
+      }else if(FINX.phase==='cine'){
+        FINX.cineT+=dt; const t=FINX.cineT;
+        const target=L.x-W.facing*64;
+        if(t<0.4){ const dx=target-W.x; W.x+=clamp(dx,-900*dt,900*dt); if(Math.random()<0.35)ring(W.x,W.y-4,bladeCol(W),46); /* rune circle kindling under the winner */ }
+        if(!FINX.struck&&t>=0.45){ FINX.struck=true; finxKillMoment(); }
+        if(FINX.launched&&!FINX.landed){
+          L.vy+=1500*dt; L.x+=L.vx*dt; L.y+=L.vy*dt;
+          if(L.y>=GROUND){ L.y=GROUND; L.vy=0; L.vx=0; FINX.landed=true; setState(L,'defeated',true);
+            if(typeof bloodDecal==='function')bloodDecal(L.x,2.2);
+            if(typeof bloodBurst==='function')bloodBurst(L.x,GROUND-6,W.facing,-0.4,14); shake=Math.max(shake,5); }
+        }
+        if(FINX.struck&&!FINX.launched&&t>=1.05&&L.state!=='defeated'){
+          setState(L,'defeated',true); /* stage two of the fall: the drop */
+          if(typeof bloodDecal==='function')bloodDecal(L.x,2.0);
+        }
+        if(FINX.struck&&t>=1.2&&Math.random()<0.3){ /* blood still dripping off the winner */
+          particles.push({x:W.x+W.facing*rand(16,30),y:W.y-rand(60,110),vx:0,vy:rand(10,36),t:0,life:rand(.35,.6),color:'#6e0b0b',size:rand(1.6,3),grav:340,type:'blood'});
+        }
+        if(t>=1.5&&!FINX.bannerShown){ FINX.bannerShown=true; finxBannerShow(); if(W.state!=='idle')setState(W,'idle',true); }
+        if(t>=2.6)finxFinish();
+      }else if(FINX.phase==='fail'){
+        FINX.endT+=dt;
+        if(FINX.endT>=0.7)finxFinish();
+      }
+    }
+    /* ---- Finisher HUD / banner / splatter (DOM built by the module) ---- */
+    function finxHudBuild(){
+      if(FINX.el)return FINX.el;
+      if(!FINX.styleEl){
+        FINX.styleEl=document.createElement('style');
+        FINX.styleEl.textContent=
+          '#finxHud{position:fixed;inset:0;z-index:61;pointer-events:none;display:none;font-family:inherit;}'+
+          '#finxHud.on{display:block;}'+
+          '#finxHud .finxShade{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 52%,rgba(5,0,0,.55) 100%);}'+
+          '#finxHud .finxTitle{position:absolute;top:12%;left:0;right:0;text-align:center;font-size:44px;font-weight:800;letter-spacing:.3em;color:#ff3b30;text-shadow:0 3px 18px #000,0 0 34px rgba(255,40,30,.45);}'+
+          '#finxHud .finxSeq{position:absolute;top:calc(12% + 62px);left:0;right:0;display:flex;gap:12px;justify-content:center;}'+
+          '.finxChip{min-width:74px;padding:9px 10px;text-align:center;border:2px solid #8a7a52;border-radius:9px;background:rgba(16,12,8,.85);color:#efe6cf;font-size:15px;letter-spacing:.12em;}'+
+          '.finxChip.done{border-color:#ff3b30;color:#ffb3ab;background:rgba(50,8,6,.9);}'+
+          '.finxChip.next{box-shadow:0 0 0 2px #ffe9a8 inset;}'+
+          '#finxHud .finxHint{position:absolute;top:calc(12% + 128px);left:0;right:0;text-align:center;font-size:14px;letter-spacing:.25em;color:#cfc7ae;text-shadow:0 2px 10px #000;}'+
+          '#finxHud .finxTimer{position:absolute;top:calc(12% + 158px);left:50%;transform:translateX(-50%);width:240px;height:5px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden;}'+
+          '#finxHud .finxTimer i{display:block;height:100%;background:#ff3b30;}'+
+          '#finxBanner{position:fixed;inset:0;z-index:62;pointer-events:none;display:none;align-items:center;justify-content:center;}'+
+          '#finxBanner.on{display:flex;}'+
+          '#finxBanner span{font-size:64px;font-weight:900;letter-spacing:.14em;color:#ff3b30;text-shadow:0 4px 0 #2b0202,0 10px 34px #000;animation:finxSlam .45s ease-out;}'+
+          '@keyframes finxSlam{0%{transform:scale(2.6);opacity:0;}60%{transform:scale(.94);opacity:1;}100%{transform:scale(1);}}'+
+          '#finxSplat{position:fixed;inset:0;z-index:59;pointer-events:none;opacity:0;transition:opacity 5s ease-out;'+
+          'background:radial-gradient(circle at 18% 22%,rgba(122,10,10,.5) 0 34px,transparent 60px),radial-gradient(circle at 82% 30%,rgba(94,6,6,.45) 0 26px,transparent 52px),radial-gradient(circle at 64% 78%,rgba(122,10,10,.4) 0 40px,transparent 74px),radial-gradient(circle at 30% 84%,rgba(70,4,4,.5) 0 20px,transparent 44px),radial-gradient(circle at 50% 12%,rgba(94,6,6,.35) 0 16px,transparent 38px);}'+
+          '#finxSplat.on{opacity:1;transition:opacity .18s ease-in;}';
+        document.head.appendChild(FINX.styleEl);
+      }
+      const el=document.createElement('div'); el.id='finxHud';
+      el.innerHTML='<div class="finxShade"></div><div class="finxTitle">END IT</div><div class="finxSeq" id="finxSeq"></div><div class="finxHint" id="finxHint"></div><div class="finxTimer"><i id="finxTimerFill"></i></div>';
+      document.body.appendChild(el);
+      const bn=document.createElement('div'); bn.id='finxBanner'; bn.innerHTML='<span>RUNEBLADE FINISH</span>';
+      document.body.appendChild(bn);
+      const sp=document.createElement('div'); sp.id='finxSplat';
+      document.body.appendChild(sp);
+      FINX.el=el; return el;
+    }
+    function finxHudShow(){ finxHudBuild().classList.add('on'); finxHudUpdate(false); }
+    function finxHudHide(){ if(FINX.el)FINX.el.classList.remove('on'); }
+    function finxHudUpdate(inRange){
+      if(!FINX.el||!FINX.active||FINX.phase!=='window')return;
+      const seq=FINX.el.querySelector('#finxSeq'); if(!seq)return;
+      seq.innerHTML='';
+      FINX.seq.forEach((inp,i)=>{
+        const c=document.createElement('div');
+        c.className='finxChip'+(i<FINX.prog?' done':(i===FINX.prog?' next':''));
+        c.textContent=FINX_ICON[inp]||inp;
+        seq.appendChild(c);
+      });
+      const hint=FINX.el.querySelector('#finxHint');
+      if(hint)hint.textContent=FINX.cpu?'…':(inRange?'ENTER THE RUNES':'GET CLOSER — MID-RANGE ONLY');
+      const tf=FINX.el.querySelector('#finxTimerFill');
+      if(tf)tf.style.width=Math.max(0,(1-FINX.t/FINX_WINDOW)*100)+'%';
+    }
+    function finxBannerShow(){ finxHudBuild(); const b=document.getElementById('finxBanner'); if(b)b.classList.add('on'); }
+    function finxBannerHide(){ const b=document.getElementById('finxBanner'); if(b)b.classList.remove('on'); }
+    function finxSplatterShow(){ finxHudBuild(); const s=document.getElementById('finxSplat'); if(s){ s.classList.remove('on'); void s.offsetWidth; s.classList.add('on'); } }
+    function finxSplatterHide(){ const s=document.getElementById('finxSplat'); if(s)s.classList.remove('on'); }
+    function finxBuildSettingsRow(){
+      if(document.getElementById('setFinisher'))return;
+      const anchor=document.getElementById('setCardClash')||document.getElementById('setBladeLock'); if(!anchor)return;
+      const row=anchor.closest('.setRow'); if(!row||!row.parentNode)return;
+      const r=document.createElement('div'); r.className='setRow';
+      r.innerHTML='<span class="slab">FINISHING MOVES</span><button class="togBtn" id="setFinisher">FINISHING MOVES: ON</button><span class="sdesc">At MATCH end only: instead of falling, the loser stands dizzied for a few seconds while the winner gets an END IT prompt — walk into mid-range and enter your fighter&rsquo;s 3-rune sequence (Up / Down / Light / Heavy) to perform a finishing move: a dash-in execution with heavy gore, a spreading blood pool and a RUNEBLADE FINISH. Wrong input or too slow and they just collapse, exactly as before. A CPU winner attempts it about half the time. Never in Training. Online duels are unchanged in this version. OFF = match end exactly as before.</span>';
+      row.parentNode.insertBefore(r,row.nextSibling);
+      r.querySelector('#setFinisher').addEventListener('click',()=>{ try{ audioInit(); }catch(e){} finxSetEnabled(!finxEnabled); });
+      const b=r.querySelector('#setFinisher');
+      b.textContent='FINISHING MOVES: '+(finxEnabled?'ON':'OFF'); b.classList.toggle('off',!finxEnabled);
+    }
+    try{ finxBuildSettingsRow(); }catch(e){ /* settings row is cosmetic; the flag still works */ }
+    window.__FINX={FINX:FINX,shouldRun:finxShouldRun,begin:finxBegin,tick:finxTick,cancel:finxCancel,seqFor:finxSeqFor,roundReset:finxRoundReset,
+      get enabled(){return finxEnabled;},setEnabled:finxSetEnabled};
+    /* __FINISHER_END ======================================================== */
+
     /* ---- Arcane Pull resolution ---- */
     function resolvePull(caster,rangeOverride){
       const def=foe(caster), dist=Math.abs(def.x-caster.x);
@@ -8905,6 +9508,7 @@
       }
       projectiles=[]; particles=[]; floats=[]; hitstopTicks=0; slowmoTicks=0; slowmoPhase=0; simAcc=0; endFinisher(true); clearGore(); applySaberCustom(); /* GORE: decals, props and sever state reset with the round */
       LOCK.active=false; LOCK.roundCount=0; LOCK.nextTick=-99999; lockHudHide(); /* BLADE LOCK: per-round caps reset with the round */
+      ccRoundReset(); /* __CARDCLASH_HOOK: one card clash per round, caps reset with the round */ finxRoundReset(); /* __FINISHER_HOOK: a new match clears the finisher done-key */
       wpT=0; wpPass=false; wpPassT=0; /* SIDE-SWITCH: walk-past pair state resets with the round */
       G.timer=99; G.phase='intro'; G.introT=0; G.introDur=cineArm(pChar,cChar);
       snapCamera();
@@ -9019,6 +9623,8 @@
     function tickSim(dt){ /* dt is ALWAYS SIM_STEP */
       G.time+=dt; G.tick++;
       if(LOCK.active&&G.phase!=='fight')endBladeLock(null,true); /* a lock can never outlive the fight phase */
+      if(CC.active&&G.phase!=='fight')ccCancel(); /* __CARDCLASH_HOOK: a card clash can never outlive the fight phase */
+      if(FINX.active&&G.phase!=='roundEnd')finxCancel(); /* __FINISHER_HOOK: a finisher window can never outlive round-end */
       if(G.phase==='intro'){
         G.introT+=dt;
         P.ctl=emptyCtl(); C.ctl=emptyCtl();
@@ -9047,7 +9653,8 @@
         let frozen=false;
         if(hitstopTicks>0){ hitstopTicks--; frozen=true; }
         else if(slowmoTicks>0){ slowmoTicks--; slowmoPhase++; if(slowmoPhase%SLOWMO_DIV!==0)frozen=true; }
-        if(LOCK.active){ lockTick(dt); stepBlade(P,dt); stepBlade(C,dt); /* BLADE LOCK: the contest replaces both fighter updates; projectiles hold. ANALOG STAGE B: the blade state still steps — in tracking mode only (the lock makes every stance ineligible), so it follows the lock geometry and re-seeds cleanly when the lock breaks */ }
+        if(CC.active){ ccTick(dt); stepBlade(P,dt); stepBlade(C,dt); } /* __CARDCLASH_HOOK: the card fight replaces both fighter updates, exactly as the blade lock does */
+        else if(LOCK.active){ lockTick(dt); stepBlade(P,dt); stepBlade(C,dt); /* BLADE LOCK: the contest replaces both fighter updates; projectiles hold. ANALOG STAGE B: the blade state still steps — in tracking mode only (the lock makes every stance ineligible), so it follows the lock geometry and re-seeds cleanly when the lock breaks */ }
         else if(frozen){ bufferTick(P); bufferTick(C); }
         else { fighterUpdate(P,dt); fighterUpdate(C,dt); separateFighters(); projUpdate(dt); stepBlade(P,dt); stepBlade(C,dt); /* ANALOG STAGE B: authoritative blade step, same tick as the fighter updates it follows */ }
         if(G.online)onlineAfterTick();
@@ -9056,12 +9663,15 @@
         P.ctl=emptyCtl(); C.ctl=emptyCtl();
         /* S4: the final-blow slow-mo stretches the fall itself — same
            deterministic 1-in-3 tick pattern as the fight phase */
-        if(slowmoTicks>0){ slowmoTicks--; slowmoPhase++; if(slowmoPhase%SLOWMO_DIV===0){ fighterUpdate(P,dt); fighterUpdate(C,dt); separateFighters(); stepBlade(P,dt); stepBlade(C,dt); } }
+        if(FINX.active){ finxTick(dt); } /* __FINISHER_HOOK: the finisher window replaces fighter updates during round-end */
+        else if(slowmoTicks>0){ slowmoTicks--; slowmoPhase++; if(slowmoPhase%SLOWMO_DIV===0){ fighterUpdate(P,dt); fighterUpdate(C,dt); separateFighters(); stepBlade(P,dt); stepBlade(C,dt); } }
         else { fighterUpdate(P,dt); fighterUpdate(C,dt); separateFighters(); stepBlade(P,dt); stepBlade(C,dt); }
         if(G.roundEndT>2.3){
           slowmoTicks=0;
           if(!G.online&&G.winner)adaptOnRoundEnd(G.winner===P); /* S3: opt-in drift, local CPU matches only */
-          if(G.winsP>=(G.winTarget||2)||G.winsC>=(G.winTarget||2))endMatch(); /* S5: survival waves are single-round (winTarget 1); everything else keeps first-to-2 */
+          if(FINX.active){ /* __FINISHER_HOOK: the finisher window holds the match end; finxFinish() releases it to the normal endMatch below */ }
+          else if(finxShouldRun()){ finxBegin(); } /* __FINISHER_HOOK */
+          else if(G.winsP>=(G.winTarget||2)||G.winsC>=(G.winTarget||2))endMatch(); /* S5: survival waves are single-round (winTarget 1); everything else keeps first-to-2 */
           else { G.round++; startRound(); }
         }
       }
