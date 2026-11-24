@@ -1245,6 +1245,25 @@ body #finxHud .finxTitle{top:8%;font:800 clamp(23px,5vw,42px)/1.1 Georgia;color:
         <div id="grHud" aria-label="Grimoire spell hand" hidden><div id="chBanner" hidden></div><div id="grMana"></div><div id="grHand"></div><div id="grStatus" aria-live="polite"></div></div>
 <div id="controls">
           <div class="cluster leftCluster">
+            <div class="forceCol" aria-label="Quick arcane abilities">
+              <div id="forceStrip" aria-label="Quick Force attacks">
+                <button class="fslot" data-fslot="pull"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9"><path d="M3 9 C6 6.2 9 11.8 12 9 C15 6.2 18 11.8 21 9"/><path d="M3 15.5 C6 12.7 9 18.3 12 15.5 C15 12.7 18 18.3 21 15.5"/></svg><small id="fsPullLab">PULL · 25</small></button>
+                <button class="fslot" data-fslot="special"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M12 3.2 L14 10 L20.8 12 L14 14 L12 20.8 L10 14 L3.2 12 L10 10 Z"/></svg><small id="fsSpecLab">SPECIAL</small></button>
+                <button class="fslot" data-fslot="alt"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><circle cx="12" cy="12" r="7.6"/><circle cx="12" cy="12" r="2.8"/></svg><small id="fsAltLab">ALT</small></button>
+                <button class="fslot" data-fslot="dash" aria-label="Dodge"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M2 7h7M2 17h7M4 12h15m-6-6 6 6-6 6"/></svg><small id="fsDashLab">DODGE · 10 STA</small></button>
+              </div>
+              <button class="cbtn spc" data-btn="force" id="forceBtn"><span id="forceGlyph"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M20.2 12 A8.2 8.2 0 1 1 17.9 6.2"/><path d="M17.6 12 A5.6 5.6 0 1 1 16 8"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg></span><small id="forceBtnLab">ARCANE</small></button>
+              <button class="cbtn" data-btn="formNext" id="formBtn" style="margin-top:8px;"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M5 4.5 L19 18.5"/><path d="M19 4.5 L5 18.5"/><path d="M3.8 7.5 L7.5 3.8"/><path d="M16.5 3.8 L20.2 7.5"/></svg><small id="formBtnLab">FORM V</small></button>
+
+              <button type="button" id="rbBowBtn" hidden aria-label="Hold to draw bow, release to shoot">BOW · 4</button>
+              <!-- STAGE 2 DEF: the GUARD modifier button, Analog scheme
+                   only (CSS-scoped below). Holding it (or the L key)
+                   makes the saber stick defensive: physical blocking /
+                   parrying, and no gesture slashes can fire. It is the
+                   shipped BLOCK channel (data-btn="block"), so every
+                   existing block / parry / feint rule reads it as-is. -->
+              <button class="cbtn blk" data-btn="block" id="anaGuardBtn" style="margin-top:8px;" aria-label="Guard — hold while aiming the defence stick to defend physically"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M12 3 L19 5.4 V11 C19 15.9 15.9 19.2 12 20.8 C8.1 19.2 5 15.9 5 11 V5.4 Z"/></svg><small>GUARD</small></button>
+            </div>
             <div id="stickZone" aria-label="Movement thumb stick — push to move or jump">
               <div id="stickBase"><div id="stickKnob"></div></div>
               <div id="stickLab">MOVE · UP = JUMP</div>
@@ -1256,23 +1275,6 @@ body #finxHud .finxTitle{top:8%;font:800 clamp(23px,5vw,42px)/1.1 Georgia;color:
           <!-- STAGE 3 GUARD-PAD LAYOUT (default): directional guard pad,
                large strikes, one FORCE button + quick-selector strip -->
           <div class="cluster" id="guardRight">
-            <div class="forceCol">
-              <div id="forceStrip" aria-label="Force ability selector">
-                <button class="fslot" data-fslot="pull"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9"><path d="M3 9 C6 6.2 9 11.8 12 9 C15 6.2 18 11.8 21 9"/><path d="M3 15.5 C6 12.7 9 18.3 12 15.5 C15 12.7 18 18.3 21 15.5"/></svg><small id="fsPullLab">PULL · 25</small></button>
-                <button class="fslot" data-fslot="special"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M12 3.2 L14 10 L20.8 12 L14 14 L12 20.8 L10 14 L3.2 12 L10 10 Z"/></svg><small id="fsSpecLab">SPECIAL</small></button>
-                <button class="fslot" data-fslot="alt"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><circle cx="12" cy="12" r="7.6"/><circle cx="12" cy="12" r="2.8"/></svg><small id="fsAltLab">ALT</small></button>
-                <button class="fslot" data-fslot="dash" aria-label="Dodge"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M2 7h7M2 17h7M4 12h15m-6-6 6 6-6 6"/></svg><small id="fsDashLab">DODGE · 10 STA</small></button>
-              </div>
-              <button class="cbtn spc" data-btn="force" id="forceBtn"><span id="forceGlyph"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M20.2 12 A8.2 8.2 0 1 1 17.9 6.2"/><path d="M17.6 12 A5.6 5.6 0 1 1 16 8"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg></span><small id="forceBtnLab">ARCANE</small></button>
-              <button class="cbtn" data-btn="formNext" id="formBtn" style="margin-top:8px;"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M5 4.5 L19 18.5"/><path d="M19 4.5 L5 18.5"/><path d="M3.8 7.5 L7.5 3.8"/><path d="M16.5 3.8 L20.2 7.5"/></svg><small id="formBtnLab">FORM V</small></button>
-              <!-- STAGE 2 DEF: the GUARD modifier button, Analog scheme
-                   only (CSS-scoped below). Holding it (or the L key)
-                   makes the saber stick defensive: physical blocking /
-                   parrying, and no gesture slashes can fire. It is the
-                   shipped BLOCK channel (data-btn="block"), so every
-                   existing block / parry / feint rule reads it as-is. -->
-              <button class="cbtn blk" data-btn="block" id="anaGuardBtn" style="margin-top:8px;" aria-label="Guard — hold while aiming the defence stick to defend physically"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M12 3 L19 5.4 V11 C19 15.9 15.9 19.2 12 20.8 C8.1 19.2 5 15.9 5 11 V5.4 Z"/></svg><small>GUARD</small></button>
-            </div>
             <div id="guardPad" aria-label="Directional guard pad — tap or flick a direction to set your guard, hold to block, a fresh timed tap in the matching direction parries">
               <div class="gz gz-l" data-gz="left">◀</div>
               <div class="gz gz-u" data-gz="overhead">▲</div>
@@ -1288,7 +1290,7 @@ body #finxHud .finxTitle{top:8%;font:800 clamp(23px,5vw,42px)/1.1 Georgia;color:
               <div id="anaStickBase"><div id="anaAimInd"></div><div id="anaStickKnob"></div></div>
               <div id="anaStickLab">DEFENCE</div>
             </div>
-            <div id="rbAttackStick" class="rbAttackStick" aria-label="Attack stick: flick and release for light, hold and release for heavy"><div class="rbAttackBase"><div class="rbAttackKnob"></div></div><span class="rbAttackLabel">ATTACK</span></div></div>
+            <div id="rbAttackStick" class="rbAttackStick" aria-label="Attack stick: sweep through an arc to swing, or flick and release; hold to charge a heavy cut"><div class="rbAttackBase"><div class="rbAttackKnob"></div></div><span class="rbAttackLabel">ATTACK</span></div></div>
             <!-- Strike grid: right cluster in Classic. In the Analog
                  scheme the CSS above lifts this same grid to the LEFT,
                  above the movement stick (left thumb strikes while the
@@ -1297,7 +1299,6 @@ body #finxHud .finxTitle{top:8%;font:800 clamp(23px,5vw,42px)/1.1 Georgia;color:
               <button class="cbtn act" data-btn="light"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"><path d="M6.2 17.8 L15.8 8.2"/><path d="M15.8 8.2 L19.8 4.2"/><path d="M4.6 15.2 L8.8 19.4"/><circle cx="4.8" cy="19.2" r="1.1"/></svg><small>LIGHT</small></button>
               <button class="cbtn jumpBtn" data-btn="up"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M6 12 L12 6 L18 12"/><path d="M6 18.5 L12 12.5 L18 18.5"/></svg><small>JUMP</small></button>
               <button class="cbtn act" data-btn="heavy"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9"><path d="M6.2 17.8 L15.8 8.2" stroke-width="3"/><path d="M15.8 8.2 L19.8 4.2" stroke-width="3"/><path d="M4.6 15.2 L8.8 19.4"/><circle cx="4.8" cy="19.2" r="1.2"/></svg><small>HEAVY</small></button>
-              <button type="button" id="rbBowBtn" hidden aria-label="Hold to draw bow, release to shoot">BOW · 4</button>
               <button class="cbtn" data-btn="dash" id="dodgeR"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M2.5 8 H9"/><path d="M2.5 16 H9"/><path d="M4 12 H15"/><path d="M11.5 5.5 L18 12 L11.5 18.5"/></svg><small>DODGE</small></button>
             </div>
           </div>
@@ -1653,7 +1654,7 @@ body #finxHud .finxTitle{top:8%;font:800 clamp(23px,5vw,42px)/1.1 Georgia;color:
                     <li><span class="k">Feint key:</span> on desktop, <b>F</b> also feints during a Heavy&rsquo;s wind-up (same as a Guard press then). While your Heavy is in its feint window the guard pad / BLOCK button glows gold.</li>
                   </ul>
                 </div>
-                <div class="fineprint">PRECISION: Left stick moves and jumps. Upper right stick guards at any angle. Lower right stick flick and release = light; hold 0.26s and release = heavy. Hold BOW to draw and aim with defence stick where available. Arcane opens abilities including Dodge. Keyboard: A/D move, W jump, right mouse aim, J/K strike, L guard.</div>
+                <div class="fineprint">PRECISION: Left stick moves and jumps. Upper right stick guards at any angle. Lower right stick: sweep through an arc to slash without lifting your thumb, or flick and release. Hold a direction 0.26s before sweeping or releasing for a heavy cut. Hold BOW to draw and aim with defence stick where available. Arcane opens abilities including Dodge. Keyboard: A/D move, W jump, right mouse aim, J/K strike, L guard.</div>
                 </details>
               </section>
               
@@ -1691,7 +1692,7 @@ body #finxHud .finxTitle{top:8%;font:800 clamp(23px,5vw,42px)/1.1 Georgia;color:
                   <button class="togBtn off" id="setLeftHanded">LEFT-HANDED: OFF</button>
                   <span class="sdesc">OFF: the shipped layout — movement stick left, strike / saber controls right. ON: the touch clusters mirror horizontally — movement stick on the right, strike / saber controls on the left — in every game mode. Desktop keys are unchanged. Saved with your other settings.</span>
                 </div>
-                <div class="setRow"><span class="slab">COMBAT CONTROLS</span><span class="sdesc">PRECISION — 64-direction physical guard and aimed attacks in every mode. Upper right stick guards; lower right stick attacks. Flick and release for light; hold a direction 0.26 seconds and release for heavy. No alternate control schemes.</span><button id="setScheme" hidden disabled>PRECISION</button></div>
+                <div class="setRow"><span class="slab">COMBAT CONTROLS</span><span class="sdesc">PRECISION — 64-direction physical guard and aimed attacks in every mode. Upper right stick guards; lower right stick attacks. Sweep the attack stick through an arc to slash, or flick and release. Hold a direction 0.26 seconds before sweeping or releasing for a heavy cut. No alternate control schemes.</span><button id="setScheme" hidden disabled>PRECISION</button></div>
                 <div class="setRow">
                   <span class="slab">DEFENCE STICK SIZE</span>
                   <button class="togBtn" id="setAnaSize">SIZE: MEDIUM</button>
@@ -1799,7 +1800,7 @@ body #finxHud .finxTitle{top:8%;font:800 clamp(23px,5vw,42px)/1.1 Georgia;color:
                 </div>
                 <div class="setRow">
                   <span class="slab">TOUCH BINDINGS</span>
-                  <span class="sdesc" style="margin-top:0; width:auto;">Move with left stick; up jumps, up+toward or away leaps. Hold the sword stick toward an incoming strike to guard or parry. Tap Light/Heavy to strike in the last aimed direction, or flick the button to override it. Arcane opens Dodge and powers. During a blade lock, follow the on-screen arrow. Legacy Classic controls remain selectable.</span>
+                  <span class="sdesc" style="margin-top:0; width:auto;">Move with left stick; up jumps, up+toward or away leaps. Hold the sword stick toward an incoming strike to guard or parry. Sweep the attack stick to slash continuously, or flick and release; hold a direction briefly to charge a heavy cut. Arcane opens Dodge and powers. During a blade lock, follow the on-screen arrow. Precision controls apply in every mode.</span>
                 </div>
                 <div class="setRow">
                   <span class="slab">DISPLAY</span>
@@ -7064,17 +7065,29 @@ three/build/three.module.js:
     rbBowButton.addEventListener('pointerup',e=>{if(e.pointerId===RBOW.pid){e.preventDefault();RBOW.pid=null;rbBowRelease();}});
     for(const ev of ['pointercancel','lostpointercapture'])rbBowButton.addEventListener(ev,e=>{if(e.pointerId===RBOW.pid)rbBowCancel();});
     window.addEventListener('keydown',e=>{if(e.code==='KeyB'&&!e.repeat&&rbBowBegin())e.preventDefault();});window.addEventListener('keyup',e=>{if(e.code==='KeyB'&&RBOW.held&&RBOW.pid===null)rbBowRelease();});
-    // Separate attack sticks: independent pointer ownership, no repeat on hold.
+    // 9.3: continuous directional sweeps, alongside the original release strikes.
+    // Every gesture emits an ordinary angle-quantized attack edge. No new wire fields or damage path.
     const rb660P2Queue=[];let rb660P2Last=null;
+    const RB93_SWEEP=Math.PI/4,RB93_CHARGE=260,RB93_INTERVAL=110;
+    function rb93Delta(a,b){return Math.atan2(Math.sin(b-a),Math.cos(b-a));}
     function rb660MakeAttack(id,queue,fighter){
       const el=$(id),knob=el.querySelector('.rbAttackKnob'),label=el.querySelector('.rbAttackLabel');
-      let pid=null,angle=null,start=null,dx=0,dy=0,raf=0;
-      const charge=()=>{if(pid===null)return;const heavy=start!==null&&performance.now()-start>=260;el.classList.toggle('heavy',heavy);label.textContent=start===null?'ATTACK':heavy?'HEAVY · RELEASE':'LIGHT · RELEASE';raf=requestAnimationFrame(charge);};
-      const reset=()=>{pid=null;angle=null;start=null;cancelAnimationFrame(raf);el.classList.remove('live','heavy');knob.style.transform='translate(-50%,-50%)';label.textContent='ATTACK';};
-      const move=e=>{const r=el.getBoundingClientRect(),rot=$('fightStage').classList.contains('forced');let x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;if(rot){const a=x;x=y;y=-a;}const radius=Math.min(r.width,r.height)*.29,mag=Math.hypot(x,y);dx=x;dy=y;if(mag>=radius*.35){if(start===null)start=performance.now();angle=Math.atan2(y,x);}else if(mag<radius*.18){start=null;angle=null;}const k=mag>radius?radius/mag:1;knob.style.transform=`translate(-50%,-50%) translate(${x*k}px,${y*k}px)`;};
-      el.addEventListener('pointerdown',e=>{if(pid!==null||G.mode!=='fight'||G.phase!=='fight'||G.paused)return;e.preventDefault();audioInit();pid=e.pointerId;el.classList.add('live');try{el.setPointerCapture(pid);}catch(_){}move(e);charge();});
-      el.addEventListener('pointermove',e=>{if(e.pointerId===pid){e.preventDefault();move(e);}});
-      el.addEventListener('pointerup',e=>{if(e.pointerId!==pid)return;e.preventDefault();const f=fighter();if(f&&angle!==null&&start!==null&&G.mode==='fight'&&G.phase==='fight'&&!G.paused&&!LOCK.active&&!(f===P&&rbBowDrawing(P))&&queue.length<8){const a=rb41Quant(Math.atan2(Math.sin(angle),Math.cos(angle)*f.facing));queue.push({name:performance.now()-start>=260?'heavy':'light',angle:a,dir:rb63Dir(a),wait:0});}reset();});
+      let pid=null,angle=null,anchor=null,start=null,centerAt=null,raf=0,lastFire=-Infinity,swept=false;
+      const active=()=>G.mode==='fight'&&G.phase==='fight'&&!G.paused&&!LOCK.active&&!CINE.active&&!CC.active&&!RBR.playback;
+      const emit=(a,heavy)=>{const f=fighter(),now=performance.now();if(!active()||!f||f.hp<=0||(f===P&&rbBowDrawing(P))||rb90Bow(f)?.channel||queue.length||now-lastFire<RB93_INTERVAL)return false;
+        const q=rb41Quant(Math.atan2(Math.sin(a),Math.cos(a)*f.facing));queue.push({name:heavy?'heavy':'light',angle:q,dir:rb63Dir(q),wait:0});lastFire=now;return true;};
+      const charge=()=>{if(pid===null)return;const heavy=angle!==null&&start!==null&&performance.now()-start>=RB93_CHARGE;el.classList.toggle('heavy',heavy);label.textContent=angle===null?'ATTACK':heavy?(swept?'HEAVY · SWEEP':'HEAVY · SWEEP / RELEASE'):(swept?'SWEEP AGAIN':'SWEEP / FLICK');raf=requestAnimationFrame(charge);};
+      const reset=()=>{pid=null;angle=null;anchor=null;start=null;centerAt=null;swept=false;lastFire=-Infinity;cancelAnimationFrame(raf);el.classList.remove('live','heavy');knob.style.transform='translate(-50%,-50%)';label.textContent='ATTACK';};
+      const move=e=>{const r=el.getBoundingClientRect(),rot=$('fightStage').classList.contains('forced');let x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;if(rot){const a=x;x=y;y=-a;}const radius=Math.min(r.width,r.height)*.29,mag=Math.hypot(x,y),now=performance.now();
+        if(mag>=radius*.35){if(centerAt!==null&&now-centerAt>140){anchor=null;start=null;swept=false;}centerAt=null;angle=Math.atan2(y,x);if(start===null){start=now;anchor=angle;swept=false;}else if(Math.abs(rb93Delta(anchor,angle))>=RB93_SWEEP){
+          const center=anchor+rb93Delta(anchor,angle)*.5; // aim through the middle of the drawn cut
+          if(emit(center,now-start>=RB93_CHARGE)){swept=true;anchor=angle;start=now;}
+          // A blocked submission never accumulates an unbounded backlog.
+        }}else if(mag<radius*.18){if(centerAt===null)centerAt=now;angle=null;}
+        const k=mag>radius?radius/mag:1;knob.style.transform=`translate(-50%,-50%) translate(${x*k}px,${y*k}px)`;};
+      el.addEventListener('pointerdown',e=>{if(pid!==null||!active())return;e.preventDefault();audioInit();pid=e.pointerId;el.classList.add('live');try{el.setPointerCapture(pid);}catch(_){}move(e);charge();});
+      el.addEventListener('pointermove',e=>{if(e.pointerId===pid){e.preventDefault();if(!active()){reset();return;}move(e);}});
+      el.addEventListener('pointerup',e=>{if(e.pointerId!==pid)return;e.preventDefault();if(!swept&&angle!==null&&start!==null)emit(angle,performance.now()-start>=RB93_CHARGE);reset();});
       for(const ev of ['pointercancel','lostpointercapture'])el.addEventListener(ev,e=>{if(e.pointerId===pid)reset();});
       el.addEventListener('contextmenu',e=>e.preventDefault());window.addEventListener('blur',reset);return reset;
     }
@@ -7239,7 +7252,7 @@ three/build/three.module.js:
     /* Force selector slots: a tap on a slot while the strip is open
        is the deliberate second tap that casts (see playerCtl) */
     document.querySelectorAll('.fslot').forEach(b=>{
-      b.addEventListener('pointerdown',e=>{ e.preventDefault(); audioInit(); if(forceUI.open)forceUI.castReq=b.dataset.fslot; });
+      b.addEventListener('pointerdown',e=>{ e.preventDefault(); audioInit(); if(getComputedStyle(b).visibility!=='hidden')forceUI.castReq=b.dataset.fslot; });
       b.addEventListener('contextmenu',e=>e.preventDefault());
     });
     /* ================= ANALOG SABER CONTROLS — STAGE A =================
@@ -18383,7 +18396,7 @@ three/build/three.module.js:
       for(const f of [P,C])if(f.gr.pending){grClearBuffer(f);f.ctl=emptyCtl();if(f===P){f.ctl.ana=1;f.ctl.anaAng=ana2WrapPi(Math.atan2(Math.sin(f.gr.pending.angle),Math.cos(f.gr.pending.angle)*f.facing));}}
     }
     function grText(id,value){const el=$(id);if(el&&el.textContent!==value)el.textContent=value;}
-    function grPaint(){if(!P||!P.gr||!C.gr)return;const me=selfF(),other=foe(me),g=me.gr;const active=grInputOpen();const pending=other.gr.pending;const status=rb46BossStatus()|| (pending?'RIVAL CASTING · '+grCard(pending.card).name: g.pending?'CASTING · '+grCard(g.pending.card).name:GR.noticeT>0?GR.notice: ('AIM · STRIKE · CAST · HEAL '+Math.max(0,22-Math.round(g.healUsed))+'/22'));grText('grMana','MANA '+Math.floor(g.mana)+' / 100 · RIVAL '+Math.floor(other.gr.mana)+(CHRUN?'':g.ascended?' · '+RB41_PERKS[me.char]: ' · '+rbHero(me).label(g)));rb49Prop($('grMana'),'--rbMana',Math.floor(g.mana)+'%');grText('grStatus',status);if(CHRUN)grText('chBanner','CH '+(CHRUN.idx+1)+' · '+CHAPTERS[CHRUN.idx].title.toUpperCase()+' · RUNES '+CHRUN.casts+'/'+CHAPTERS[CHRUN.idx].casts);const key=g.hand.join(',');if(GR.paintKey!==key){GR.paintKey=key;$('grHand').replaceChildren();g.hand.forEach((id,i)=>{const c=grCard(id),b=document.createElement('button');b.type='button';b.style.setProperty('--grc',c.color);b.innerHTML=rb40Art(c)+'<span class="rbCost">'+c.cost+' ◆</span><span class="rbRuneIcon" aria-hidden="true">'+({Inferno:'✹',Frost:'❄',Storm:'ϟ',Void:'◈',Radiance:'✦',Bloodbound:'♦'}[c.school]||'◇')+'</span><span class="rbRuneName">'+c.name+'</span><small>'+c.speed+' · '+(i+1)+'</small>';b.title=c.desc;b.setAttribute('aria-label',c.name+' '+c.cost+' mana. '+c.desc);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();audioInit();grRequest(i);});b.addEventListener('click',e=>{if(e.detail===0)grRequest(i);});$('grHand').append(b);});}Array.from($('grHand').children).forEach((b,i)=>{const off=!active||!grCan(me,i);if(b.disabled!==off)b.disabled=off;const c=grCard(g.hand[i]),reason=off?rb42CardReason(me,i):'READY',state=!off?'ready':reason==='LOW MANA'?'mana':'wait';const progress=reason==='COOLDOWN'?Math.max(0,Math.min(100,g.cd/2.1*100)):0;rb49Prop(b,'--rb42cd',progress.toFixed(0)+'%');if(b.dataset.cardState!==state||b.dataset.reason!==reason){b.dataset.reason=reason;b.dataset.cardState=state;let label=b.querySelector('.rbCardState');if(!label){label=document.createElement('span');label.className='rbCardState';b.append(label);}label.textContent=reason;b.setAttribute('aria-label',c.name+' · '+c.cost+' mana · '+reason+'. '+c.desc);}});}
+    function grPaint(){if(!P||!P.gr||!C.gr)return;const me=selfF(),other=foe(me),g=me.gr;const active=grInputOpen();const pending=other.gr.pending;const status=rb46BossStatus()|| (pending?'RIVAL CASTING · '+grCard(pending.card).name: g.pending?'CASTING · '+grCard(g.pending.card).name:GR.noticeT>0?GR.notice: ('AIM · STRIKE · CAST · HEAL '+Math.max(0,22-Math.round(g.healUsed))+'/22'));grText('grMana','MANA '+Math.floor(g.mana)+' / 100 · RIVAL '+Math.floor(other.gr.mana)+(CHRUN?'':g.ascended?' · '+RB41_PERKS[me.char]: ' · '+rbHero(me).label(g)));rb49Prop($('grMana'),'--rbMana',Math.floor(g.mana)+'%');grText('grStatus',status);if(CHRUN)grText('chBanner','CH '+(CHRUN.idx+1)+' · '+CHAPTERS[CHRUN.idx].title.toUpperCase()+' · RUNES '+CHRUN.casts+'/'+CHAPTERS[CHRUN.idx].casts);const key=g.hand.join(',');if(GR.paintKey!==key){GR.paintKey=key;$('grHand').replaceChildren();g.hand.forEach((id,i)=>{const c=grCard(id),b=document.createElement('button');b.type='button';b.style.setProperty('--grc',c.color);b.innerHTML='<span class="rbCost">'+c.cost+' ◆</span><span class="rbRuneIcon" aria-hidden="true">'+({Inferno:'✹',Frost:'❄',Storm:'ϟ',Void:'◈',Radiance:'✦',Bloodbound:'♦'}[c.school]||'◇')+'</span><span class="rbRuneName">'+c.name+'</span><small class="rb94Key">'+(i+1)+'</small>';b.title=c.speed+' · '+c.desc;b.setAttribute('aria-label',c.name+' '+c.cost+' mana. '+c.desc);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();audioInit();grRequest(i);});b.addEventListener('click',e=>{if(e.detail===0)grRequest(i);});$('grHand').append(b);});}Array.from($('grHand').children).forEach((b,i)=>{const off=!active||!grCan(me,i);if(b.disabled!==off)b.disabled=off;const c=grCard(g.hand[i]),reason=off?rb42CardReason(me,i):'READY',state=!off?'ready':reason==='LOW MANA'?'mana':'wait';const progress=reason==='COOLDOWN'?Math.max(0,Math.min(100,g.cd/2.1*100)):0;rb49Prop(b,'--rb42cd',progress.toFixed(0)+'%');if(b.dataset.cardState!==state||b.dataset.reason!==reason){b.dataset.reason=reason;b.dataset.cardState=state;let label=b.querySelector('.rbCardState');if(!label){label=document.createElement('span');label.className='rbCardState';b.append(label);}label.textContent=reason;b.setAttribute('aria-label',c.name+' · '+c.cost+' mana · '+c.speed+' · '+reason+'. '+c.desc);}});}
     const grSectorNames=['FORWARD','LOW DIAGONAL','LOW / RISING','REAR LOW','REAR','REAR HIGH','OVERHEAD','HIGH DIAGONAL'];
     function grRelease(ok){if(!GR)return;GR.gesture=null;GR.release=null;GR.aimConsumed=false;}
     function grAnalogPoll(){GR.feint=false;const f=selfF();if(!ANA.on||!f||!f.blade||GR.aimConsumed||f.gr&&f.gr.pending||G.phase!=='fight'||G.paused||CC.active||LOCK.active||keys.KeyL||btnState.block){GR.gesture=null;GR.release=null;return;}const mag=anaStick.mag,ang=Math.atan2(anaStick.qy,anaStick.qx*f.facing);if(anaStick.active&&mag>.35){const sector=(Math.round(ang/(Math.PI/4))+8)%8;rb49Text($('anaStickLab'),grSectorNames[sector]+' · '+(rb43GuardMode?'GUARD / STRIKE':'AIM / STRIKE'));if(!GR.gesture)GR.gesture={start:G.tick,angle:ang,last:ang,arc:0,net:0,path:[ang],max:mag,facing:f.facing};const g=GR.gesture;if(g.facing!==f.facing){GR.gesture=null;return;}const d=ana2WrapPi(ang-g.last);g.arc+=Math.abs(d);g.net+=d;g.last=ang;g.max=Math.max(g.max,mag);if(g.path.length<40)g.path.push(g.path[g.path.length-1]+d);if(f.state==='attack'&&f.atk&&f.atk.type==='heavy'&&f.atk.t<f.atk.def.startup&&Math.abs(ana2WrapPi(ang-(f._grStartAngle??ang)))>2.1){GR.feint=true;GR.gesture=null;GR.release=null;return;}}else if(!anaStick.active&&!GR.release){GR.gesture=null;rb49Text($('anaStickLab'),'AIM · LIGHT / HEAVY');}
@@ -18669,8 +18682,8 @@ rb40Init();window.__rb40={state:RB40,art:rb40Art,school:rb40School,gallery:rb40G
 /* HUD Studio: local presentation only. No save-game, combat, wire or hash fields. */
 const RBHUD=(()=>{
  const stage=$('fightStage'), key='runeblade.hudstudio.v1', cap=(v,a,b)=>Math.max(a,Math.min(b,v));
- const defs=[['move','Movement stick','#stickZone'],['sword','Defence stick','#anaStickZone'],['attack','Attack stick','#rbAttackStick'],['magic','Arcane / form','#guardRight .forceCol'],['dodgeL','Dodge (left)','#dodgeL'],['runes','Rune hand & mana','#grHud'],['player','Player status','#plateL'],['rival','Opponent status','#plateR'],['timer','Round timer','#timerBox'],['pause','Pause & sound','#topBtns'],['p2','Player 2 controls','#p2Touch']];
- let store={};try{const raw=JSON.parse(localStorage.getItem(key)||'{}');if(raw&&typeof raw==='object'&&!Array.isArray(raw))store=raw;for(const [k,v] of Object.entries(store)){if(!v||typeof v!=='object')continue;delete v.jump;delete v.classicJump;delete v.dodgeR;if(k.startsWith('analog')&&!v._rb63){for(const a of ['light','heavy'])if(v[a]){delete v[a].x;delete v[a].y;}v._rb63=true;}if(k.startsWith('analog')&&!v._rb43){for(const a of ['light','heavy','magic']){if(v[a]){delete v[a].x;delete v[a].y;}}v._rb43=true;}}}catch(e){}
+ const defs=[['move','Movement stick','#stickZone'],['sword','Defence stick','#anaStickZone'],['attack','Attack stick','#rbAttackStick'],['magic','Arcane / form','#controls .forceCol'],['dodgeL','Dodge (left)','#dodgeL'],['runes','Rune hand & mana','#grHud'],['player','Player status','#plateL'],['rival','Opponent status','#plateR'],['timer','Round timer','#timerBox'],['pause','Pause & sound','#topBtns'],['p2','Player 2 controls','#p2Touch']];
+ let store={};try{const raw=JSON.parse(localStorage.getItem(key)||'{}');if(raw&&typeof raw==='object'&&!Array.isArray(raw))store=raw;for(const [k,v] of Object.entries(store)){if(!v||typeof v!=='object')continue;delete v.jump;delete v.classicJump;delete v.dodgeR;if(!v._rb94){delete v.magic;delete v.runes;v._rb94=true;}if(k.startsWith('analog')&&!v._rb63){for(const a of ['light','heavy'])if(v[a]){delete v[a].x;delete v[a].y;}v._rb63=true;}if(k.startsWith('analog')&&!v._rb43){for(const a of ['light','heavy','magic']){if(v[a]){delete v[a].x;delete v[a].y;}}v._rb43=true;}}}catch(e){}
  const clone=o=>JSON.parse(JSON.stringify(o));
  const profile=()=> 'precision-dual'+(stage.classList.contains('lefty')?'-left':'-right');
  const entries=()=>defs.map(([id,label,sel])=>({id,label,el:stage.querySelector(sel)})).filter(o=>o.el);
@@ -19160,5 +19173,31 @@ rb60Init();
 #rb82ChampionVictory.rb82Static .rb82Seal{animation:none!important}@media(prefers-reduced-motion:reduce){#rb82ChampionVictory .rb82Seal{animation:none!important}}@media(max-height:460px){#rb82ChampionVictory:not([hidden]){margin:3px auto}#rb82ChampionVictory .rb82Seal{width:26px;height:26px}#rb82ChampionVictory svg{width:20px;height:20px}}
 </style><style id="rb88RivalArsenal">
 #rb87Select[hidden],.rb88RankHud[hidden]{display:none!important}.rb88Head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:9px 0 6px;font:700 10px system-ui;letter-spacing:.08em;color:#e7c48c}.rb88Head span{font:700 9px system-ui;color:#c2c9d4;letter-spacing:0}#rb88Cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;text-align:left}.rb88Card{position:relative;display:flex;align-items:center;gap:7px;min-width:0;min-height:69px;border:1px solid #ac927457;border-radius:6px;background:linear-gradient(140deg,#233244,#111a27);color:#f1e3c8;text-align:left;padding:7px 8px;cursor:pointer;touch-action:manipulation}.rb88Card[aria-pressed=true]{border-color:#e7c184;background:linear-gradient(135deg,#4d3d2b,#222731);box-shadow:inset 0 0 0 1px #e7c18455}.rb88Card:focus-visible{outline:2px solid #8fd5ff;outline-offset:2px}.rb88Card:disabled{cursor:default;opacity:.7}.rb88Card[aria-pressed=true]:disabled{opacity:1}.rb88Glyph{display:grid;place-items:center;flex:none;width:28px;height:34px;background:#0f1622;border:1px solid #ad966c80;color:#f3d6a1;border-radius:4px;font:700 20px Georgia}.rb88Details{display:grid;gap:2px;min-width:0}.rb88Details strong{font:700 14px Georgia}.rb88Details small{font:700 9px system-ui;color:#d5b983;text-transform:uppercase}.rb88Details em{font:500 10px/1.25 system-ui;color:#cbd4e1;font-style:normal}.rb88Check{display:none;position:absolute;top:4px;right:5px;color:#f4d49c;font:700 11px system-ui}.rb88Card[aria-pressed=true] .rb88Check{display:block}.rb88Intro{color:#eacb94!important;font:700 10px/1.2 system-ui!important;margin-top:3px}.rb88RankHud{position:relative;display:flex;align-items:center;gap:5px;min-height:13px;padding:2px 0 0;margin-top:2px;border-top:1px solid #c4ac7433;font:700 8px/1.1 system-ui;color:#d9c9ad;overflow:hidden}.rb88RankHud b{color:#f1d9aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}.rb88Pots{display:inline-flex;align-items:center;gap:3px;flex:none;padding-top:3px}.rb88Pots i{position:relative;width:7px;height:8px;border-radius:2px 2px 3px 3px;border:1px solid #c2e5c8;background:#59ae7b;box-shadow:0 0 4px #65d89850}.rb88Pots i:before{content:'';position:absolute;left:1px;right:1px;height:2px;background:#d8c79f;top:-3px;border-radius:1px}.rb88Pots i.spent{background:transparent;opacity:.35;box-shadow:none}.rb88PotText{white-space:nowrap;color:#c8d6c9;font-variant-numeric:tabular-nums}.rb88RankHud.drinking:after{content:'';position:absolute;bottom:0;left:0;width:var(--rb88Progress);height:2px;background:#9ee5ad}.right .rb88RankHud{flex-direction:row-reverse}.rb88RankHud.drinking .rb88PotText{color:#a4f0b6}#fightStage #hud .rb88RankHud:not([hidden]){margin-bottom:1px}@media(max-width:440px){#rb88Cards{grid-template-columns:repeat(2,minmax(0,1fr))}.rb88Card{padding:6px;gap:4px;min-height:72px}.rb88Glyph{width:20px;height:28px;font-size:14px}.rb88RankHud{gap:3px;font-size:7px}.rb88Pots{gap:2px}.rb88Pots i{width:6px;height:7px}}@media(max-height:440px){.rb88Card{min-height:55px;padding:5px}.rb88Details strong{font-size:12px}.rb88Details em{font-size:9px}}
-</style><style>#rb90Grid .rb86Card{border-top:3px solid #a5a5a5}#rb90Grid [data-tier="2"]{border-top-color:#79b0d4}#rb90Grid [data-tier="3"]{border-top-color:#a17de2}#rb90Grid [data-tier="4"]{border-top-color:#dfb564}#rb90Grid [data-tier="5"]{border-top-color:#e98477}#rb90Tabs button[aria-pressed="true"]{border-color:#d9b773;color:#ffdc92;background:#48382b}#rb90Shop .rb86Card strong{font-size:14px}#rb90Shop .rb86Card small{line-height:1.35}#rb90Shop .rb86Card button{min-height:35px}</style><style>#rb90Shop[hidden],#rb86Inventory[hidden]{display:none!important}#rb91GoogleLogin,#rb91GoogleLink{max-width:100%;overflow:hidden}</style><style>.rb92Crest{font-size:11px;letter-spacing:.06em;text-transform:uppercase}#rb90Tabs{flex-wrap:wrap}</style></body>
+</style><style>#rb90Grid .rb86Card{border-top:3px solid #a5a5a5}#rb90Grid [data-tier="2"]{border-top-color:#79b0d4}#rb90Grid [data-tier="3"]{border-top-color:#a17de2}#rb90Grid [data-tier="4"]{border-top-color:#dfb564}#rb90Grid [data-tier="5"]{border-top-color:#e98477}#rb90Tabs button[aria-pressed="true"]{border-color:#d9b773;color:#ffdc92;background:#48382b}#rb90Shop .rb86Card strong{font-size:14px}#rb90Shop .rb86Card small{line-height:1.35}#rb90Shop .rb86Card button{min-height:35px}</style><style>#rb90Shop[hidden],#rb86Inventory[hidden]{display:none!important}#rb91GoogleLogin,#rb91GoogleLink{max-width:100%;overflow:hidden}</style><style>.rb92Crest{font-size:11px;letter-spacing:.06em;text-transform:uppercase}#rb90Tabs{flex-wrap:wrap}</style><style id="rb94CompactCombat">
+/* Anchor quick attacks to the movement cluster, mirror the existing left-handed layout. */
+#fightStage #controls .leftCluster{position:relative;overflow:visible;}
+#fightStage #controls .leftCluster>.forceCol{position:absolute;left:0;right:auto;bottom:100%;margin-bottom:3px;display:grid;grid-template-columns:auto 46px;grid-template-rows:46px 46px;gap:4px;align-items:center;pointer-events:none;z-index:35;}
+#fightStage.lefty #controls .leftCluster>.forceCol{left:auto;right:0;}
+#fightStage #controls .leftCluster #forceStrip{position:static;grid-column:1;grid-row:1/3;display:grid;grid-template-columns:repeat(2,46px);grid-template-rows:repeat(2,46px);gap:4px;padding:0;border:0;background:none;box-shadow:none;backdrop-filter:none;transform:none;visibility:visible;opacity:1;pointer-events:none;}
+#fightStage #controls .leftCluster #forceStrip .fslot,#fightStage #controls .leftCluster #forceStrip:not(.open) .fslot{width:46px;height:46px;min-width:46px;min-height:46px;pointer-events:auto;box-sizing:border-box;}
+#fightStage #controls .leftCluster #forceStrip .fslot svg{width:16px;height:16px;}
+#fightStage #controls .leftCluster #forceStrip .fslot small{font:700 7px/1.05 system-ui;margin-top:1px;}
+#fightStage #controls .leftCluster #forceBtn{display:none!important;}
+#fightStage #controls .leftCluster #formBtn{grid-column:2;grid-row:1;width:46px;height:46px;margin:0!important;pointer-events:auto;}
+#fightStage #controls .leftCluster #formBtn small{font-size:7px;}
+#fightStage #controls .leftCluster #rbBowBtn{grid-column:2;grid-row:2;width:46px;min-width:46px;height:46px;min-height:46px;white-space:normal;padding:1px;font-size:8px;letter-spacing:0;}
+#fightStage.wb-on #controls .leftCluster #forceStrip [data-fslot="pull"],#fightStage.wb-on #controls .leftCluster #forceStrip [data-fslot="special"],#fightStage.wb-on #controls .leftCluster #forceStrip [data-fslot="alt"]{visibility:hidden;pointer-events:none;}
+/* Four readable mini cards, no large panel; menu collection art is unchanged. */
+#fightStage #grHud{width:min(236px,36%);bottom:max(4px,env(safe-area-inset-bottom));}
+#fightStage #grHand{gap:3px!important;margin:2px 0;}
+#fightStage #grHand button{height:44px;min-height:44px!important;max-height:44px;gap:0;padding:2px!important;justify-content:center;}
+#fightStage #grHand button .rbCost{top:2px;left:2px;font-size:8px;}
+#fightStage #grHand .rbRuneIcon{font-size:13px;line-height:1;}
+#fightStage #grHand button .rb94Key{position:absolute;right:2px;top:2px;margin:0;font-size:7px;color:#d6dce7;}
+#fightStage #grHand .rbRuneName{font-size:8px;line-height:1.03;overflow-wrap:normal;max-width:100%;}
+#fightStage #grHand button .rbCardState{font-size:6.5px;line-height:1;margin:1px 0 0;white-space:nowrap;}
+#fightStage #grMana,#fightStage #grStatus{font-size:8px;line-height:1.1;padding:2px 3px;min-height:0;}
+#fightStage #grStatus:empty{display:none;}
+#fightStage.rbHudEditing #controls .leftCluster #forceStrip .fslot,#fightStage.rbHudEditing #controls .leftCluster #formBtn,#fightStage.rbHudEditing #controls .leftCluster #rbBowBtn{pointer-events:none!important;}
+</style></body>
 </html>
