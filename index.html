@@ -758,6 +758,45 @@
 #timerBox{background:linear-gradient(#30222a,#15111a);border:1px solid #b39464;border-radius:0 0 12px 12px;padding:4px 8px;box-shadow:0 4px 16px #0009}
 #controls .cbtn,#controls .fslot,#stickBase,#guardPad{border-color:#c5ab7a!important;box-shadow:inset 0 0 12px #dcc68f18,0 2px 7px #0008;color:#f5e9d4}
 #controls .cbtn{background:radial-gradient(circle at 35% 28%,#9e876c42,#171321a6 70%)!important} #controls .cbtn:active,#controls .cbtn.on{border-color:#fff0bc!important}
+
+/* HOME SCREEN REFRESH — featured hero, clearer primary modes, compact secondary grid */
+#menu.atHome .menuMain{width:min(680px,100%);padding:clamp(14px,3vh,34px) clamp(18px,5vw,34px) 0;}
+#menu.atHome .menuLeft{gap:0;}
+#menu.atHome .hmHead{text-align:center;padding-top:clamp(2px,1.4vh,10px);}
+#menu.atHome .hmBrand{font-family:"Cinzel",serif;font-size:clamp(14px,2.6vw,17px);font-weight:700;letter-spacing:.42em;text-indent:.42em;color:#d5b17a;}
+#menu.atHome .hmTitle{margin:6px 0 0;font-family:"Cinzel",serif;font-size:clamp(34px,8.8vw,58px);line-height:.96;letter-spacing:.11em;text-indent:.11em;color:#fff1d7;text-shadow:0 0 28px rgba(241,214,160,.18),0 2px 20px rgba(0,0,0,.75);}
+#menu.atHome .hmTag{margin:12px 0 0;font-family:"Rajdhani",sans-serif;font-size:clamp(11px,2.5vw,13px);font-weight:700;letter-spacing:.38em;text-indent:.38em;color:#e6c48a;}
+#menu.atHome .hmRule{margin:18px 0 16px;}
+#menu.atHome .hmHeroCard{padding:14px 16px 12px;border:1px solid rgba(241,214,160,.22);border-radius:16px;background:linear-gradient(180deg,rgba(24,20,27,.78),rgba(10,10,15,.66));box-shadow:0 14px 34px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.05);backdrop-filter:blur(5px);}
+#menu.atHome .hmIntro{margin:0;font:600 clamp(14px,3.2vw,16px)/1.45 "Rajdhani",sans-serif;color:#f6ebd6;text-shadow:0 1px 2px rgba(0,0,0,.55);}
+#menu.atHome .hmHighlights{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:12px;}
+#menu.atHome .hmChip{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 11px;border-radius:999px;border:1px solid rgba(241,214,160,.28);background:linear-gradient(180deg,rgba(241,214,160,.12),rgba(241,214,160,.04));font:700 11px/1 "Rajdhani",sans-serif;letter-spacing:.15em;color:#f6e0b8;white-space:nowrap;}
+#menu.atHome #startDuelBtn{min-height:74px;margin:16px 0 0;padding:12px 18px;border-radius:18px;background:linear-gradient(180deg,rgba(63,46,29,.86),rgba(18,15,19,.92));border:1px solid rgba(241,214,160,.5);box-shadow:0 14px 28px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.08), 0 0 24px rgba(217,149,68,.12);}
+#menu.atHome .hmPillLab{font-size:11px;letter-spacing:.32em;color:#f0cb8d;}
+#menu.atHome #startDuelSub{font-size:17px;font-weight:700;color:#fff9ec;}
+#menu.atHome .hmPillArrow{filter:drop-shadow(0 0 8px rgba(241,214,160,.55));}
+#menu.atHome .hmSectionTitle{margin:16px 0 9px;font:700 11px/1 "Rajdhani",sans-serif;letter-spacing:.32em;color:#e3c48c;text-align:left;opacity:.92;}
+#menu.atHome .hmSectionGap{margin-top:14px;}
+#menu.atHome .menuNav{margin-top:0;}
+#menu.atHome .hmFeatGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+#menu.atHome .hmFeatPrimary{grid-column:1 / -1;min-height:102px;}
+#menu.atHome .hmFeatBtn{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;min-height:92px;padding:14px 14px 12px 16px;border:1px solid rgba(241,214,160,.24);border-radius:16px;background:linear-gradient(180deg,rgba(22,19,27,.82),rgba(9,9,13,.72));box-shadow:0 12px 28px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.04);font-family:"Cinzel",serif;font-size:21px;letter-spacing:.06em;text-align:left;color:#fff2d5;overflow:hidden;}
+#menu.atHome .hmFeatBtn::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top right, rgba(255,138,74,.18), transparent 38%), radial-gradient(circle at bottom left, rgba(68,133,255,.15), transparent 32%);pointer-events:none;}
+#menu.atHome .hmFeatBtn::after{content:"";position:absolute;right:14px;bottom:12px;width:30px;height:30px;border-radius:50%;border:1px solid rgba(241,214,160,.22);background:radial-gradient(circle, rgba(241,214,160,.26), rgba(241,214,160,0) 72%);opacity:.8;}
+#menu.atHome .hmModeKicker{position:relative;display:block;margin-bottom:8px;font:700 10px/1 "Rajdhani",sans-serif;letter-spacing:.3em;color:#f0cb8d;}
+#menu.atHome .hmFeatBtn .rbNavSub{position:relative;display:block;margin-top:8px;font:600 12px/1.35 "Rajdhani",sans-serif;letter-spacing:.02em;color:#d5d9e1;max-width:36ch;}
+#menu.atHome .hmFeatBtn:active,#menu.atHome .hmFeatBtn:focus-visible{transform:translateY(0);background:linear-gradient(180deg,rgba(56,41,26,.92),rgba(16,12,16,.92));box-shadow:0 0 0 1px rgba(255,242,204,.18),0 14px 30px rgba(0,0,0,.4),0 0 24px rgba(241,214,160,.13);}
+#menu.atHome .hmSecondaryNav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+#menu.atHome .hmCompactMode{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:74px;padding:12px 14px;border:1px solid rgba(241,214,160,.18);border-radius:14px;background:linear-gradient(180deg,rgba(18,18,24,.76),rgba(8,8,11,.64));box-shadow:0 8px 20px rgba(0,0,0,.26);font-size:16px;letter-spacing:.08em;color:#f8ead0;text-align:left;}
+#menu.atHome .hmCompactMode .rbNavSub{display:block;margin-top:4px;font:600 11px/1.25 "Rajdhani",sans-serif;letter-spacing:.01em;color:#c5cbd5;}
+#menu.atHome .hmCompactMode:active,#menu.atHome .hmCompactMode:focus-visible{background:linear-gradient(180deg,rgba(46,36,26,.84),rgba(11,10,14,.84));box-shadow:0 0 0 1px rgba(241,214,160,.12),0 10px 22px rgba(0,0,0,.34);}
+#menu.atHome .hmUtilityRow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:14px;}
+#menu.atHome .hmUtility{min-height:46px;padding:0 10px;border:1px solid rgba(241,214,160,.18);border-radius:12px;background:linear-gradient(180deg,rgba(17,17,23,.72),rgba(7,7,10,.56));box-shadow:0 8px 20px rgba(0,0,0,.24);font:700 12px/1 "Rajdhani",sans-serif;letter-spacing:.16em;color:#e7d6b5;}
+#menu.atHome .hmUtility:hover,#menu.atHome .hmUtility:focus-visible{color:#fff7e6;border-color:rgba(241,214,160,.3);}
+#menu.atHome .hmVer{margin-top:11px;padding-bottom:calc(15px + env(safe-area-inset-bottom));font-size:10.5px;letter-spacing:.16em;color:rgba(214,201,176,.72);}
+@media (max-width:760px){#menu.atHome .hmFeatGrid{grid-template-columns:1fr;}#menu.atHome .hmFeatPrimary{grid-column:auto;}#menu.atHome .hmSecondaryNav{grid-template-columns:1fr 1fr;}#menu.atHome .hmFeatBtn{min-height:86px;font-size:19px;}#menu.atHome .hmCompactMode{min-height:70px;font-size:15px;}}
+@media (max-width:560px){#menu.atHome .menuMain{width:min(100%,540px);padding-left:14px;padding-right:14px;}#menu.atHome .hmHeroCard{padding:13px 14px 11px;}#menu.atHome .hmSecondaryNav,#menu.atHome .hmUtilityRow{grid-template-columns:1fr;}#menu.atHome .hmCompactMode,#menu.atHome .hmUtility{min-height:58px;}#menu.atHome .hmTitle{font-size:clamp(30px,10vw,42px);}#menu.atHome .hmTag{letter-spacing:.24em;text-indent:.24em;}}
+@media (orientation:landscape) and (max-height:520px){#menu.atHome .hmHeroCard{display:none;}#menu.atHome .hmFeatGrid{grid-template-columns:repeat(3,minmax(0,1fr));}#menu.atHome .hmFeatPrimary{grid-column:auto;}#menu.atHome .hmFeatBtn{min-height:70px;padding:10px 12px;font-size:15px;}#menu.atHome .hmFeatBtn .rbNavSub{font-size:10px;}#menu.atHome .hmSecondaryNav{grid-template-columns:repeat(3,minmax(0,1fr));}#menu.atHome .hmUtilityRow{grid-template-columns:repeat(3,minmax(0,1fr));}}
 #stickKnob{background:radial-gradient(circle at 30% 25%,#d5c7a4aa,#4f4655bb)!important} .combo{color:#f9d48a;text-shadow:0 0 10px #ac6a2e,0 2px 5px #000}
 
 /* Runeblade Enhanced graphics pass: purely cosmetic. */
@@ -852,48 +891,93 @@
 }
 @media(prefers-reduced-motion:reduce){#gate #gateBtn{animation:none;}}
 
+
+.rcPanel{margin:12px 0;padding:12px;border:1px solid #705d3e;border-radius:10px;background:#151925;color:#f4e2b6}.rcPanel summary{font-weight:800;cursor:pointer;padding:6px}.rcPanel p{margin:8px 0}#rcRoad,#rcCards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}#rcRoad button,#rcCards button{padding:10px;border:1px solid #77684e;border-radius:7px;background:#252a36;color:#f5e4c0;text-align:left;white-space:normal;min-height:52px}#rcRoad button[aria-pressed=true]{outline:2px solid #e6bc69}#rcCards button:disabled{opacity:.64}#rcCards small,#rcRoad small{display:block;font-size:11px;margin-top:5px;color:#ccc}#rcNotice{min-height:1em;color:#eac478}#grDeck button:disabled{opacity:.45}#grStart:disabled{opacity:.45;cursor:not-allowed}
+
+.rbTools{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.rbTools button,.rbTools select{font:inherit;font-size:12px;color:#f3ddb5;background:#171822;border:1px solid #8f754e;border-radius:6px;padding:7px} .rbArt{width:100%;height:65px;display:block;margin-bottom:5px;background:#10131c;border-radius:5px}.rbCard{overflow:hidden;text-align:left}.rbCard:disabled{opacity:.7} #grDeck button{min-width:0} #grDeck button small,#rcCards button small{line-height:1.35} #grHand{gap:3px!important} #grHand button{min-width:0!important;font-size:clamp(8px,1.3vw,13px)!important;padding:3px!important} .rbMap{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px;margin:10px 0}.rbMap span{border:1px solid #8f754e;padding:9px;border-radius:6px;background:#181921;color:#efdbb7;font-size:12px}.rbMap span.done{border-color:#82c9ab;color:#a2eccb}
+
+#rbrPanel{margin:12px 0;border:1px solid #99754e;border-radius:10px;padding:10px;background:linear-gradient(135deg,#1b1720,#111926)}#rbrPanel summary{color:#e4c586;letter-spacing:.09em;font-weight:800;cursor:pointer}#rbrPanel input{min-width:100px;max-width:100%;flex:1}#rbrPanel .rbTools{flex-wrap:wrap} .rbrCards{display:grid;grid-template-columns:repeat(auto-fill,minmax(116px,1fr));gap:6px;max-height:320px;overflow:auto;padding:4px}.rbrCards .rbCard{min-height:136px;white-space:normal}.rbrCards .rbCard[aria-pressed=true]{outline:2px solid #f0d699;background:#302a21}#rbrBoard>div{border-bottom:1px solid #ffffff18;padding:5px}#replayBar{position:fixed;top:3px;left:50%;transform:translateX(-50%);z-index:9999;background:#131924ef;border:1px solid #cfb175;border-radius:6px;padding:5px;color:#efdbab;display:flex;gap:8px;align-items:center;font:10px system-ui}#replayBar[hidden],#rbrAuth[hidden],#rbrSigned[hidden]{display:none!important}#replayBar button{color:white;background:#333c4d;border:1px solid #9a875d;padding:5px;border-radius:3px}.rbArt{filter:drop-shadow(0 0 5px #b8b0ff25)}.rbrCards button:focus-visible,#rbrPanel button:focus-visible{outline:2px solid #fff} @media(prefers-reduced-motion:no-preference){.rbCard:not(:disabled):hover .rbArt{filter:drop-shadow(0 0 8px #d3b57680)}}
+
+/* 3.1 Radiant Realms interface — presentation only. */
+:root{--rb-ink:#0b1019;--rb-panel:#141d2b;--rb-gold:#e9c58a;--rb-muted:#b7c0cd;--rb-line:#a78a565d;--cream:#fff0d5;--mut:#c4c6ce;--mgold-hi:#f4d7a1;--mgold:#d5ae73;--mgold-line:#b59b676e;}
+#menu .menuArt::after{background:linear-gradient(180deg,#070c17bb 0%,#070b1460 35%,#080d17ef 100%)}
+#menu.atHome .hmTitle{font-size:clamp(29px,7.2vw,58px);letter-spacing:.035em;line-height:1.05;text-indent:0;color:#fff3db;text-shadow:0 2px 0 #4b2e1a,0 0 28px #d3a86580,0 5px 18px #000}
+#menu.atHome .hmTag{letter-spacing:.12em;text-indent:0;color:#f6d9a1;font-size:clamp(10px,2.4vw,14px)}
+#menu.atHome #startDuelBtn,#gate #gateBtn{border:1px solid #f0d6a3;background:linear-gradient(115deg,#f2d59a,#ba894f);color:#21180f;box-shadow:0 5px 22px #000a,inset 0 0 0 2px #fff3c750;border-radius:8px;text-shadow:none}
+#menu.atHome #startDuelBtn #startDuelSub,#menu.atHome #startDuelBtn .hmPillLab{color:#241b14;text-shadow:none}
+#menu.atHome .menuNav{gap:7px;grid-template-columns:repeat(2,minmax(0,1fr));}
+#menu.atHome .mnav.mode{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;min-height:55px;padding:8px 10px 8px 14px;white-space:normal;line-height:1.12;font-size:clamp(12px,3.1vw,16px);letter-spacing:.045em;background:linear-gradient(115deg,#202a3beF,#101723f5);border:1px solid #9d865c8a;border-radius:8px;box-shadow:inset 0 1px 0 #fff1;}
+#menu.atHome .mnav.mode::before{display:none} #menu.atHome .mnav.mode:first-child{border-top:1px solid #eac384} #menu.atHome .mnav.mode:last-child{grid-column:auto}
+#menu.atHome .mnav.mode[data-panel=panelOnline]{background:linear-gradient(115deg,#24394b,#14212e);border-color:#8dc7ed}
+#menu.atHome .mnav.mode[data-panel=panelGrimoire]{background:linear-gradient(115deg,#3b2e42,#1b192b);border-color:#dcbd82}
+#menu.atHome .mnav.mode[data-panel=panelChronicle]{grid-column:1/-1;background:linear-gradient(115deg,#3c3024,#171d29)}
+.rbNavSub{font:600 10px/1.15 system-ui,sans-serif;letter-spacing:0;text-transform:none;color:#c5cbd5;text-shadow:none}
+#menu.atHome .menuFoot{gap:clamp(10px,4vw,30px);padding:10px 0}#menu.atHome .hmVer{color:#c0c4cc;letter-spacing:.08em}
+#menu .mpanel,.overlay:not(#menu) .card{background:linear-gradient(155deg,#1b2635fa,#0c121dfc 65%);border:1px solid var(--rb-line);border-radius:10px;box-shadow:0 16px 50px #000c,inset 0 0 0 2px #0a101c;}
+#menu .mpanel{width:min(850px,100%);padding:14px clamp(12px,2.8vw,24px) 20px;backdrop-filter:none;-webkit-backdrop-filter:none;}
+#menu .phead{gap:10px;border-bottom:1px solid var(--rb-line);margin-bottom:12px;padding-bottom:9px}
+#menu .mpanel h2.ptitle{letter-spacing:.065em;font-size:clamp(16px,4vw,24px);color:#f5d6a1;border:0;margin:0;padding:0;line-height:1.18}
+#menu .psub,.sdesc,.pick p{font-size:13px;line-height:1.5;letter-spacing:.015em;color:#c8ceda;text-shadow:none!important}
+#menu .setupHead,.rbSection{color:#eac58d;font:700 12px/1.4 system-ui;letter-spacing:.14em;margin:18px 0 8px;text-transform:uppercase;border-bottom:1px solid #a78a5650;padding-bottom:6px}
+#menu .backBtn,#menu .dbtn,#menu .togBtn,#menu .abtn,#menu .obtn,#menu .rbTools button,#menu .rbTools select,#menu .mnav:not(.mode),.endBtns button,#replayBar button{border:1px solid #a28c635f;border-radius:6px;background:linear-gradient(#273243,#121a28);color:#f9e6c8;box-shadow:inset 0 1px 0 #ffffff0f;}
+#menu .backBtn{white-space:nowrap;min-height:36px;padding:6px 10px;font-size:11px;letter-spacing:.03em;flex:none;}
+#menu .modeStart,#menu .pickBtn,.endBtns button.primary{background:linear-gradient(110deg,#eccc96,#be9059);border:1px solid #f3d9ad;color:#20180f;font-weight:800;border-radius:7px;box-shadow:0 4px 12px #0005,inset 0 1px 0 #fff6;letter-spacing:.07em;}
+#menu .dbtn.sel,#menu .abtn.sel,#menu .mnav.sel,#menu .togBtn:not(.off){border-color:#e8c58c;color:#ffe6b6;background:linear-gradient(#42362b,#25231f)}
+#menu .oinput,#menu input:not([type=range]):not([type=checkbox]),#menu select{background:#0a111d;border:1px solid #8b795e;border-radius:6px;color:#f5ead9;letter-spacing:.02em;max-width:100%;}
+#menu .setRow,#menu .runRow,#menu .unlockRow,#menu .setupSummary,#menu .moves,#menu .chDetail,#menu .chProgress,#menu .chMastery{background:#101925b8;border:1px solid #8f795740;border-radius:7px;padding:10px;margin:6px 0;}
+#menu .setRow .slab{font-size:12px;letter-spacing:.09em} #menu .runRow.done{opacity:1;border-color:#78b8a060}
+#menu .pick{border-radius:9px;background:linear-gradient(#263448,#111a27)!important;box-shadow:0 4px 14px #0006;}
+#menu .pick[class*="sel"]{border-width:2px;box-shadow:0 0 17px #d5b37244,inset 0 0 20px #e0c38913}
+#menu .pick h2{color:#f9dfb8} #menu .pick .role{color:#a8cfea}
+#menu .rcPanel,#menu #rbrPanel{background:linear-gradient(125deg,#192638,#101824);border:1px solid #9f865c85;border-radius:9px;padding:12px;margin:12px 0;}
+#menu .rcPanel summary,#menu .chMastery summary{color:#f2d29b;font-weight:800;font-size:13px;line-height:1.45;letter-spacing:.045em;padding:8px 1px;}
+#menu .rcPanel[open] summary{border-bottom:1px solid #9f865c55;margin-bottom:10px}
+#menu .rbTools{gap:8px}#menu .rbTools button,#menu .rbTools select{min-height:37px;padding:7px 10px;font-weight:700}
+#menu #grSchools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+#menu #grSchools button{min-height:43px;white-space:normal;font-size:12px;font-weight:800;border-radius:7px;background:#131b29;color:#e6e8ee}
+#menu #grSchools button.sel{background:#53402d;color:#fff0c9;box-shadow:inset 0 0 0 1px #e7c691,0 2px 12px #0008}
+#menu #grDeck,#menu #rcCards,#menu .rbrCards{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:9px;align-items:stretch;}
+#menu #grDeck button,#menu #rcCards button,#menu .rbrCards .rbCard{position:relative;display:flex;flex-direction:column;align-items:stretch;min-width:0;min-height:156px;text-align:left;white-space:normal;padding:7px;border-radius:8px;background:linear-gradient(160deg,#263247,#121a27 70%);box-shadow:inset 0 0 0 2px #0a111c,0 3px 9px #0005;overflow:hidden;}
+#menu #grDeck button.sel,#menu .rbrCards .rbCard[aria-pressed=true]{outline:2px solid #f3d29b;outline-offset:-3px;background:linear-gradient(155deg,#55422e,#242431 80%);}
+#menu #grDeck button:disabled{opacity:.58}#menu #rcCards button:disabled,#menu .rbrCards .rbCard:disabled{opacity:.76}
+#menu .rbArt{height:auto;aspect-ratio:120/80;min-height:55px;max-height:100px;border:1px solid #ffffff22;border-radius:4px;object-fit:contain;margin-bottom:7px;background:#0b1220;}
+#menu #grDeck b,#menu #rcCards b,#menu .rbrCards b{font:700 13px/1.2 system-ui;color:#fff0d8;margin-bottom:4px;overflow-wrap:anywhere}
+#menu #grDeck small,#menu #rcCards small,#menu .rbrCards small{font:500 11px/1.4 system-ui;color:#c8d1df;margin-top:2px;overflow-wrap:anywhere}
+#menu #grDeckInfo,#menu #rbDeckStats,#menu #rcBalance,#menu #rcDaily,#menu #rbrProfile,#menu #rbrStatus,#menu #rbrDeckCount{padding:9px 10px;background:#0b1422;border:1px solid #8fa9ca3d;border-radius:6px;color:#d5e3f4;font-size:12px;line-height:1.4;}
+#menu #rcRoad{grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:7px}#menu #rcRoad button{border-radius:7px;background:linear-gradient(#283648,#151d2c);color:#ffebc9;}
+#menu #rcRoad button[aria-pressed=true]{background:linear-gradient(#4d3b2c,#212a35);outline:2px solid #f3d29b;outline-offset:-2px}
+#menu .rbMap span{border-radius:7px;background:linear-gradient(#293346,#151c2b);border-color:#bfa37580;line-height:1.4;}
+#menu #rbrPanel .rbTools button[id=rbrQueue],#menu #rbrPanel .rbTools button[id=rbrCup]{background:linear-gradient(#d8bf92,#b48957);color:#17191d;border-color:#efd4a6;}
+#menu #rbrBoard>div{background:#101925;padding:9px;border-radius:5px;margin:4px 0;}
+#hud .plate{background:linear-gradient(125deg,#0d1624ed,#1e2a3aea);border-radius:7px;border:1px solid #d0b17b99;padding:5px 8px;box-shadow:0 3px 12px #000b;}
+#hud .plate.right{background:linear-gradient(235deg,#0d1624ed,#30232ce8)}#hud .pname{font-weight:800;letter-spacing:.03em;color:#fff1d6;}
+#hud .bar{height:13px;border-radius:3px;border:1px solid #e4c58b;background:#111722}#hud .bar .fill{background:linear-gradient(#a0f9bd,#35ac72 60%,#168055)}#hud .bar.low .fill{background:linear-gradient(#ff9a7d,#c03942)}
+#hud .mini .mbar{height:5px;border-radius:2px;}#timerBox{background:linear-gradient(#2d3649,#101b2a);border-radius:7px;border:1px solid #e4c58b;}
+#controls .cbtn{background:radial-gradient(circle at 40% 25%,#46546acc,#111b2bd9 72%)!important;border-color:#d6c095b5;color:#fff2d7;box-shadow:inset 0 0 0 1px #0a101e,0 2px 7px #0008;}
+#controls .cbtn.held,#controls .cbtn.flick-fired,#controls .cbtn:active{background:radial-gradient(circle,#8e774a,#222c3c 70%)!important;border-color:#fff3d5;box-shadow:0 0 17px var(--glow),inset 0 0 7px #ffedbc70;}
+#controls #stickBase,#controls #anaStickBase{border-color:#d7bd858f;box-shadow:inset 0 0 0 2px #111827,0 2px 7px #0009;}
+#controls #stickKnob,#controls #anaStickKnob{background:radial-gradient(circle at 35% 30%,#d1c3a0,#526277 75%);border:1px solid #e6ce9d;}
+#grHud{width:min(35%,340px);bottom:6px}#grMana{background:linear-gradient(90deg,#151d2f,#253754);border:1px solid #8ab9e6;color:#e2f2ff;font-size:clamp(8px,1.25vw,12px);position:relative;isolation:isolate;overflow:hidden;}
+#grMana::before{content:"";position:absolute;inset:0 auto 0 0;width:var(--rbMana,0%);background:linear-gradient(90deg,#246caa55,#6ecbff55);z-index:-1;}
+#grHand{gap:4px!important}#grHand button{border:1px solid var(--grc,#c5a575);background:linear-gradient(160deg,#2b384f,#111827);box-shadow:inset 0 0 0 1px #121826,0 3px 7px #000b;line-height:1.15;overflow-wrap:anywhere;border-radius:6px;min-height:45px;padding:4px 2px!important;}
+#grHand button:not(:disabled){box-shadow:inset 0 0 9px var(--grc),0 2px 8px #000c;}#grHand button:disabled{opacity:.72;filter:saturate(.5)}#grHand button small{font-size:clamp(7px,1vw,10px);color:#d4e3ef;}#grHand .rbCost{display:block;font-weight:900;color:#fff2d0;line-height:1.05;}
+#grStatus{color:#ffe5b0;text-shadow:0 1px 3px #000,0 0 5px #000;background:#0b1122bb;border-radius:4px;min-height:13px;}
+#endScreen .title,#pauseScreen .title,#drillScreen .title{color:#f5d59d;text-shadow:0 2px 2px #000,0 0 20px #c38d4360;letter-spacing:.08em;}
+#rcEnd{background:#172a2b;border-radius:6px;padding:8px;border:1px solid #7cb89866;}#rcEnd:empty{display:none}
+#replayBar{background:#111c2c;border-color:#d9bc85;padding:6px 9px;}
+#menu button:focus-visible,#menu select:focus-visible,#menu input:focus-visible,.endBtns button:focus-visible,#grHand button:focus-visible{outline:2px solid #ffe0a7;outline-offset:2px;}
+@media(hover:hover){#menu .mnav.mode:hover,#menu .rbTools button:hover,#menu #grDeck button:not(:disabled):hover,#menu #rcCards button:not(:disabled):hover{filter:brightness(1.15);}}
+@media(max-width:440px){#menu #grDeck,#menu #rcCards,#menu .rbrCards{grid-template-columns:repeat(2,minmax(0,1fr));}#menu #grSchools{gap:4px}#menu #grSchools button{font-size:11px;padding:6px 3px}#menu .rbTools button,#menu .rbTools select{font-size:11px;}}
+@media(orientation:landscape) and (max-height:520px){#menu.atHome .menuNav{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;}#menu.atHome .mnav.mode{min-height:42px;padding:5px 7px;font-size:11px;gap:2px}#menu.atHome .mnav.mode[data-panel=panelChronicle]{grid-column:auto}#menu.atHome .hmTitle{font-size:clamp(26px,7vh,40px)}.rbNavSub{font-size:9px}}
+@media(prefers-reduced-motion:reduce){#menu *,#grHand button{scroll-behavior:auto!important;transition:none!important;animation:none!important;}}
+
 </style>
   <link rel="manifest" href="manifest.webmanifest" />
 <link rel="apple-touch-icon" href="icon-180.png" />
 <script src="config.js"></script>
 <script>if("serviceWorker" in navigator && (location.protocol==="https:" || location.hostname==="localhost" || location.hostname==="127.0.0.1")){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
-
-<style id="rbUiStreamline">
-/* ===== UI STREAMLINE (v2.0.1) — home declutter, presentation only.
-   Appended last so it wins the cascade over the layered menu paints.
-   No layout system, panel, mode or option is removed by these rules. ===== */
-/* --- mode list: one clean column of hairline rows at every width --- */
-#menu .menuNav{display:flex !important;flex-direction:column;flex-wrap:nowrap;gap:0;margin-top:clamp(10px,2vh,16px);}
-#menu.atHome .menuNav button.mnav.mode{display:grid;grid-template-columns:1fr 14px;grid-template-rows:auto auto;column-gap:8px;align-items:center;width:100%;min-height:52px;padding:8px 4px 8px 12px;background:none;border:none;border-bottom:1px solid rgba(216,191,138,.22);border-radius:0;box-shadow:none;text-align:left;position:relative;}
-#menu.atHome .menuNav button.mnav.mode:first-child{border-top:1px solid rgba(216,191,138,.22);}
-#menu.atHome .menuNav button.mnav.mode::before{display:none;}
-#menu.atHome .menuNav button.mnav.mode .mnName{grid-column:1;grid-row:1;font-family:"Cinzel",serif;font-size:clamp(15.5px,4vw,19px);font-weight:700;letter-spacing:.1em;color:var(--cream);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-#menu.atHome .menuNav button.mnav.mode .mnSub{grid-column:1;grid-row:2;display:block;font-family:"Rajdhani",sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.05em;color:var(--mut);line-height:1.25;margin-top:1px;}
-#menu.atHome .menuNav button.mnav.mode .mnChev{grid-column:2;grid-row:1 / span 2;align-self:center;justify-self:end;font-size:20px;line-height:1;color:var(--mgold);opacity:.75;}
-#menu.atHome .menuNav button.mnav.mode:hover,#menu.atHome .menuNav button.mnav.mode:focus-visible{background:linear-gradient(90deg, rgba(216,191,138,.13), rgba(216,191,138,0) 75%);color:#fff;outline:none;}
-#menu.atHome .menuNav button.mnav.mode:hover .mnChev,#menu.atHome .menuNav button.mnav.mode:focus-visible .mnChev{opacity:1;}
-#menu.atHome .menuNav button.mnav.mode.sel{background:linear-gradient(90deg, rgba(216,191,138,.16), rgba(216,191,138,0) 75%);box-shadow:none;color:var(--cream);}
-#menu.atHome .menuNav button.mnav.mode.sel .mnName{color:#fff;}
-#menu.atHome .menuNav button.mnav.mode:last-child{grid-column:auto;}
-/* --- CONTINUE pill: slimmer, one quiet bar under the header --- */
-#menu.atHome #startDuelBtn{min-height:50px;padding:7px 14px;border-radius:10px;margin-top:clamp(10px,2vh,16px);}
-#menu.atHome .hmPillLab{font-size:10.5px;}
-#menu.atHome .hmPillTxt .startSub{font-size:13.5px;}
-/* --- quiet footer: smaller, tighter --- */
-#menu .menuFoot{gap:clamp(18px,6vw,38px);margin-top:12px;padding-top:8px;}
-#menu .mnav.foot{min-height:30px;font-size:11.5px;}
-#menu .hmVer{margin-top:6px;}
-/* --- fighter select declutter: flavour text only on the selected card;
-       name, role line, stats and the PLAY AS button stay on every card --- */
-#panelVersus .pick p{display:none;}
-#panelVersus .pick[class*="sel"] p{display:block;}
-#panelVersus .pick{padding:8px 10px 10px;}
-#panelVersus .pick canvas{width:132px;height:167px;}
-#panelVersus #showcaseCap{font-size:11px;letter-spacing:.14em;}
-#panelVersus .setupSummary{font-size:13px;line-height:1.45;}
-</style>
 </head>
-  <body>
+  <body><div id="replayBar" hidden><span id="replayState"></span><button id="replayPause">PAUSE</button><button id="replayExit">EXIT</button></div>
     <div id="wrap">
       <div id="stageWrap">
         <!-- FIGHT LAYER: one wrapper for the whole duel (arena, HUD,
@@ -1064,7 +1148,7 @@
             <p id="endStats" style="color:var(--mut); line-height:1.5; margin:6px 0 0;"></p>
 <p id="endRead"></p>
 <p id="endAdapt"></p>
-<p id="endRun"></p>
+<p id="endRun"></p><p id="rcEnd" role="status" style="color:#f3d28d;font-weight:700"></p>
             <p id="endOnlineNote" style="color:var(--mgold-hi); font-weight:700; letter-spacing:.08em; margin:8px 0 0; display:none;"></p>
             <div class="endBtns">
               <button class="primary" id="rematchBtn">REMATCH</button>
@@ -1120,40 +1204,53 @@
           <div class="menuMain">
             <div class="menuLeft">
               <header class="hmHead">
-                <p class="hmBrand">THE CROWN RESTORED</p>
-                <h1 class="hmTitle">RUNEBLADE</h1>
-                <p class="hmTag">MASTER THE RUNE · CLAIM THE CROWN</p>
+                <p class="hmBrand">RUNEBLADE</p>
+                <h1 class="hmTitle">RADIANT REALMS</h1>
+                <p class="hmTag">SWORDCRAFT · SPELLCRAFT · ASCENSION</p>
                 <div class="hmRule" aria-hidden="true"><span class="hmDia"></span></div>
+                <div class="hmHeroCard" aria-label="Game overview">
+                  <p class="hmIntro">Forge your champion, master directional sword combat, and wield a 60-card rune arsenal across the Six Realms.</p>
+                  <div class="hmHighlights">
+                    <span class="hmChip">60 RUNES</span>
+                    <span class="hmChip">7 HEROES</span>
+                    <span class="hmChip">RANKED ONLINE</span>
+                    <span class="hmChip">CLASSIC &amp; GRIMOIRE</span>
+                  </div>
+                </div>
               </header>
               <button id="startDuelBtn" type="button" aria-label="Continue — start a duel with your last setup">
                 <span class="hmPillTxt">
-                  <span class="hmPillLab">CONTINUE</span>
+                  <span class="hmPillLab">QUICK CONTINUE</span>
                   <span class="startSub" id="startDuelSub"></span>
                 </span>
                 <svg class="hmPillArrow" viewBox="0 0 12 14" width="13" height="15" aria-hidden="true" focusable="false"><path d="M1 1.2v11.6c0 .9 1 1.5 1.8 1L11.4 8a1.15 1.15 0 0 0 0-2L2.8.2C2-.3 1 .3 1 1.2z" fill="currentColor"/></svg>
               </button>
-              <nav class="menuNav" aria-label="Main menu">
-                <button class="mnav mode" data-panel="panelChronicle"><span class="mnName">♜ STORY CAMPAIGN</span><small class="mnSub">THE SHATTERED CROWN · 5 CHAPTERS</small><span class="mnChev" aria-hidden="true">›</span></button>
-                <button class="mnav mode" data-panel="panelGrimoire"><span class="mnName">✦ GRIMOIRE DUEL</span><small class="mnSub">SPELL CARDS · BUILD YOUR GRIMOIRE</small><span class="mnChev" aria-hidden="true">›</span></button>
-                <button class="mnav mode" data-panel="panelVersus"><span class="mnName">CLASSIC DUEL</span><small class="mnSub">VS CPU · YOUR SETUP, YOUR RIVAL</small><span class="mnChev" aria-hidden="true">›</span></button>
-                <button class="mnav mode" data-panel="panelLadder"><span class="mnName">ARCADE LADDER</span><small class="mnSub">A LADDER OF DUELS, ONE AFTER ANOTHER</small><span class="mnChev" aria-hidden="true">›</span></button>
-                <button class="mnav mode" data-panel="panelLocal"><span class="mnName">LOCAL VERSUS</span><small class="mnSub">TWO PLAYERS · ONE SCREEN</small><span class="mnChev" aria-hidden="true">›</span></button>
-                <button class="mnav mode" data-panel="panelOnline"><span class="mnName">ONLINE DUEL</span><small class="mnSub">ROOMS · FIGHT A FRIEND ANYWHERE</small><span class="mnChev" aria-hidden="true">›</span></button>
-                <button class="mnav mode" data-panel="panelTraining"><span class="mnName">TRAINING</span><small class="mnSub">DRILLS &amp; THE PRACTICE LAB</small><span class="mnChev" aria-hidden="true">›</span></button>
-                <button class="mnav mode" data-panel="panelSurvival"><span class="mnName">SURVIVAL</span><small class="mnSub">HOW LONG CAN YOU LAST?</small><span class="mnChev" aria-hidden="true">›</span></button>
-                <button class="mnav mode" data-panel="panelBoss"><span class="mnName">BOSS RUSH</span><small class="mnSub">EVERY BOSS, BACK TO BACK</small><span class="mnChev" aria-hidden="true">›</span></button>
-              </nav>
-              <div class="menuFoot">
-                <button class="mnav foot" data-panel="panelSettings">SETTINGS</button>
-                <button class="mnav foot" data-panel="panelExtras">CREDITS</button>
-                <button class="mnav foot" data-panel="panelProgress">PROGRESS</button>
+              <div class="hmSectionTitle">FEATURED MODES</div>
+              <nav class="menuNav hmFeatGrid" aria-label="Featured modes">
+<button class="mnav mode hmFeatBtn hmFeatPrimary" data-panel="panelOnline"><span class="hmModeKicker">ONLINE</span>ONLINE ARENA<span class="rbNavSub">Ranked duels, casual matches, server cups and verified progression</span></button>
+<button class="mnav mode hmFeatBtn" data-panel="panelGrimoire"><span class="hmModeKicker">DECKBUILDING</span>GRIMOIRE DUEL<span class="rbNavSub">Build your rune deck, practice combos and enter expedition runs</span></button>
+<button class="mnav mode hmFeatBtn" data-panel="panelChronicle"><span class="hmModeKicker">CAMPAIGN</span>STORY CAMPAIGN<span class="rbNavSub">Play The Shattered Crown and unlock mastery across the realms</span></button>
+</nav>
+              <div class="hmSectionTitle hmSectionGap">ALL MODES</div>
+              <nav class="menuNav hmSecondaryNav" aria-label="All game modes">
+<button class="mnav mode hmCompactMode" data-panel="panelVersus">CLASSIC DUEL<span class="rbNavSub">Sword skill · vs CPU</span></button>
+<button class="mnav mode hmCompactMode" data-panel="panelTraining">TRAINING<span class="rbNavSub">Learn and master combat</span></button>
+<button class="mnav mode hmCompactMode" data-panel="panelLocal">LOCAL VERSUS<span class="rbNavSub">Two players · one device</span></button>
+<button class="mnav mode hmCompactMode" data-panel="panelLadder">ARCADE LADDER<span class="rbNavSub">Seven challenging fights</span></button>
+<button class="mnav mode hmCompactMode" data-panel="panelSurvival">SURVIVAL<span class="rbNavSub">Endless waves</span></button>
+<button class="mnav mode hmCompactMode" data-panel="panelBoss">BOSS RUSH<span class="rbNavSub">Four bosses · one clock</span></button>
+</nav>
+              <div class="hmUtilityRow">
+                <button class="mnav foot hmUtility" data-panel="panelProgress">PROGRESS</button>
+                <button class="mnav foot hmUtility" data-panel="panelSettings">SETTINGS</button>
+                <button class="mnav foot hmUtility" data-panel="panelExtras">CREDITS</button>
               </div>
-              <div class="hmVer">RUNEBLADE · v2.0 · THE CROWN RESTORED</div>
+              <div class="hmVer">RUNEBLADE · v3.2 HOME SCREEN REFRESH · RADIANT REALMS</div>
             </div>
             <div class="menuPanelWrap">
               <section class="mpanel on" id="panelHome">
                 <h2 class="ptitle"><span class="sw">YOUR LAST DUEL</span> &mdash; READY WHEN YOU ARE</h2>
-                <p class="psub">CONTINUE replays this exact setup in one tap. To change anything, open CLASSIC DUEL &mdash; Fighter Select.</p>
+                <p class="psub">START DUEL replays this exact setup in one tap. To change anything, open VS CPU &mdash; Fighter Select.</p>
                 <div class="ldGrid" id="lastDuelGrid">
                   <div><span>YOU</span><b>DRAKTHAR</b></div>
                   <div><span>CPU</span><b>ELDRYN</b></div>
@@ -1168,20 +1265,21 @@
               <section class="mpanel" id="panelChronicle">
 <div class="phead"><button class="backBtn" type="button">&#8249; MENU</button><h2 class="ptitle">THE SHATTERED CROWN</h2></div>
 <p class="psub">A five-chapter Grimoire campaign. Recover the broken seals of the crown and challenge the last sovereign. Choose your fighter in Classic Duel and your deck in Grimoire Duel before starting.</p>
-<div id="chProgress" class="chProgress"></div><div id="chList"></div><div id="chDetail" class="chDetail"></div>
+<div id="chProgress" class="chProgress"></div><div id="rbMap" class="rbMap" aria-label="Chronicle map"></div><div id="chList"></div><div id="chDetail" class="chDetail"></div>
 <button class="modeStart" id="chStart">BEGIN CHAPTER</button>
-<details class="chMastery"><summary>Rune mastery · all 15 spells</summary><p class="psub">Earn mastery for resolving spells during finished campaign matches. Titles are cosmetic; every spell stays available to all players.</p><div id="chMastery"></div></details>
+<details class="chMastery"><summary>Rune mastery · all 60 spells</summary><p class="psub">Earn mastery for resolving spells during finished campaign matches. Titles are cosmetic. Collect additional spells through the Rune Collection.</p><div id="chMastery"></div></details>
 </section>
 <section class="mpanel" id="panelGrimoire">
 <div class="phead"><button class="backBtn" type="button">&#8249; MENU</button><h2 class="ptitle">GRIMOIRE DUEL</h2></div>
-<p class="psub">Forge a six-card grimoire from two schools. All cards are free and equally available. Three cards in hand; casting cycles the card to the back. Both duelists use the same mana rules. Choose your fighter and arena in Classic Duel first.</p>
-<div id="grSchools"></div><div id="grDeck"></div><p id="grDeckInfo" class="psub"></p>
-<p class="psub">Analog: aim anywhere, flick and release to strike, hold a direction briefly for a heavy, sweep for an arc. Hold GUARD to defend. Reverse during heavy wind-up to feint. Tap a card (or 1–3); aimed spells lock your current direction. A fresh guard counters incoming magic. No pay-to-win.</p>
-<button class="modeStart" id="grStart">ENTER GRIMOIRE DUEL</button></section>
+<p class="psub">Build a 6–10 card deck from two schools. Your first four runes form your opening hand; cast to cycle cards. Earn and craft new runes in the collection. Select your fighter and arena in Classic Duel.</p><p class="psub">Burst / Reaction: instant · Quick / Ritual: interruptible.</p>
+<div class="rbTools"><button type="button" id="rbSaveDeck">SAVE PRESET</button><select id="rbPresets" aria-label="Saved decks"></select><button type="button" id="rbLoadDeck">LOAD</button><button type="button" id="rbDraft">DRAFT PRACTICE</button></div><p id="rbDeckStats" class="psub"></p><div class="rbSection">01 · Choose two schools</div><div id="grSchools"></div><div class="rbSection">02 · Build your deck</div><div id="grDeck"></div><p id="grDeckInfo" class="psub"></p>
+<details id="rcCollection" class="rcPanel"><summary>✦ RUNE COLLECTION · REWARD ROAD</summary><p id="rcBalance" class="psub"></p><div id="rcRoad"></div><p id="rcDaily" class="psub"></p><p id="rcNotice" role="status" aria-live="polite"></p><div class="rbTools"><select id="rbFilter" aria-label="Filter collection"><option value="all">All schools</option><option>Inferno</option><option>Frost</option><option>Storm</option><option>Void</option><option>Radiance</option><option>Bloodbound</option></select><select id="rbOwnedFilter" aria-label="Filter ownership"><option value="all">All cards</option><option value="owned">Owned</option><option value="locked">Locked</option></select></div><div id="rcCards"></div></details>
+<p class="psub">Analog: aim anywhere, flick and release to strike, hold a direction briefly for a heavy, sweep for an arc. Hold GUARD to defend. Reverse during heavy wind-up to feint. Tap a card (or 1–4); aimed spells lock your current direction. A fresh guard counters incoming magic. No pay-to-win.</p>
+<button class="modeStart" id="grStart">ENTER GRIMOIRE DUEL</button><details class="rcPanel" id="rbPathPanel"><summary>PATH OF ASCENSION · EXPEDITION</summary><p class="psub">Choose your route through three duels, then face the Sovereign. A defeat ends the run. Each victory offers a different route or boon; rewards are local and earned through combat.</p><p id="rbPathRecord" class="psub"></p><button class="modeStart" id="rbPathStart">START EXPEDITION</button></details><details class="rcPanel"><summary>RUNE DUEL MATCH HISTORY · LOCAL</summary><div id="rbHistory"></div></details></section>
 <section class="mpanel" id="panelVersus">
                 <div class="phead"><button class="backBtn" type="button">&#8249; MENU</button><h2 class="ptitle"><span class="sw">VS CPU</span> &mdash; FIGHTER SELECT</h2></div>
-                <p class="psub">Tap a fighter to choose your side, set the rival, difficulty and arena below, then BEGIN DUEL.</p>
-                <div id="showcase"><canvas id="pedCanvas" width="720" height="440"></canvas><div id="showcaseCap">THE FIGHTERS — THE PEDESTAL SHOWS YOUR SELECTED DUELIST</div></div>
+                <p class="psub">Tap a fighter to choose your side. Set the CPU RIVAL below — anyone, even your own duelist — or leave AUTO for the classic rival. Set the setup, then BEGIN DUEL. Tapping a preview never starts the match.</p>
+                <div id="showcase"><canvas id="pedCanvas" width="720" height="440"></canvas><div id="showcaseCap">THE DUELISTS — TURN THE FORM PICKER AND THE PEDESTAL ANSWERS · CUSTOMIZE THE SABER BELOW AND WATCH IT IGNITE</div></div>
                 <div class="vsRow">
                   <div class="pick" id="pickVader">
                     <canvas id="prevVader" width="300" height="380"></canvas>
@@ -1291,8 +1389,8 @@
               <section class="mpanel" id="panelOnline">
                 <div class="phead"><button class="backBtn" type="button">&#8249; MENU</button><h2 class="ptitle"><span class="sw">ONLINE DUEL</span> &mdash; LOCKSTEP VERSUS</h2></div>
                 <p class="psub">Duel a friend over the shared relay server. Both phones run the identical simulation and swap inputs tick by tick — no host advantage. Create a room and share the code, or join with theirs.</p>
-                <div class="setupSummary" id="onlineSummary"></div>
-                <div id="onlineStatus">Server: not connected.</div>
+                <p class="psub" style="color:#e6c78e">Casual Rune Duel uses the existing relay and local cards. Ranked Arena below uses the separate authenticated server and its own collection.</p><div class="setRow"><label for="rbOnlineMode">DUEL TYPE</label><select id="rbOnlineMode" class="oinput"><option value="classic">Classic</option><option value="rune">Casual Rune Duel · experimental</option></select></div><div class="setupSummary" id="onlineSummary"></div>
+                <details class="rcPanel" id="rbrPanel"><summary>RANKED ARENA · SERVER PROFILE</summary><p class="psub">Competitive collection, verified replays and seasonal ratings. Requires the bundled server; offline saves are not imported into ranked play.</p><div id="rbrAuth" class="rbTools"><input class="oinput" id="rbrName" placeholder="Username (3–16)" maxlength="16" autocomplete="username"><input class="oinput" id="rbrPass" placeholder="Password (10+ chars)" type="password" autocomplete="current-password"><button id="rbrLogin">SIGN IN</button><button id="rbrRegister">REGISTER</button></div><p id="rbrStatus" class="psub" role="status">Sign in to the competitive server.</p><div id="rbrSigned" hidden><p id="rbrProfile" class="psub"></p><p id="rbrDeckCount" class="psub"></p><div class="rbTools"><button id="rbrSave">SAVE DECK</button><button id="rbrQueue">FIND RANKED DUEL</button><button id="rbrCup">JOIN 4-PLAYER CUP</button><button id="rbrCancel">CANCEL QUEUE</button><button id="rbrLogout">SIGN OUT</button></div><div class="rbrCards" id="rbrCardList"></div><div class="rbTools"><button id="rbrRefresh">REFRESH LEADERBOARD</button></div><div id="rbrBoard" class="psub"></div><p class="psub">COMPETITIVE FACTION XP</p><div id="rbrRoad" class="psub"></div><p class="psub">RECENT MATCHES</p><div id="rbrHistory" class="rbTools"></div><div class="rbTools"><input class="oinput" id="rbrReplayId" placeholder="Match / replay ID"><button id="rbrWatch">WATCH REPLAY</button><button id="rbrDownload">SAVE REPLAY</button></div></div></details><div id="onlineStatus">Server: not connected.</div>
                 <div class="setRow"><span class="slab">YOUR NAME</span><span style="flex:1 1 160px;"><input class="oinput" id="onlineName" maxlength="16" value="PLAYER" autocomplete="off"></span></div>
                 <div class="setRow"><span class="slab">YOUR FIGHTER</span><span><button class="obtn ocbtn sel" data-ochar="vader">DRAKTHAR</button> <button class="obtn ocbtn" data-ochar="obi">ELDRYN</button> <button class="obtn ocbtn" data-ochar="maul">VORGRATH</button> <button class="obtn ocbtn" data-ochar="ahsoka">NYRA</button> <button class="obtn ocbtn" data-ochar="dooku">SAHIR</button> <button class="obtn ocbtn" data-ochar="sidious">MORVANE</button> <button class="obtn ocbtn" data-ochar="inaam">INAAM</button></span><span class="sdesc">Mirror picks are allowed &mdash; the P1 / P2 plate and the YOU tag keep the sides straight on both phones.</span></div>
                 <div class="setRow"><span class="slab">ARENA (HOST PICKS)</span><span><button class="obtn oabtn sel" data-oarena="duel">DUELING CIRCLE</button> <button class="obtn oabtn" data-oarena="temple">TEMPLE</button> <button class="obtn oabtn" data-oarena="fortress">FORTRESS</button> <button class="obtn oabtn" data-oarena="ashen">ASHEN</button> <button class="obtn oabtn" data-oarena="frozen">FROZEN</button> <button class="obtn oabtn" data-oarena="verdant">VERDANT</button> <button class="obtn oabtn" data-oarena="twinsuns">SUNFALL COURT</button> <button class="obtn oabtn" data-oarena="hangar">HANGAR</button></span></div>
@@ -1568,7 +1666,7 @@
           <header class="gateTitle">
             <div class="gateKicker">MASTER THE RUNE &middot; CLAIM THE CROWN</div>
             <h1 class="gateLogo">RUNEBLADE</h1>
-            <div class="gateEdition">2.0 &middot; THE CROWN RESTORED</div>
+            <div class="gateEdition">3.1 &middot; RADIANT REALMS</div>
           </header>
           <div class="gateMain">
             <button id="gateBtn" type="button">ENTER THE REALM</button>
@@ -2275,7 +2373,7 @@
       });
       /* pointerup, pointercancel AND lostpointercapture all return the
          stick to neutral — no stuck aim can survive any of them */
-      const anaEnd=e=>{ if(e.pointerId!==anaStick.pid)return; e.preventDefault(); if(grActive())grRelease(e.type==='pointerup'); anaReset(); };
+      const anaEnd=e=>{ if(e.pointerId!==anaStick.pid)return; e.preventDefault(); if(grActive()&&!G.online)grRelease(e.type==='pointerup'); anaReset(); };
       anaZone.addEventListener('pointerup',anaEnd);
       anaZone.addEventListener('pointercancel',anaEnd);
       anaZone.addEventListener('lostpointercapture',anaEnd);
@@ -2306,7 +2404,7 @@
         if(len>R){ dx=dx/len*R; dy=dy/len*R; }
         anaStick.x=dx/R; anaStick.y=dy/R; anaQuantize();
       });
-      window.addEventListener('mouseup',e=>{ if(anaStick.pid==='mouse'&&e.button===2){if(grActive())grRelease(true);anaReset();} });
+      window.addEventListener('mouseup',e=>{ if(anaStick.pid==='mouse'&&e.button===2){if(grActive()&&!G.online)grRelease(true);anaReset();} });
       fsEl.addEventListener('contextmenu',e=>{ if(ANA.on)e.preventDefault(); });
     }
     /* the discrete guard direction the sim sees in Analog mode:
@@ -2430,7 +2528,7 @@
     }
     function ana3Poll(){
       ANA3.fire=null;
-      if(grActive()){grAnalogPoll();return;}
+      if(grActive()&&!G.online){grAnalogPoll();return;}
       /* STAGE 2 DEF §6 — NO ACCIDENTAL ATTACKS: while GUARD is held
          (the L key / GUARD button — the standing guard modifier),
          right-stick movement is defensive ONLY and the gesture
@@ -2730,7 +2828,7 @@
         if(anaStick.active&&anaStick.mag>0){
           const _sf=(typeof selfF==='function')?selfF():null;
           const _fc=_sf?_sf.facing:1;
-          anaCtlAng=grActive()?Math.atan2(anaStick.qy,anaStick.qx*_fc):clamp(Math.atan2(anaStick.qy,anaStick.qx*_fc),TUNING.ANA2_BLADE_MIN,TUNING.ANA2_BLADE_MAX);
+          anaCtlAng=(grActive()&&!G.online)?Math.atan2(anaStick.qy,anaStick.qx*_fc):clamp(Math.atan2(anaStick.qy,anaStick.qx*_fc),TUNING.ANA2_BLADE_MIN,TUNING.ANA2_BLADE_MAX);
         }
       }
       return {
@@ -3759,7 +3857,7 @@
        collision, blocking or parry behaviour reads f.blade in this
        stage — bladeSegment remains the only combat geometry. */
     function ana2WrapPi(a){ while(a>Math.PI)a-=2*Math.PI; while(a<-Math.PI)a+=2*Math.PI; return a; }
-    function ana2ClampArc(a){ return grActive()?ana2WrapPi(a):clamp(ana2WrapPi(a),TUNING.ANA2_BLADE_MIN,TUNING.ANA2_BLADE_MAX); }
+    function ana2ClampArc(a){ return (grActive()&&!G.online)?ana2WrapPi(a):clamp(ana2WrapPi(a),TUNING.ANA2_BLADE_MIN,TUNING.ANA2_BLADE_MAX); }
     /* the guard anchor angles, identical to bladeSegment / poseFor:
        left 1.85, overhead -2.65, low -0.65, right (default) -1.5 */
     function ana2GuardAng(dir){ return dir==='left'?1.85:dir==='overhead'?-2.65:dir==='low'?-0.65:-1.5; }
@@ -7054,12 +7152,12 @@
       const active=G.mode==='fight'&&P&&C&&qScale()>.3;
       for(let i=0;i<2;i++){
         const l=runeLights14[i], f=active?(i?C:P):null;
-        if(!f||f.char==='inaam'||f.state==='choked'||f._goreSever){l.intensity=0;continue;}
+        if(!f||f.state==='choked'||f._goreSever){l.intensity=0;continue;}
         const b=(bladeRenderSim(f)?simBladeSegments(f):bladeSegments(f))[0];
         if(!b){l.intensity=0;continue;}
         l.color.set(bladeCol(f));
         l.position.set(g2wX(b.hx+(b.tx-b.hx)*.48),g2wY(b.hy+(b.ty-b.hy)*.48),.70);
-        const power=f.state==='attack'||f.state==='special'?1.35:.65;
+        const power=f.state==='attack'||f.state==='special'?2.5:1.35;
         l.intensity=power*(G.reducedMotion?1:.94+.06*Math.sin(t*6+i))*qScale();
       }
     }
@@ -7316,19 +7414,23 @@
         const bar=new THREE.Mesh(new THREE.CylinderGeometry(0.012,0.012,0.19,8),steel);
         bar.rotation.z=Math.PI/2; bar.position.y=emitY; grp.add(bar);
         for(const s of [-1,1]){
-          const stubGlow=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,0.11,8),new THREE.MeshBasicMaterial({color:colorHex,transparent:true,opacity:.38,blending:THREE.AdditiveBlending,depthWrite:false}));
+          const stubGlow=new THREE.Mesh(new THREE.CylinderGeometry(0.038,0.038,0.11,8),new THREE.MeshBasicMaterial({color:colorHex,transparent:true,opacity:.56,blending:THREE.AdditiveBlending,depthWrite:false}));
           stubGlow.rotation.z=Math.PI/2; stubGlow.position.set(s*0.145,emitY,0); grp.add(stubGlow);
-          const stubCore=new THREE.Mesh(new THREE.CylinderGeometry(0.009,0.009,0.11,6),new THREE.MeshBasicMaterial({color:0xffffff}));
+          const stubCore=new THREE.Mesh(new THREE.CylinderGeometry(0.0105,0.0105,0.11,6),new THREE.MeshBasicMaterial({color:0xffffff}));
           stubCore.rotation.z=Math.PI/2; stubCore.position.set(s*0.145,emitY,0); grp.add(stubCore);
         }
       }
       const bl=hiltStyle==='long'?len+0.1:len;
-      const core=new THREE.Mesh(new THREE.CylinderGeometry(0.016,0.016,bl,8),new THREE.MeshBasicMaterial({color:0xffffff}));
+      const core=new THREE.Mesh(new THREE.CylinderGeometry(0.017,0.017,bl,8),new THREE.MeshBasicMaterial({color:0xffffff}));
       core.position.y=emitY+bl/2; grp.add(core);
-      const glow=new THREE.Mesh(new THREE.CylinderGeometry(0.045,0.045,bl,10),new THREE.MeshBasicMaterial({color:colorHex,transparent:true,opacity:.38,blending:THREE.AdditiveBlending,depthWrite:false}));
+      const glow=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.06,bl,12),new THREE.MeshBasicMaterial({color:colorHex,transparent:true,opacity:.54,blending:THREE.AdditiveBlending,depthWrite:false}));
       glow.position.y=emitY+bl/2; grp.add(glow);
-      const tip=new THREE.Mesh(new THREE.SphereGeometry(0.045,10,8),new THREE.MeshBasicMaterial({color:colorHex,transparent:true,opacity:.38,blending:THREE.AdditiveBlending,depthWrite:false}));
+      const aura=new THREE.Mesh(new THREE.CylinderGeometry(0.095,0.095,bl,12),new THREE.MeshBasicMaterial({color:colorHex,transparent:true,opacity:.16,blending:THREE.AdditiveBlending,depthWrite:false}));
+      aura.position.y=emitY+bl/2; grp.add(aura);
+      const tip=new THREE.Mesh(new THREE.SphereGeometry(0.062,12,10),new THREE.MeshBasicMaterial({color:colorHex,transparent:true,opacity:.58,blending:THREE.AdditiveBlending,depthWrite:false}));
       tip.position.y=emitY+bl; grp.add(tip);
+      const tipHalo=new THREE.Mesh(new THREE.SphereGeometry(0.11,14,12),new THREE.MeshBasicMaterial({color:colorHex,transparent:true,opacity:.18,blending:THREE.AdditiveBlending,depthWrite:false}));
+      tipHalo.position.y=emitY+bl; grp.add(tipHalo);
       return grp;
     }
     /* SIZE DEDUPE (UI-cleanup build): each GLB's bytes are fetched ONCE
@@ -7584,7 +7686,7 @@
       const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.anisotropy=4;t.colorSpace=THREE.SRGBColorSpace;runeSurfaceCache[kind]=t;return t;
     }
     let runeAura=null;
-    function runeAuraTexture(){if(runeAura)return runeAura;const c=document.createElement('canvas');c.width=64;c.height=128;const g=c.getContext('2d');const v=g.createLinearGradient(0,0,64,0);v.addColorStop(0,'#ffffff00');v.addColorStop(.4,'#ffffff16');v.addColorStop(.5,'#ffffffaa');v.addColorStop(.6,'#ffffff16');v.addColorStop(1,'#ffffff00');g.fillStyle=v;g.fillRect(0,0,64,128);runeAura=new THREE.CanvasTexture(c);return runeAura;}
+    function runeAuraTexture(){if(runeAura)return runeAura;const c=document.createElement('canvas');c.width=64;c.height=128;const g=c.getContext('2d');const v=g.createLinearGradient(0,0,64,0);v.addColorStop(0,'#ffffff00');v.addColorStop(.20,'#ffffff0e');v.addColorStop(.40,'#ffffff65');v.addColorStop(.5,'#ffffffee');v.addColorStop(.60,'#ffffff65');v.addColorStop(.80,'#ffffff0e');v.addColorStop(1,'#ffffff00');g.fillStyle=v;g.fillRect(0,0,64,128);runeAura=new THREE.CanvasTexture(c);return runeAura;}
     let runeReflection=null;
     function runeEnv(){
       if(runeReflection)return runeReflection;
@@ -7664,7 +7766,7 @@
       }
       function sword(){const o=new THREE.Group();root.add(o);const sh=new THREE.Shape();sh.moveTo(-.048,0);sh.lineTo(-.055,.15);sh.lineTo(-.036,.83);sh.lineTo(0,1);sh.lineTo(.036,.83);sh.lineTo(.055,.15);sh.lineTo(.048,0);sh.closePath();const geo=new THREE.ExtrudeGeometry(sh,{depth:.025,bevelEnabled:true,bevelSize:.009,bevelThickness:.007,bevelSegments:2,steps:1});const m=mesh(geo,new THREE.MeshStandardMaterial({color:0xc1ccd7,map:runeSurface('steel'),metalness:.48,roughness:.25,emissive:0x301d16,emissiveIntensity:.4}),0,0,-.009,o);m.material.envMap=runeEnv();m.material.envMapIntensity=1.1;m.material.metalness=.72;
         const runeMat=new THREE.MeshBasicMaterial({color:0xff3322});const line=box(0,.46,.015,.012,.83,.006,runeMat,o);
-        const auraMat=new THREE.MeshBasicMaterial({map:runeAuraTexture(),color:0xffffff,transparent:true,opacity:.48,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide});const aura=mesh(new THREE.PlaneGeometry(.25,1.04),auraMat,0,.49,.035,o);const edge=box(0,0,.0,.21,.037,.05,trim,o);box(0,-.055,0,.044,.12,.04,dark,o);ball(0,-.12,0,.039,.037,.037,trim,o);for(let i=0;i<5;i++){const r=box(0,.15+i*.13,.019,.037,.018,.008,runeMat,o);r.rotation.z=Math.PI/4;}for(const sg of [-1,1]){const q=box(sg*.105,-.012,.014,.055,.045,.06,trim,o);q.rotation.z=sg*.42;ball(sg*.135,-.021,.01,.023,.027,.03,trim,o);}
+        const auraMat=new THREE.MeshBasicMaterial({map:runeAuraTexture(),color:0xffffff,transparent:true,opacity:.48,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide});const aura=mesh(new THREE.PlaneGeometry(.44,1.10),auraMat,0,.49,.035,o);const edge=box(0,0,.0,.21,.037,.05,trim,o);box(0,-.055,0,.044,.12,.04,dark,o);ball(0,-.12,0,.039,.037,.037,trim,o);for(let i=0;i<5;i++){const r=box(0,.15+i*.13,.019,.037,.018,.008,runeMat,o);r.rotation.z=Math.PI/4;}for(const sg of [-1,1]){const q=box(sg*.105,-.012,.014,.055,.045,.06,trim,o);q.rotation.z=sg*.42;ball(sg*.135,-.021,.01,.023,.027,.03,trim,o);}
         const core=box(0,-.012,.043,.035,.035,.016,runeMat,o);core.rotation.z=.785;
         for(let i=0;i<6;i++){const l=box(0,-.1+i*.018,.028,.047,.006,.005,trim,o);l.rotation.z=.25;}
         return {o,runeMat,m,aura};}
@@ -7787,7 +7889,7 @@
       }
       for(let i=0;i<r.swords.length;i++){const sw=r.swords[i], bs=bladeSegs&&bladeSegs[i];let a=i===0?p.ang:(f.char==='maul'?p.ang+Math.PI:p.ang+2.35), x=i===0?hx:off,y=i===0?hy:oy,length=i===0?.94:f.char==='maul'?.80:.52;
         if(bs){x=(bs.hx-f.x)*s/100;y=(f.y-bs.hy)/100;const dx=(bs.tx-bs.hx)*s/100,dy=(bs.ty-bs.hy)/100;a=Math.atan2(dy,dx);length=Math.hypot(dx,dy);}
-        sw.o.position.set(x,y,.17+i*.015);sw.o.rotation.z=-a-Math.PI/2;sw.o.scale.set(f.char==='vader'?1.45:1,Math.max(.03,length),1);sw.runeMat.color.set(bladeCol(f));sw.aura.material.color.set(bladeCol(f));sw.m.material.emissive.set(bladeCol(f));sw.m.material.emissiveIntensity=.13;
+        sw.o.position.set(x,y,.17+i*.015);sw.o.rotation.z=-a-Math.PI/2;sw.o.scale.set(f.char==='vader'?1.45:1,Math.max(.03,length),1);sw.runeMat.color.set(bladeCol(f));sw.aura.material.color.set(bladeCol(f));sw.m.material.emissive.set(bladeCol(f));const bladePulse=G.reducedMotion?1:.92+.12*Math.sin(t*5+i*1.7+(f.isPlayer?0:.9));const surge=(!menu&&(f.state==='attack'||f.state==='special'))?1.18:1;sw.m.material.emissiveIntensity=.68*bladePulse*surge;if(sw.aura&&sw.aura.material){sw.aura.material.opacity=Math.min(.92,.72*bladePulse*surge);}
         const ignite=menu?1:((typeof CINE!=='undefined'&&CINE.active)?(f===P?CINE.kP:CINE.kC):1);sw.o.visible=f.state!=='choked'&&!f._goreSever&&ignite>.02;sw.o.scale.y*=ignite;
       }
       if(!menu){r.root.position.set(g2wX(f.x),g2wY(f.y-(f._finLift||0)),0);r.root.rotation.z=(f.state==='defeated'||f.state==='knockdown')?s*-1.30:0;}
@@ -7844,7 +7946,7 @@
         else {const hair=p.style==='sage'?'#d2c7b9':'#25202b';g.beginPath();g.moveTo(-12,h+1);g.quadraticCurveTo(-16,h-18,1,h-15);g.quadraticCurveTo(10,h-15,11,h-8);g.lineTo(1,h-9);g.lineTo(-6,h+2);g.closePath();g.fillStyle=hair;g.fill();for(let i=0;i<5;i++)line(-10+i*2,h-8,0+i*1.6,h-14,p.style==='sage'?'#faf0dc88':'#8d7d9b66',.7);if(p.style==='sage'){poly([[-8,h+5],[10,h+5],[4,h+16],[-3,h+15]],hair,'#a59b8d');for(let i=0;i<5;i++)line(-5+i*3,h+7,-3+i*1.7,h+14,'#eee3d1aa',.65);}else{g.beginPath();g.moveTo(-9,h-8);g.quadraticCurveTo(-23,h-3,-21,h+18);g.quadraticCurveTo(-8,h+11,-10,h+1);g.fillStyle=hair;g.fill();}}
       }
     }
-    function fantasySword(g,x,y,tx,ty,col,width){const a=Math.atan2(ty-y,tx-x),l=Math.hypot(tx-x,ty-y);g.save();g.translate(x,y);g.rotate(a);g.shadowColor=col;g.shadowBlur=10;g.fillStyle=col;g.globalAlpha=.28;g.fillRect(0,-width,l,width*2);g.globalAlpha=1;g.shadowBlur=3;const m=g.createLinearGradient(0,-width,0,width);m.addColorStop(0,'#e5e8e7');m.addColorStop(.48,'#717d8c');m.addColorStop(.53,'#dce6ee');m.addColorStop(1,'#454b5b');g.fillStyle=m;g.beginPath();g.moveTo(0,-width*.75);g.lineTo(l*.82,-width*.5);g.lineTo(l,0);g.lineTo(l*.82,width*.5);g.lineTo(0,width*.75);g.closePath();g.fill();g.strokeStyle=col;g.lineWidth=1.1;g.beginPath();g.moveTo(4,0);g.lineTo(l-3,0);g.stroke();for(let i=12;i<l-6;i+=13){g.fillStyle=col;g.fillRect(i,-2,2,4);}g.shadowBlur=0;g.fillStyle='#c4a46a';g.fillRect(-3,-width*2,4,width*4);g.restore();}
+    function fantasySword(g,x,y,tx,ty,col,width){const a=Math.atan2(ty-y,tx-x),l=Math.hypot(tx-x,ty-y),pulse=G.reducedMotion?1:.92+.08*Math.sin(performance.now()*.004+l*.04);g.save();g.translate(x,y);g.rotate(a);g.globalCompositeOperation='lighter';g.shadowColor=col;g.shadowBlur=36*pulse;g.fillStyle=col;g.globalAlpha=.24;g.fillRect(0,-width*1.9,l,width*3.8);g.globalAlpha=.11;g.fillRect(0,-width*3.8,l,width*7.6);g.globalAlpha=1;g.shadowBlur=8;const m=g.createLinearGradient(0,-width,0,width);m.addColorStop(0,'#f4f6f5');m.addColorStop(.2,'#c8d7e4');m.addColorStop(.48,'#727d8d');m.addColorStop(.53,'#eef6ff');m.addColorStop(.82,'#8b96a5');m.addColorStop(1,'#4c5261');g.fillStyle=m;g.beginPath();g.moveTo(0,-width*.78);g.lineTo(l*.82,-width*.55);g.lineTo(l,0);g.lineTo(l*.82,width*.55);g.lineTo(0,width*.78);g.closePath();g.fill();g.strokeStyle=col;g.lineWidth=1.6;g.beginPath();g.moveTo(4,0);g.lineTo(l-3,0);g.stroke();g.strokeStyle='rgba(255,255,255,.78)';g.lineWidth=.9;g.beginPath();g.moveTo(7,0);g.lineTo(l-7,0);g.stroke();for(let i=12;i<l-6;i+=13){g.fillStyle=col;g.fillRect(i,-2,2,4);}const tip=g.createRadialGradient(l,0,0,l,0,width*6);tip.addColorStop(0,'rgba(255,255,255,.95)');tip.addColorStop(.28,col);tip.addColorStop(1,'rgba(255,255,255,0)');g.globalAlpha=.75;g.fillStyle=tip;g.beginPath();g.arc(l,0,width*3.2,0,Math.PI*2);g.fill();g.shadowBlur=0;g.globalAlpha=1;g.fillStyle='#c4a46a';g.fillRect(-3,-width*2,4,width*4);g.restore();}
 
     function init3D(){
       if(typeof THREE==='undefined'||!THREE.WebGLRenderer||!THREE.GLTFLoader) return;
@@ -7859,7 +7961,7 @@
       const rim=new THREE.DirectionalLight(0xff6a35,0.8); rim.position.set(-3.5,1.6,-2.5); scene3.add(rim);
       const fill=new THREE.DirectionalLight(0x9ec4ff,1.05); fill.position.set(-2,2,3.5); scene3.add(fill);
       lights3={hemi:hemi,key:key,rim:rim,fill:fill}; tintLights();
-      runeLights14=[new THREE.PointLight(0xffffff,0,2.5,2),new THREE.PointLight(0xffffff,0,2.5,2)];
+      runeLights14=[new THREE.PointLight(0xffffff,0,3.1,2),new THREE.PointLight(0xffffff,0,3.1,2)];
       for(const l of runeLights14)scene3.add(l);
       /* no PMREM/environment pass: the light rig carries the scene and
          startup stays fast enough for phone (and software) WebGL */
@@ -8752,12 +8854,37 @@
     }
 
     function blade(x1,y1,x2,y2,color,width){
-      ctx.save(); ctx.lineCap='round';
-      ctx.shadowColor=color; ctx.shadowBlur=18;
-      ctx.strokeStyle=color; ctx.globalAlpha=.5; ctx.lineWidth=width*2.6;
+      ctx.save(); ctx.lineCap='round'; ctx.globalCompositeOperation='lighter';
+      const dx=x2-x1, dy=y2-y1, len=Math.hypot(dx,dy)||1;
+      const nx=-dy/len, ny=dx/len;
+      ctx.shadowColor=color; ctx.shadowBlur=34;
+      ctx.strokeStyle=color; ctx.globalAlpha=.18; ctx.lineWidth=width*5.8;
       ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
-      ctx.globalAlpha=1; ctx.strokeStyle='#ffffff'; ctx.lineWidth=width;
+      ctx.shadowBlur=22;
+      ctx.strokeStyle=color; ctx.globalAlpha=.5; ctx.lineWidth=width*3.3;
       ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+      const core=ctx.createLinearGradient(x1,y1,x2,y2);
+      core.addColorStop(0,'rgba(255,255,255,.96)');
+      core.addColorStop(.16,color);
+      core.addColorStop(.48,'#ffffff');
+      core.addColorStop(.84,color);
+      core.addColorStop(1,'rgba(255,255,255,.96)');
+      ctx.shadowBlur=10;
+      ctx.strokeStyle=core; ctx.globalAlpha=1; ctx.lineWidth=width*1.22;
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+      const flare=ctx.createRadialGradient(x2,y2,0,x2,y2,width*7);
+      flare.addColorStop(0,'rgba(255,255,255,.95)');
+      flare.addColorStop(.28,color);
+      flare.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.globalAlpha=.65; ctx.fillStyle=flare;
+      ctx.beginPath(); ctx.arc(x2,y2,width*4.3,0,Math.PI*2); ctx.fill();
+      ctx.globalAlpha=.22; ctx.fillStyle=color;
+      ctx.beginPath();
+      ctx.moveTo(x1+nx*width*2.1,y1+ny*width*2.1);
+      ctx.lineTo(x2+nx*width*3.0,y2+ny*width*3.0);
+      ctx.lineTo(x2-nx*width*3.0,y2-ny*width*3.0);
+      ctx.lineTo(x1-nx*width*2.1,y1-ny*width*2.1);
+      ctx.closePath(); ctx.fill();
       ctx.restore();
     }
     function drawFighter(g,f,t,preview){
@@ -9155,13 +9282,13 @@
       }
     }
     const runeTrails=new WeakMap();
-    function cinematicBladeLight(f,t){if(!f||!FANTASY[f.char]||f.state==='choked'||f._goreSever)return;const bs=bladeRenderSim(f)?simBladeSegments(f):bladeSegments(f);if(!bs||!bs.length)return;ctx.save();ctx.globalCompositeOperation='screen';for(const b of bs){const x=(b.hx+b.tx)*.5,y=(b.hy+b.ty)*.5;const c=bladeCol(f);const halo=ctx.createRadialGradient(x,y,0,x,y,65);halo.addColorStop(0,c);halo.addColorStop(1,'transparent');ctx.globalAlpha=.08;ctx.fillStyle=halo;ctx.fillRect(x-65,y-65,130,130);if(!G.reducedMotion){ctx.globalAlpha=.55;ctx.fillStyle=c;for(let j=0;j<4;j++){const k=((t*.6+j*.23)%1);const px=b.hx+(b.tx-b.hx)*k,py=b.hy+(b.ty-b.hy)*k+Math.sin(t*4+j*3)*5;ctx.fillRect(px,py,1.5,1.5);}}}ctx.restore();}
+    function cinematicBladeLight(f,t){if(!f||!FANTASY[f.char]||f.state==='choked'||f._goreSever)return;const bs=bladeRenderSim(f)?simBladeSegments(f):bladeSegments(f);if(!bs||!bs.length)return;ctx.save();ctx.globalCompositeOperation='screen';for(const b of bs){const x=(b.hx+b.tx)*.5,y=(b.hy+b.ty)*.5;const c=bladeCol(f);const pulse=G.reducedMotion?1:.92+.08*Math.sin(t*5+(f.isPlayer?0:1.7));const halo=ctx.createRadialGradient(x,y,0,x,y,95);halo.addColorStop(0,'rgba(255,255,255,.28)');halo.addColorStop(.24,c);halo.addColorStop(1,'transparent');ctx.globalAlpha=.27*pulse;ctx.fillStyle=halo;ctx.fillRect(x-95,y-95,190,190);const shaft=ctx.createLinearGradient(b.hx,b.hy,b.tx,b.ty);shaft.addColorStop(0,'rgba(255,255,255,0)');shaft.addColorStop(.18,c);shaft.addColorStop(.5,'rgba(255,255,255,.55)');shaft.addColorStop(.82,c);shaft.addColorStop(1,'rgba(255,255,255,0)');ctx.globalAlpha=.34*pulse;ctx.strokeStyle=shaft;ctx.lineWidth=24;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(b.hx,b.hy);ctx.lineTo(b.tx,b.ty);ctx.stroke();if(!G.reducedMotion){ctx.globalAlpha=.65;ctx.fillStyle=c;for(let j=0;j<6;j++){const k=((t*.78+j*.17)%1);const px=b.hx+(b.tx-b.hx)*k,py=b.hy+(b.ty-b.hy)*k+Math.sin(t*5+j*3.2)*6;ctx.fillRect(px,py,2,2);}const flare=ctx.createRadialGradient(b.tx,b.ty,0,b.tx,b.ty,44);flare.addColorStop(0,'rgba(255,255,255,.95)');flare.addColorStop(.22,c);flare.addColorStop(1,'rgba(255,255,255,0)');ctx.globalAlpha=.55*pulse;ctx.fillStyle=flare;ctx.beginPath();ctx.arc(b.tx,b.ty,28,0,TAU);ctx.fill();}}ctx.restore();}
 
     function runeArcTrail(f,t){
       if(!f||!FANTASY[f.char])return;
       if(G.reducedMotion||f.state==='choked'||f._goreSever||G.mode!=='fight'){runeTrails.delete(f);return;}
       let q=runeTrails.get(f);if(!q){q=[];runeTrails.set(f,q);}
-      const active=f.state==='attack'||f.state==='special', quality=qScale(), life=.15;
+      const active=f.state==='attack'||f.state==='special', quality=qScale(), life=.21;
       const bs=(bladeRenderSim(f)?simBladeSegments(f):bladeSegments(f));
       for(let j=0;j<Math.max(q.length,bs.length);j++){
         const track=q[j]||(q[j]=[]), b=bs[j], prev=track[track.length-1];
@@ -9173,8 +9300,8 @@
         for(let i=1;i<track.length;i++){
           const a=track[i-1],b=track[i],alpha=Math.max(0,1-(t-b.t)/life);
           const inner=.25;
-          ctx.globalAlpha=alpha*.20;ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(a.hx+(a.tx-a.hx)*inner,a.hy+(a.ty-a.hy)*inner);ctx.lineTo(a.tx,a.ty);ctx.lineTo(b.tx,b.ty);ctx.lineTo(b.hx+(b.tx-b.hx)*inner,b.hy+(b.ty-b.hy)*inner);ctx.closePath();ctx.fill();
-          ctx.globalAlpha=alpha*.7;ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(a.tx,a.ty);ctx.lineTo(b.tx,b.ty);ctx.stroke();
+          ctx.globalAlpha=alpha*.29;ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(a.hx+(a.tx-a.hx)*inner,a.hy+(a.ty-a.hy)*inner);ctx.lineTo(a.tx,a.ty);ctx.lineTo(b.tx,b.ty);ctx.lineTo(b.hx+(b.tx-b.hx)*inner,b.hy+(b.ty-b.hy)*inner);ctx.closePath();ctx.fill();
+          ctx.globalAlpha=alpha*.8;ctx.strokeStyle=col;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(a.tx,a.ty);ctx.lineTo(b.tx,b.ty);ctx.stroke();
           if(quality>.6){ctx.globalAlpha=alpha*.42;ctx.strokeStyle='#fff4da';ctx.lineWidth=.8;ctx.stroke();}
         }ctx.restore();
       }
@@ -9818,7 +9945,6 @@
     const SETUP_VERSION=1;
     const BEST_OF=3; /* the shipped match format: first to 2 rounds */
     var chosenRival=null; /* ROSTER: the player's picked CPU rival (VS CPU + training dummy); null = AUTO classic rival */
-    var rbSetupWasSaved=false, rbBootRestoring=true; /* UI STREAMLINE: CONTINUE pill shows only when a setup was actually saved (loaded from storage, or persisted after boot) */
     function snapshotSetup(){
       const sfSnap={}; for(const ch of CHAR_IDS)sfSnap[ch]=(G.startForms&&G.startForms[ch])||PROFILES[ch].affinityForm;
       return {v:SETUP_VERSION,playerChar:G.playerChar,diff:CHRUN?CHRUN.old.diff:G.diff,arch:CHRUN?CHRUN.old.arch:aiArchSel,arena:CHRUN?CHRUN.old.arena:G.arena,
@@ -9827,12 +9953,12 @@
     }
     function persistLastSetup(){
       if(!saveReady)return;
-      try{ window.localStorage.setItem(SETUP_KEY,JSON.stringify(snapshotSetup())); if(!rbBootRestoring)rbSetupWasSaved=true; }catch(e){ /* session-only */ }
+      try{ window.localStorage.setItem(SETUP_KEY,JSON.stringify(snapshotSetup())); }catch(e){ /* session-only */ }
       refreshSetupSummary();
     }
     function loadLastSetup(){
       try{ const raw=window.localStorage.getItem(SETUP_KEY); if(!raw)return null;
-        const s=JSON.parse(raw); if(s&&typeof s==='object'){ rbSetupWasSaved=true; return s; } return null; }catch(e){ return null; }
+        const s=JSON.parse(raw); return (s&&typeof s==='object')?s:null; }catch(e){ return null; }
     }
     function applyLastSetup(s){
       if(!s)return;
@@ -9864,7 +9990,6 @@
         +' &middot; CPU STYLE <b>'+archTxt+'</b> &middot; ARENA <b>'+ARENA_NAMES[G.arena].toUpperCase()+'</b>'
         +' &middot; FORM <b>'+form+(fdef?' · '+fdef.name.toUpperCase():'')+'</b>'
         +' &middot; SABER <b>'+(HILT_NAMES[cfg.hilt]||'STANDARD')+' / '+String(cfg.color).toUpperCase()+'</b> &middot; <b>BEST OF 3</b>';
-      const _cbtn=$('startDuelBtn'); if(_cbtn)_cbtn.style.display=rbSetupWasSaved?'':'none'; /* UI STREAMLINE: no saved setup, no pill */
       const sub=$('startDuelSub');
       if(sub)sub.textContent=CHARS[you].short+' vs '+CHARS[cpu].short+' · '+DIFF[G.diff].name+' · '+ARENA_NAMES[G.arena]+' · Best of 3';
       const grid=$('lastDuelGrid');
@@ -9910,6 +10035,7 @@
          state only — never read by the sim, never hashed. */
       thrown:0,counters:0,gbDealt:0,gbTaken:0,reactSum:0,reactN:0}; }
     function startMatch(){
+      rcAwarded=false; $('rcEnd').textContent='';const choices=$('rbPathChoices');if(choices)choices.remove();
       if(CHRUN)chResetMatch();
       latchSwept(); /* STAGE 1 PASS: the swept-collision flag is read once, here, for the whole match */
       TR=null; CINE.pending=true; /* CINEMATIC INTRO: armed here — startRound round 1 consumes it; drills never call startMatch */ $('drillHud').classList.remove('on','labFade','labOff'); const _lf2=$('labFlash'); if(_lf2)_lf2.classList.remove('on'); $('drillScreen').classList.add('hidden');
@@ -9939,7 +10065,7 @@
         if(G.diff===2&&Math.random()<0.25)C.form=(cChar==='vader'||cChar==='maul'||cChar==='sidious')?'VII':'IV';
       }
       if(G.cumP){ P.stats=G.cumP; C.stats=G.cumC; }
-      if(CHRUN)C.form=CHAPTERS[CHRUN.idx].form;
+      if(CHRUN)C.form=CHAPTERS[CHRUN.idx].form;if(RB_PATH?.node){const v=RB_PATH.node;C.maxHp=v.hp;C.hp=C.dispHp=v.hp;C.maxPosture=v.posture;C.posture=v.posture;P.gr.mana=Math.min(100,55+RB_PATH.mana);P.hp=P.dispHp=Math.min(P.maxHp||100,RB_PATH.carry);P.gr.ward=RB_PATH.ward;P.gr.wardAngle=P.facing===1?0:Math.PI;}
       /* S5 (local only): versus P2 opens in their picked form; a run
          opponent opens in its row's form with its boss tuning; a
          survival wave starts the player at the carried HP with
@@ -10048,7 +10174,7 @@
       const er=$('endRead'); if(er)er.textContent=G.online?'':cpuReadNote();
       const ea=$('endAdapt'); if(ea)ea.textContent=G.online?'':(ADAPT.on?('Adaptive difficulty: '+(ADAPT.lastMove||'ON, but no drift this match — the rounds stayed even.')):'');
       if(G.online)onlineOnMatchEnd();
-      if(CHRUN)chEnd(won);else s5OnMatchEnd(won); /* S5: stats / rating / run progression — presentation + progress store only */
+      if(CHRUN)chEnd(won);else if(!NET.rbMatch)s5OnMatchEnd(won);else $('endOnlineNote').textContent=RBR.playback?'Replay finished':'Casual Rune Duel · no verified rating or card rewards';if(RBR.match)rbrFinish();if(!RBR.playback){rcFinish(won);rbLogMatch(won);}if(RB_PATH?.node)rbPathEnd(won); /* S5: stats / rating / run progression — presentation + progress store only */
       $('endScreen').classList.remove('hidden');
       $('controls').classList.remove('on');
     }
@@ -10108,7 +10234,7 @@
         if(CC.active){ ccTick(dt); stepBlade(P,dt); stepBlade(C,dt); } /* __CARDCLASH_HOOK: the card fight replaces both fighter updates, exactly as the blade lock does */
         else if(LOCK.active){ lockTick(dt); stepBlade(P,dt); stepBlade(C,dt); /* BLADE LOCK: the contest replaces both fighter updates; projectiles hold. ANALOG STAGE B: the blade state still steps — in tracking mode only (the lock makes every stance ineligible), so it follows the lock geometry and re-seeds cleanly when the lock breaks */ }
         else if(frozen){ bufferTick(P); bufferTick(C); }
-        else { if(grActive())grTick(dt); if(G.phase!=='fight')return; fighterUpdate(P,dt); fighterUpdate(C,dt); separateFighters(); projUpdate(dt); stepBlade(P,dt); stepBlade(C,dt); /* ANALOG STAGE B: authoritative blade step, same tick as the fighter updates it follows */ }
+        else { if(grActive())grTick(dt); if(G.phase!=='fight'){if(G.online)onlineAfterTick();return;} fighterUpdate(P,dt); fighterUpdate(C,dt); separateFighters(); projUpdate(dt); stepBlade(P,dt); stepBlade(C,dt); /* ANALOG STAGE B: authoritative blade step, same tick as the fighter updates it follows */ }
         if(G.online)onlineAfterTick();
       }else if(G.phase==='roundEnd'){
         G.roundEndT+=dt;
@@ -10129,6 +10255,7 @@
       }
     }
     function loop(ts){
+      if(window.__RB_MANUAL)return;
       requestAnimationFrame(loop);
       if(!lastTs)lastTs=ts;
       let frameDt=(ts-lastTs)/1000; lastTs=ts;
@@ -10158,7 +10285,7 @@
         if(window.__pedLive&&PED.ok){ const mp=$('panelVersus'); if(mp&&mp.classList.contains('on'))renderPedestal(rawDt,menuT); }
       }
       if(G.mode!=='fight'||!P||!C){ simAcc=0; render(rawDt,menuT); return; }
-      if(G.paused){ simAcc=0; render(0,ts/1000); updateHUD(); return; }
+      if(G.paused||RBR.paused){ simAcc=0; render(0,ts/1000); updateHUD(); return; }
       /* LOCKSTEP GATE: a fight tick may only execute when BOTH players'
          inputs for it have arrived. While waiting, the duel honestly
          freezes (rendering continues) instead of guessing inputs. */
@@ -11398,7 +11525,6 @@
     try{ applyLastSetup(loadLastSetup()); }catch(e){}
     saveReady=true; persistSave();
     persistLastSetup();
-    refreshSetupSummary(); /* UI STREAMLINE: the CONTINUE pill is settled at gate entry (dismissGate) — boot-time wiring persists must not mark a setup 'saved' */
     /* ---- STAGE 3: drill launchers + drill result buttons ---- */
     document.querySelectorAll('.drillBtn').forEach(b=>b.addEventListener('click',()=>{ startTraining(b.dataset.drill); }));
     $('drillRetryBtn').addEventListener('click',()=>{ if(TR)startTraining(TR.id); });
@@ -11527,12 +11653,12 @@
       fitArena(); tryLockLandscape();
       startMatch();
     });
-    $('rematchBtn').addEventListener('click',()=>{ audioInit(); if(CHRUN){chNext();return;} if(G.online){ onlineRematchVote(); return; } if(RUN&&(RUN.phase==='advance'||RUN.phase==='retry')){ $('endScreen').classList.add('hidden'); fitArena(); runAdvance(); return; } if(RUN&&RUN.phase==='done'){ const k=RUN.kind; $('endScreen').classList.add('hidden'); if(k==='ladder')beginLadder(); else if(k==='boss')beginBoss(); else beginSurvival(); return; } fadeOutMenuTheme(); $('endScreen').classList.add('hidden'); fitArena(); startMatch(); });
+    $('rematchBtn').addEventListener('click',()=>{ audioInit(); if(RB_PATH?.node){if(RB_PATH.done)toMenu();else rbPathAdvance(0);return;} if(CHRUN){chNext();return;} if(G.online){ onlineRematchVote(); return; } if(RUN&&(RUN.phase==='advance'||RUN.phase==='retry')){ $('endScreen').classList.add('hidden'); fitArena(); runAdvance(); return; } if(RUN&&RUN.phase==='done'){ const k=RUN.kind; $('endScreen').classList.add('hidden'); if(k==='ladder')beginLadder(); else if(k==='boss')beginBoss(); else beginSurvival(); return; } fadeOutMenuTheme(); $('endScreen').classList.add('hidden'); fitArena(); startMatch(); });
         /* STAGE 4: ONE return-to-menu path — every overlay closed, every
        input cleared, hum off, theme back, rotation dropped */
     function toMenu(){
-      const wasChronicle=!!CHRUN;
-      grLeave(); if(wasChronicle)chLeave();
+      const wasChronicle=!!CHRUN,wasPath=!!RB_PATH;
+      rbPathLeave();grLeave(); if(wasChronicle)chLeave();
       if(G.online){ onlineDeclineMatch(); return; }
       G.paused=false; TR=null; RUN=null; G.versus=false; G.cpuChar=null; G.winTarget=2; document.body.classList.remove('versus-on'); clearAllInputs(); cineEnd();
       $('drillHud').classList.remove('on','labFade','labOff'); const _lf3=$('labFlash'); if(_lf3)_lf3.classList.remove('on'); $('drillScreen').classList.add('hidden');
@@ -11541,7 +11667,7 @@
       $('hud').classList.remove('on'); $('controls').classList.remove('on'); $('topBtns').classList.remove('on');
       const co=$('callout'); if(co)co.classList.remove('on');
       G.mode='menu'; G.phase='idle'; fitArena(); setHum(false);
-      $('menu').classList.remove('hidden'); wipeGo(); playMenuTheme(); if(wasChronicle)showPanel('panelChronicle');
+      $('menu').classList.remove('hidden'); wipeGo(); playMenuTheme(); if(wasChronicle)showPanel('panelChronicle');else if(wasPath)showPanel('panelGrimoire');
     }
     $('changeBtn').addEventListener('click',()=>{ if(G.online){ onlineDeclineMatch(); return; } if(RUN){ const k=RUN.kind; toMenu(); showPanel(k==='ladder'?'panelLadder':k==='boss'?'panelBoss':'panelSurvival'); return; } toMenu(); });
     $('endMenuBtn').addEventListener('click',()=>{ if(G.online){ onlineDeclineMatch(); return; } toMenu(); });
@@ -11565,7 +11691,6 @@
     let gateGone=false;
     function dismissGate(){
       if(gateGone)return; gateGone=true; window.__gateGone=true;
-      rbBootRestoring=false; try{ refreshSetupSummary(); }catch(e){} /* UI STREAMLINE: settle the CONTINUE pill now the menu is actually entered */
       /* visuals FIRST, each step isolated: a failure anywhere in the audio
          stack must never leave the gate standing with gateGone already
          latched (the old order set the latch, then let audioInit() run
@@ -11581,7 +11706,7 @@
        booting — the early handler beside the gate markup records that on
        window.__gateGone and has already done the visuals; adopt the state
        so the theme retry and the keyboard path stay in sync */
-    if(window.__gateGone){ gateGone=true; rbBootRestoring=false; try{ refreshSetupSummary(); }catch(e){} try{ $('menu').classList.remove('hidden'); }catch(e){} const g0=$('gate'); if(g0)g0.style.display='none'; }
+    if(window.__gateGone){ gateGone=true; try{ $('menu').classList.remove('hidden'); }catch(e){} const g0=$('gate'); if(g0)g0.style.display='none'; }
     const gateBtn=$('gateBtn');
     if(gateBtn){ gateBtn.addEventListener('click',dismissGate); gateBtn.addEventListener('pointerdown',dismissGate); }
     const gateEl=$('gate');
@@ -11652,11 +11777,11 @@
       const mx=Math.round(clamp(typeof c.moveX==='number'?c.moveX:0,-1,1)*127)+128;
       const adl=c.atkDirL?({left:1,overhead:2,right:3,low:4}[c.atkDirL]||0):0;
       const adh=c.atkDirH?({left:1,overhead:2,right:3,low:4}[c.atkDirH]||0):0;
-      return b|(dc<<12)|(mx<<14)|(adl<<24)|(adh<<27); /* FLICK: per-strike direction overrides, bits 24-29 — clear of every shipped field */
+      return (b|(dc<<12)|(mx<<14)|(adl<<24)|(adh<<27))+(c.rbSlot||0)*1073741824; /* FLICK: per-strike direction overrides, bits 24-29 — clear of every shipped field */
     }
     function unpackCtl(n){
-      n=n|0;
-      return {left:n&1?1:0,right:n&2?1:0,up:n&4?1:0,down:n&8?1:0,light:n&16?1:0,heavy:n&32?1:0,
+      const rbSlot=Math.floor(n/1073741824);n=n|0;
+      return {rbSlot,left:n&1?1:0,right:n&2?1:0,up:n&4?1:0,down:n&8?1:0,light:n&16?1:0,heavy:n&32?1:0,
         block:n&64?1:0,feint:n&128?1:0,dash:n&256?1:0,pull:n&512?1:0,special:n&1024?1:0,alt:n&2048?1:0,
         formNext:n&4194304?1:0,formPrev:n&8388608?1:0,
         dir:CODE_DIR[(n>>12)&3]||null,moveX:(((n>>14)&255)-128)/127,
@@ -11692,18 +11817,19 @@
            sector). A classic local fighter never latches blade.ana,
            so classic hash values are exactly the pre-stage values. */
         if(f.blade&&f.blade.ana){ mix(Math.round(f.blade.ang*1000)); mix(Math.round(f.blade.des*1000)); mix(Math.round(f.blade.vel*20)); }
-        mix(CHAR_IDS.indexOf(f.char)); /* ROSTER: identity is setup state — both clients agree it, and it guards cross-roster mixups */
+        if(NET.rbMatch&&f.gr){const g=f.gr;for(const key of ['mana','cd','flame','frostEdge','frost','haste','ward','wardAngle','breaker','bloodblade','edge','edgePower','freezePower','echo','echoPower','comboT','hits','casts','parries','dodges','drained','blocks'])mix(Math.round((g[key]||0)*1000));mix(g.ascended?1:0);mix(g.wasDash?1:0);mix(g.base?.parries||0);mix(g.base?.blocks||0);mix(Object.keys(GR_COL).indexOf(g.lastSchool));for(const id of g.hand.concat(g.queue))mix(GR_CARDS.findIndex(c=>c.id===id)+1);mix(g.pending?GR_CARDS.findIndex(c=>c.id===g.pending.card)+1:0);if(g.pending){mix(Math.round(g.pending.t*1000));mix(Math.round(g.pending.angle*1000));mix(Math.round(g.pending.hp*1000));}}mix(CHAR_IDS.indexOf(f.char)); /* ROSTER: identity is setup state — both clients agree it, and it guards cross-roster mixups */
       };
       mix(upto); mix(NET.seed|0); mix(hitstopTicks); mix(slowmoTicks); /* S4: freeze state is sim state */ mix(wpT); mix(wpPass?1:0); /* SIDE-SWITCH: walk-past pair state is sim state */ F(P); F(C); mix(G.winsP); mix(G.winsC); mix(Math.round(G.timer*60)); mix(projectiles.length);
       for(const pr of projectiles){ mix(Math.round(pr.x*2)); mix(Math.round(pr.y*2)); mix(Math.round(pr.vx)); mix(pr.returning?1:0); mix(pr.kind==='staff'?7:1); mix(pr.hitOut?1:0); mix(pr.hitBack?1:0); }
       return (h>>>0).toString(36);
     }
     function netSend(o){
+      if(RBR.playback)return false;
       if(!NET.ws||NET.ws.readyState!==1)return false;
       try{ NET.ws.send(JSON.stringify({type:'runeblade:state',dueler:o})); return true; }catch(e){ return false; }
     }
     function onlineResetClocks(){
-      OF.tick=0; OF.localBuf.clear(); OF.remoteBuf.clear(); OF.hashes.clear(); OF.rHashes.clear();
+      NET.rbSlot=0;OF.tick=0; OF.localBuf.clear(); OF.remoteBuf.clear(); OF.hashes.clear(); OF.rHashes.clear();
       OF.sentUpTo=OF.delay-1; OF.lastLocalPacked=packCtl(emptyCtl()); OF.pendingDelay=null; OF.stallSince=0; OF.lastRetryAt=0;
       NET.desynced=false; NET.graceUntil=0;
     }
@@ -11712,12 +11838,13 @@
        P/C are swapped around playerCtl() — that function was written
        for "P is me" (stick-block reads my facing, my rival's state) and
        the swap makes it read the guest's fighter as "me" exactly. */
-    function onlineSample(){
+    function onlineSample(){if(RBR.playback)return;
       let ctl;
       if(G.localSlot==='C'){ const _p=P,_c=C; P=_c; C=_p; ctl=playerCtl(); P=_p; C=_c; }
       else ctl=playerCtl();
-      const packed=packCtl(ctl);
       const target=OF.tick+OF.delay;
+      if(NET.rbMatch&&!OF.localBuf.has(target)&&NET.rbSlot){ctl.rbSlot=NET.rbSlot;NET.rbSlot=0;}
+      const packed=packCtl(ctl);
       if(!OF.localBuf.has(target))OF.localBuf.set(target,packed);
       OF.lastLocalPacked=packed;
       const batch=[];
@@ -11728,7 +11855,7 @@
       if(batch.length){ netSend({k:'in',f:OF.sentUpTo+1,i:batch}); OF.sentUpTo=target; }
     }
     function onlineCanRun(){
-      if(NET.desynced)return false;
+      if(NET.desynced||RBR.paused)return false;
       const t=OF.tick;
       if(t<OF.delay)return true; /* the opening delay ticks are empty inputs on both sides, by agreement */
       return OF.localBuf.has(t)&&OF.remoteBuf.has(t);
@@ -11759,6 +11886,7 @@
       onlinePingHud();
     }
     function onlineStallTick(){
+      if(RBR.playback){netBanner("REPLAY INPUT ENDED",false);return;}if(RBR.paused){netBanner("RECONNECTING · PLEASE KEEP THE GAME OPEN",true);return;}
       const now=performance.now();
       if(!OF.stallSince)OF.stallSince=now;
       /* Stage 6: bounded input replay during lockstep stalls. Replaying
@@ -11814,8 +11942,12 @@
         onlineUi('Opponent left the room.');
       }
     }
+    function rbWireDeck(d){return Array.isArray(d)&&d.length>=6&&d.length<=10&&new Set(d).size===d.length&&d.every(id=>!!grCard(id))&&new Set(d.map(id=>grCard(id).school)).size<=2;}
+    function rbReadyPacket(){const rune=$('rbOnlineMode').value==='rune';return {k:'ready',ready:NET.myReady,rb:rune?'rb3':null,deck:rune?GR.deck.slice():null};}
+    function rbSetup(cfg){const rune=$('rbOnlineMode').value==='rune';if(!rune){if(NET.rbPeer?.rb)return false;return true;}if(NET.rbPeer?.rb!=='rb3'||!rcDeckValid(GR.deck,GR.schools)||!rbWireDeck(NET.rbPeer.deck))return false;cfg.rb={v:'rb3',p:GR.deck.slice(),c:NET.rbPeer.deck.slice()};cfg.delay=3;return true;}
     function onlineStartMatch(cfg){
-      G.online=true; G.localSlot=NET.host?'P':'C';
+      const wants=$('rbOnlineMode').value==='rune';if(wants!==!!cfg.rb){onlineUi('Duel type mismatch. Ready again with the same mode.');return;}if(cfg.rb){const own=NET.host?cfg.rb.p:cfg.rb.c,other=NET.host?cfg.rb.c:cfg.rb.p;if(cfg.rb.v!=='rb3'||!rbWireDeck(own)||!rbWireDeck(other)||(!(RBR.match||RBR.playback)&&(!rcDeckValid(GR.deck,GR.schools)||JSON.stringify(own)!==JSON.stringify(GR.deck)||JSON.stringify(other)!==JSON.stringify(NET.rbPeer?.deck)))){onlineUi('Rune deck or protocol mismatch. Match not started.');return;}NET.rbMatch=cfg.rb;NET.rbSlot=0;if(!GR.active)GR.oldScheme=G.scheme;GR.active=true;grScheme('analog');$('fightStage').classList.add('gr-mode');}else{grLeave();NET.rbMatch=null;}G.winTarget=2;
+      G.online=true; G.localSlot=NET.host?'P':'C';if(RBR.match||RBR.playback){G.tick=0;G.time=0;clearAllInputs();}
       G.pChar=(CHAR_IDS.indexOf(cfg.pChar)>=0?cfg.pChar:'vader'); G.cChar=(CHAR_IDS.indexOf(cfg.cChar)>=0?cfg.cChar:'obi');
       G.oppChar=NET.host?G.cChar:G.pChar;
       NET.seed=cfg.seed|0; G.seed=cfg.seed|0;
@@ -11836,12 +11968,13 @@
     }
     function onlineOnMatchEnd(){
       NET.rematchMe=false; NET.rematchOpp=false;
-      $('rematchBtn').textContent='REMATCH';
-      $('endMenuBtn').textContent='BACK TO LOBBY';
+      $('rematchBtn').textContent=RBR.playback?'EXIT REPLAY':'REMATCH';
+      $('endMenuBtn').textContent=RBR.playback?'EXIT REPLAY':'BACK TO LOBBY';
       const cb=$('changeBtn'); if(cb)cb.style.display='none';
       const ph=$('pingHud'); if(ph)ph.classList.remove('on');
     }
     function onlineRematchVote(){
+      if(RBR.match)return;if(rbrExit())return;
       if(NET.rematchMe)return; NET.rematchMe=true;
       netSend({k:'rematch'});
       $('rematchBtn').textContent='WAITING FOR OPPONENT…';
@@ -11851,15 +11984,16 @@
     function onlineTryRematchStart(){
       if(NET.rematchMe&&NET.rematchOpp&&NET.host){
         const cfg={k:'start',pChar:G.pChar,cChar:G.cChar,arena:G.arena,seed:(Math.random()*2147483647)|0,delay:OF.delay,pSaber:SABER_CFG[G.pChar],cSaber:NET.oppSaber};
-        netSend(cfg); onlineStartMatch(cfg);
+        if(NET.rbMatch){cfg.rb=NET.rbMatch;cfg.delay=3;}netSend(cfg); onlineStartMatch(cfg);
       }
     }
     function onlineDeclineMatch(){
+      if(rbrExit())return;
       netSend({k:'bye'});
       onlineToLobby('You left the match — back in the lobby.');
     }
     function onlineToLobby(note){
-      G.online=false; G.forfeitWin=false; NET.desynced=false; NET.graceUntil=0; NET_SABERS=null; _saberSig=''; applySaberCustom();
+      grLeave();NET.rbMatch=null;NET.rbSlot=0;G.online=false; G.forfeitWin=false; NET.desynced=false; NET.graceUntil=0; NET_SABERS=null; _saberSig=''; applySaberCustom();
       NET.rematchMe=false; NET.rematchOpp=false; NET.myReady=false; NET.oppReady=false;
       G.paused=false; TR=null; clearAllInputs(); cineEnd();
       const ds=$('desyncScreen'); if(ds)ds.classList.add('hidden');
@@ -11876,10 +12010,10 @@
     function onlineTryStart(){
       if(!NET.host||!NET.oppId||!NET.myReady||!NET.oppReady||G.online)return;
       const cfg={k:'start',pChar:NET.myChar,cChar:NET.oppChar||'obi',arena:G.arena,seed:(Math.random()*2147483647)|0,delay:OF.delay,pSaber:SABER_CFG[NET.myChar],cSaber:NET.oppSaber};
-      netSend(cfg); onlineStartMatch(cfg);
+      if(!rbSetup(cfg)){onlineUi('Both players must select the same duel type and legal decks. Unready, adjust, then ready again.');return;}netSend(cfg); onlineStartMatch(cfg);
     }
     function onlineAdaptDelay(){
-      if(!NET.host||!NET.rtt)return;
+      if(!NET.host||!NET.rtt||NET.rbMatch)return;
       const want=Math.max(2,Math.min(5,Math.ceil((NET.rtt/2)/16.7)+1));
       if(want===OF.delay)return;
       if(G.online&&G.mode==='fight'&&G.phase==='fight'){
@@ -11942,7 +12076,7 @@
       ws.onerror=()=>{ try{ ws.close(); }catch(e){} };
     }
     function onlineDisconnect(silent){
-      const ws=NET.ws; NET.ws=null;
+      NET.rbPeer=null;NET.rbSlot=0;const ws=NET.ws; NET.ws=null;
       if(ws){ try{ ws.send(JSON.stringify({type:'runeblade:leave'})); }catch(e){} try{ ws.close(); }catch(e){} }
       NET.room=null; NET.id=null; NET.oppId=null; NET.oppChar=null; NET.oppReady=false; NET.myReady=false;
       if(!silent){ NET.status='off'; onlineUi('Left the room.'); }
@@ -11955,7 +12089,7 @@
         if(peers.length===1){ NET.oppId=peers[0].id; NET.oppName=peers[0].name||'PLAYER'; }
         onlineUi(NET.host?'Room created — share the code below.':'Joined room '+escHtml(NET.room)+'.');
         netSend({k:'pick',char:NET.myChar,name:NET.myName,saber:SABER_CFG[NET.myChar]});
-        if(NET.myReady)netSend({k:'ready',ready:true});
+        if(NET.myReady)netSend(rbReadyPacket());
         onlinePingStart();
         return;
       }
@@ -11963,7 +12097,7 @@
         if(!NET.oppId){
           NET.oppId=m.id; NET.oppName=m.name||'PLAYER'; NET.oppReady=false;
           netSend({k:'pick',char:NET.myChar,name:NET.myName,saber:SABER_CFG[NET.myChar]});
-          if(NET.myReady)netSend({k:'ready',ready:true});
+          if(NET.myReady)netSend(rbReadyPacket());
           onlineUi('Opponent joined the room.');
         }
         return;
@@ -11978,7 +12112,7 @@
       const d=m.dueler;
       switch(d.k){
         case 'pick': NET.oppChar=(CHAR_IDS.indexOf(d.char)>=0?d.char:'vader'); if(d.name)NET.oppName=String(d.name).slice(0,16); NET.oppSaber=normSaber(d.saber,NET.oppChar); onlineUi(); break;
-        case 'ready': NET.oppReady=!!d.ready; onlineUi(); onlineTryStart(); break;
+        case 'ready': NET.rbPeer={rb:d.rb,deck:rbWireDeck(d.deck)?d.deck.slice():null};NET.oppReady=!!d.ready; onlineUi(); onlineTryStart(); break;
         case 'start': if(!NET.host&&!(G.online&&G.mode==='fight'&&G.phase!=='over'))onlineStartMatch(d); break;
         case 'in': if(G.online){
           if(!Number.isSafeInteger(d.f)||!Array.isArray(d.i)||d.i.length<1||d.i.length>256)break;
@@ -11986,7 +12120,7 @@
           if(d.f>latest||d.f+d.i.length<=earliest)break;
           for(let j=0;j<d.i.length;j++){
             const frame=d.f+j,packed=d.i[j];
-            if(frame<earliest||frame>latest||!Number.isInteger(packed)||packed<0||packed>1073741823)continue;
+            if(frame<earliest||frame>latest||!Number.isInteger(packed)||packed<0||packed>(NET.rbMatch?5368709119:1073741823))continue;
             /* An already accepted frame cannot be rewritten by a later packet. */
             if(!OF.remoteBuf.has(frame))OF.remoteBuf.set(frame,packed);
           }
@@ -12026,14 +12160,15 @@
     });
     const rdyBtn=$('readyBtn');
     if(rdyBtn)rdyBtn.addEventListener('click',()=>{
-      audioInit(); NET.myReady=!NET.myReady;
-      netSend({k:'ready',ready:NET.myReady});
+      audioInit();if(!NET.myReady&&$('rbOnlineMode').value==='rune'&&!rcDeckValid(GR.deck,GR.schools)){onlineUi('Build a legal owned deck first.');return;}NET.myReady=!NET.myReady;
+      netSend(rbReadyPacket());
       onlineUi(); onlineTryStart();
     });
     const leaveBtn=$('leaveRoomBtn');
     if(leaveBtn)leaveBtn.addEventListener('click',()=>{ audioInit(); onlineDisconnect(false); });
     const dsBtn=$('desyncMenuBtn');
     if(dsBtn)dsBtn.addEventListener('click',()=>{ audioInit(); const ds=$('desyncScreen'); if(ds)ds.classList.add('hidden'); onlineToLobby('The desync ended that match — back in the lobby.'); });
+    $('rbOnlineMode').onchange=()=>{if(NET.myReady){NET.myReady=false;netSend(rbReadyPacket());}onlineUi();};
     const nameInput=$('onlineName');
     if(nameInput)nameInput.addEventListener('change',()=>{ NET.myName=(nameInput.value||'PLAYER').trim().slice(0,16)||'PLAYER'; });
     onlineUi(); refreshSetupSummary();
@@ -12597,36 +12732,68 @@
       }};
     
     /* ============= RUNEBLADE 1.6 — isolated Grimoire Duel ============= */
-    const GR_COL={Inferno:'#ed7949',Frost:'#82d9fc',Storm:'#f2d478',Void:'#be8af1',Radiance:'#ffe9a6'};
+    const GR_COL={Inferno:'#ed7949',Frost:'#82d9fc',Storm:'#f2d478',Void:'#be8af1',Radiance:'#ffe9a6',Bloodbound:'#e76c8b'};
     const GR_CARDS=[
       ['flame','Inferno Blade','Inferno',28,'Next clean blade hit +6 fire damage.'],['cinder','Cinder Lance','Inferno',25,'Aimed fire bolt, 10 damage.'],['ember','Ember Ward','Inferno',20,'Restore 22 stamina.'],
       ['frost','Frost Edge','Frost',25,'Next clean blade hit slows enemy for 2.5s.'],['ice','Ice Lance','Frost',26,'Aimed frost bolt, 7 damage and slow.'],['iceward','Glacial Ward','Frost',18,'Restore 20 posture.'],
       ['thunder','Thunder Arc','Storm',28,'Aimed lightning bolt, 11 damage.'],['haste','Gale Step','Storm',22,'15% movement boost for 3s.'],['surge','Storm Surge','Storm',24,'Restore 25 stamina.'],
       ['step','Void Step','Void',26,'Shift 82 units in the aimed direction.'],['curse','Null Hex','Void',24,'Aimed hex drains 14 enemy mana.'],['breaker','Spellbreaker','Void',24,'Counter the next incoming spell within 3s.'],
-      ['shield','Rune Shield','Radiance',24,'Directional ward reduces the next matching blade or spell hit.'],['heal','Dawn Renewal','Radiance',34,'Recover 10 health.'],['focus','Sunlit Focus','Radiance',20,'Restore 23 posture.']
-    ].map(([id,name,school,cost,desc])=>({id,name,school,cost,desc,color:GR_COL[school]}));
+      ['shield','Rune Shield','Radiance',24,'Directional ward reduces the next matching blade or spell hit.'],['heal','Dawn Renewal','Radiance',34,'Recover 10 health.'],['focus','Sunlit Focus','Radiance',20,'Restore 23 posture.'],
+      ['meteor','Ashfall','Inferno',40,'Ritual: aimed bolt deals 16 damage.'],['glacier','Glacier Seal','Frost',30,'Burst: restore 30 posture.'],['wind','Wind Rush','Storm',30,'Burst: restore 32 stamina.'],['dispel','Unravel','Void',32,'Reaction: interrupt an enemy cast; only usable while they cast.'],['renew','Sanctuary','Radiance',42,'Ritual: recover 15 health.'],
+      ['bloodblade','Sanguine Edge','Bloodbound',28,'Next clean sword hit restores up to 6 health.'],['leech','Crimson Lance','Bloodbound',30,'Aimed bolt deals 9 damage and restores 4 health on hit.'],['pact','Blood Pact','Bloodbound',12,'Burst: sacrifice 8 health to restore 28 mana; requires more than 8 health.'],['resolve','Scarlet Resolve','Bloodbound',22,'Burst: restore 24 posture.']
+    ].map(([id,name,school,cost,desc])=>({id,name,school,cost,desc,color:GR_COL[school],speed:['meteor','renew','heal'].includes(id)?'Ritual':['dispel','breaker'].includes(id)?'Reaction':['ember','surge','focus','iceward','glacier','wind','pact','resolve'].includes(id)?'Burst':'Quick'}));
+    const RB_EXTRA=[{"id":"ashbrand","name":"Ash Brand","school":"Inferno","cost":27,"kind":"edge","power":5,"desc":"Next clean sword hit deals +5 damage.","speed":"Quick","rarity":"Common"},{"id":"firewheel","name":"Firewheel","school":"Inferno","cost":33,"kind":"bolt","power":12,"desc":"Aimed bolt deals 12 damage.","speed":"Quick","rarity":"Rare"},{"id":"kindle","name":"Kindle","school":"Inferno","cost":16,"kind":"stamina","power":16,"desc":"Restore 16 stamina.","speed":"Burst","rarity":"Rare"},{"id":"phoenix","name":"Phoenix Oath","school":"Inferno","cost":42,"kind":"heal","power":13,"desc":"Restore 13 health.","speed":"Ritual","rarity":"Epic"},{"id":"magma","name":"Magma Chain","school":"Inferno","cost":34,"kind":"slowbolt","power":9,"desc":"Aimed bolt deals 9 damage and slows.","speed":"Quick","rarity":"Epic"},{"id":"sunforge","name":"Sunforge","school":"Inferno","cost":37,"kind":"edge","power":9,"desc":"Next clean sword hit deals +9 damage.","speed":"Quick","rarity":"Legendary"},{"id":"rime","name":"Rime Blade","school":"Frost","cost":22,"kind":"frostedge","power":3,"desc":"Next clean hit slows for 3 seconds.","speed":"Quick","rarity":"Common"},{"id":"hail","name":"Hailstone","school":"Frost","cost":24,"kind":"bolt","power":8,"desc":"Aimed bolt deals 8 damage.","speed":"Quick","rarity":"Rare"},{"id":"icewall","name":"Icewall","school":"Frost","cost":30,"kind":"ward","power":5,"desc":"Directional ward lasts 5 seconds or until a hit.","speed":"Quick","rarity":"Rare"},{"id":"snowmend","name":"Snowmend","school":"Frost","cost":32,"kind":"heal","power":8,"desc":"Restore 8 health.","speed":"Quick","rarity":"Epic"},{"id":"permafrost","name":"Permafrost","school":"Frost","cost":37,"kind":"slowbolt","power":10,"desc":"Aimed bolt deals 10 damage and slows.","speed":"Quick","rarity":"Epic"},{"id":"winter","name":"Winter Resolve","school":"Frost","cost":28,"kind":"posture","power":27,"desc":"Restore 27 posture.","speed":"Burst","rarity":"Legendary"},{"id":"spark","name":"Spark","school":"Storm","cost":18,"kind":"bolt","power":5,"desc":"Aimed bolt deals 5 damage.","speed":"Quick","rarity":"Common"},{"id":"tailwind","name":"Tailwind","school":"Storm","cost":19,"kind":"haste","power":2,"desc":"Move 15% faster for 2 seconds.","speed":"Burst","rarity":"Rare"},{"id":"tempest","name":"Tempest","school":"Storm","cost":40,"kind":"bolt","power":15,"desc":"Aimed bolt deals 15 damage.","speed":"Ritual","rarity":"Rare"},{"id":"charge","name":"Charge Rune","school":"Storm","cost":22,"kind":"stamina","power":24,"desc":"Restore 24 stamina.","speed":"Burst","rarity":"Epic"},{"id":"thundershield","name":"Thunder Shield","school":"Storm","cost":32,"kind":"ward","power":5,"desc":"Directional ward lasts 5 seconds or until a hit.","speed":"Quick","rarity":"Epic"},{"id":"skybreak","name":"Skybreak","school":"Storm","cost":34,"kind":"edge","power":8,"desc":"Next clean sword hit deals +8 damage.","speed":"Quick","rarity":"Legendary"},{"id":"nightstep","name":"Nightstep","school":"Void","cost":24,"kind":"step","power":65,"desc":"Shift 65 units forward or back.","speed":"Quick","rarity":"Common"},{"id":"rift","name":"Rift Needle","school":"Void","cost":28,"kind":"bolt","power":10,"desc":"Aimed bolt deals 10 damage.","speed":"Quick","rarity":"Rare"},{"id":"silence","name":"Silence","school":"Void","cost":28,"kind":"counter","power":4,"desc":"Counter the next incoming spell within 4 seconds.","speed":"Reaction","rarity":"Rare"},{"id":"veil","name":"Veil Ward","school":"Void","cost":25,"kind":"ward","power":3,"desc":"Directional ward lasts 3 seconds or until a hit.","speed":"Quick","rarity":"Epic"},{"id":"hollow","name":"Hollow Pulse","school":"Void","cost":29,"kind":"drain","power":19,"desc":"Aimed hex drains 19 mana.","speed":"Quick","rarity":"Epic"},{"id":"shade","name":"Shade Companion","school":"Void","cost":39,"kind":"summon","power":5,"desc":"Summon an echo for 5 seconds; its next clean sword assist adds 5 damage.","speed":"Ritual","rarity":"Legendary"},{"id":"glimmer","name":"Glimmer","school":"Radiance","cost":22,"kind":"heal","power":5,"desc":"Restore 5 health.","speed":"Quick","rarity":"Common"},{"id":"aegis","name":"Aegis","school":"Radiance","cost":29,"kind":"ward","power":5,"desc":"Directional ward lasts 5 seconds or until a hit.","speed":"Quick","rarity":"Rare"},{"id":"oath","name":"Oathkeeper","school":"Radiance","cost":22,"kind":"posture","power":20,"desc":"Restore 20 posture.","speed":"Burst","rarity":"Rare"},{"id":"dawnbolt","name":"Dawnbolt","school":"Radiance","cost":27,"kind":"bolt","power":9,"desc":"Aimed bolt deals 9 damage.","speed":"Quick","rarity":"Epic"},{"id":"seraph","name":"Seraph Companion","school":"Radiance","cost":40,"kind":"summon","power":5,"desc":"Summon an echo for 5 seconds; its next clean sword assist adds 5 damage.","speed":"Ritual","rarity":"Epic"},{"id":"judgment","name":"Judgment","school":"Radiance","cost":44,"kind":"bolt","power":16,"desc":"Aimed bolt deals 16 damage.","speed":"Ritual","rarity":"Legendary"},{"id":"scar","name":"Scarlet Mark","school":"Bloodbound","cost":25,"kind":"edge","power":5,"desc":"Next clean sword hit deals +5 damage.","speed":"Quick","rarity":"Common"},{"id":"vein","name":"Vein Needle","school":"Bloodbound","cost":28,"kind":"leechbolt","power":8,"desc":"Aimed bolt deals 8 damage and heals 4 on hit.","speed":"Quick","rarity":"Rare"},{"id":"redward","name":"Red Ward","school":"Bloodbound","cost":26,"kind":"ward","power":4,"desc":"Directional ward lasts 4 seconds or until a hit.","speed":"Quick","rarity":"Rare"},{"id":"bloodrush","name":"Blood Rush","school":"Bloodbound","cost":24,"kind":"haste","power":3,"desc":"Move 15% faster for 3 seconds.","speed":"Burst","rarity":"Epic"},{"id":"crimson","name":"Crimson Renewal","school":"Bloodbound","cost":34,"kind":"heal","power":10,"desc":"Restore 10 health.","speed":"Quick","rarity":"Epic"},{"id":"revenant","name":"Revenant","school":"Bloodbound","cost":41,"kind":"summon","power":6,"desc":"Summon an echo for 5 seconds; its next clean sword assist adds 6 damage.","speed":"Ritual","rarity":"Legendary"}];
+    GR_CARDS.push(...RB_EXTRA.map(c=>({...c,color:GR_COL[c.school]})));
     const grCard=id=>GR_CARDS.find(c=>c.id===id);
-    function grActive(){return !!(typeof GR!=='undefined'&&GR&&GR.active&&typeof G!=='undefined'&&!G.online&&!G.versus&&!TR&&!RUN);}
-    function grLoad(){try{const v=JSON.parse(localStorage.getItem('runeblade-grimoire-v1')||'null');if(v&&Array.isArray(v.schools)&&v.schools.length===2&&new Set(v.schools).size===2&&v.schools.every(x=>typeof x==='string'&&Object.hasOwn(GR_COL,x)))GR.schools=v.schools;}catch(e){} const legal=GR_CARDS.filter(c=>GR.schools.includes(c.school)).map(c=>c.id);GR.deck=legal;try{const v=JSON.parse(localStorage.getItem('runeblade-grimoire-v1')||'null');if(v&&Array.isArray(v.deck)&&v.deck.length===6&&new Set(v.deck).size===6&&v.deck.every(id=>legal.includes(id)))GR.deck=v.deck.slice();}catch(e){} }
+    function grActive(){return !!(typeof GR!=='undefined'&&GR&&GR.active&&typeof G!=='undefined'&&(!G.online||!!NET.rbMatch)&&!G.versus&&!TR&&!RUN);}
+    /* RuneBlade 2.2 — offline collection. Online ownership must be issued by an authenticated backend. */
+    const RC_KEY='runeblade-collection-v1';
+    const RC_START=['flame','cinder','ember','frost','ice','iceward','thunder','haste','step','curse','shield','bloodblade'];
+    const RC_CHAPTER=['focus','meteor','glacier','dispel','renew'];
+    const RC_ROAD=[100,250,450,700,1000,1400,1900,2500,3200,4000];
+    const RC_COST={Common:100,Rare:300,Epic:800,Legendary:2000};
+    const rcRarity=id=>grCard(id)?.rarity||(id==='renew'?'Legendary':['meteor','glacier','wind','dispel','leech','pact'].includes(id)?'Epic':RC_START.includes(id)?'Common':'Rare');
+    const rcDay=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();};
+    const rcValidID=id=>typeof id==='string'&&!!grCard(id);
+    const rcNum=n=>Number.isSafeInteger(n)&&n>=0?Math.min(n,10000000):0;
+    function rcBlank(){let owned=[];try{const v=JSON.parse(localStorage.getItem('runeblade-grimoire-v1')||'null');if(v&&Array.isArray(v.deck)&&v.deck.length>=6&&v.deck.length<=10&&new Set(v.deck).size===v.deck.length&&v.deck.every(rcValidID)&&new Set(v.deck.map(id=>grCard(id).school)).size<=2)owned=v.deck.slice();}catch(e){}for(const id of RC_START)if(owned.length<12&&!owned.includes(id))owned.push(id);return {v:1,owned,essence:0,xp:Object.fromEntries(Object.keys(GR_COL).map(k=>[k,0])),claimed:Object.fromEntries(Object.keys(GR_COL).map(k=>[k,0])),allegiance:'Inferno',chapter:[],daily:{day:rcDay(),wins:0,claimed:false}};}
+    function rcLoad(){const out=rcBlank();try{const d=JSON.parse(localStorage.getItem(RC_KEY)||'null');if(!d||d.v!==1)return out;const own=Array.isArray(d.owned)?[...new Set(d.owned.filter(rcValidID))]:[];if(own.length>=12)out.owned=own;out.essence=rcNum(d.essence);for(const k of Object.keys(GR_COL)){out.xp[k]=rcNum(d.xp?.[k]);out.claimed[k]=Math.min(RC_ROAD.length,rcNum(d.claimed?.[k]),RC_ROAD.filter(n=>out.xp[k]>=n).length);}if(Object.hasOwn(GR_COL,d.allegiance))out.allegiance=d.allegiance;out.chapter=Array.isArray(d.chapter)?[...new Set(d.chapter.filter(i=>Number.isInteger(i)&&i>=0&&i<5))]:[];if(d.daily?.day===rcDay())out.daily={day:rcDay(),wins:Math.min(2,rcNum(d.daily.wins)),claimed:d.daily.claimed===true};}catch(e){}return out;}
+    let RC=rcLoad(),rcAwarded=false,rcNotice='';
+    function rcSave(){try{localStorage.setItem(RC_KEY,JSON.stringify(RC));return true;}catch(e){return false;}}
+    function rcDailyReset(){if(RC.daily.day!==rcDay())RC.daily={day:rcDay(),wins:0,claimed:false};}
+    const rcOwned=id=>RC.owned.includes(id);
+    const rcLegal=schools=>GR_CARDS.filter(c=>schools.includes(c.school)&&rcOwned(c.id)).map(c=>c.id);
+    function rcDeckValid(deck,schools){return Array.isArray(schools)&&schools.length===2&&new Set(schools).size===2&&schools.every(k=>Object.hasOwn(GR_COL,k))&&Array.isArray(deck)&&deck.length>=6&&deck.length<=10&&new Set(deck).size===deck.length&&deck.every(id=>rcLegal(schools).includes(id));}
+    function rcGrant(id,rewards){if(!rcValidID(id))return false;if(rcOwned(id)){RC.essence+=60;if(rewards)rewards.push('+60 essence (duplicate)');return false;}RC.owned.push(id);if(rewards)rewards.push('Unlocked '+grCard(id).name);return true;}
+    function rcNextCard(school){return GR_CARDS.find(c=>c.school===school&&!rcOwned(c.id));}
+    function rcClaimRoad(rewards){const k=RC.allegiance;while(RC.claimed[k]<RC_ROAD.length&&RC.xp[k]>=RC_ROAD[RC.claimed[k]]){RC.claimed[k]++;const c=rcNextCard(k);if(c)rcGrant(c.id,rewards);else{RC.essence+=100;rewards.push('+100 faction essence');}}}
+    function rcCraft(id){if(!rcValidID(id)||rcOwned(id))return false;const cost=RC_COST[rcRarity(id)];if(RC.essence<cost)return false;RC.essence-=cost;rcGrant(id);rcNotice='Crafted '+grCard(id).name+' · −'+cost+' essence.';rcSave();grMenu();return true;}
+    function rcRender(){rcDailyReset();$('rcBalance').textContent=RC.owned.length+' / '+GR_CARDS.length+' cards owned · '+RC.essence+' rune essence · Local profile';$('rcDaily').textContent='Daily quest: Win 2 Grimoire or campaign matches · '+RC.daily.wins+'/2 · '+(RC.daily.claimed?'Reward claimed':'+100 essence');$('rcNotice').textContent=rcNotice;
+      $('rcRoad').replaceChildren();for(const k of Object.keys(GR_COL)){const b=document.createElement('button');b.type='button';b.style.borderColor=GR_COL[k];b.setAttribute('aria-pressed',String(k===RC.allegiance));const n=RC_ROAD[RC.claimed[k]];b.innerHTML='<b>'+k+'</b><small>'+RC.xp[k]+' XP · '+RC.claimed[k]+'/'+RC_ROAD.length+' rewards<br>'+(n?'Next reward: '+n+' XP':'Road complete')+'</small>';b.onclick=()=>{RC.allegiance=k;rcNotice='Reward road set to '+k+'. Earn XP in Grimoire or campaign duels.';rcSave();rcRender();};$('rcRoad').append(b);}
+      $('rcCards').replaceChildren();for(const c of GR_CARDS){if($('rbFilter').value!=='all'&&$('rbFilter').value!==c.school)continue;if($('rbOwnedFilter').value!=='all'&&($('rbOwnedFilter').value==='owned')!==rcOwned(c.id))continue;const b=document.createElement('button');b.type='button';b.style.borderColor=c.color;b.className='rbCard';const own=rcOwned(c.id),cost=RC_COST[rcRarity(c.id)];b.innerHTML=rbArt(c)+'<b>'+c.name+'</b><small>'+c.school+' · '+rcRarity(c.id)+'<br>'+c.desc+'<br>'+(own?'OWNED · '+((RB_MASTERY&&RB_MASTERY[c.id])||0)+' practice casts':'CRAFT · '+cost+' ESSENCE')+'</small>';b.disabled=own||RC.essence<cost;b.onclick=()=>rcCraft(c.id);$('rcCards').append(b);}}
+    function rcFinish(won){if(rcAwarded||G.online||G.versus||!GR.active||TR||RUN)return;rcAwarded=true;rcDailyReset();const rewards=[];const xp=won?60:15,ess=won?60:15;RC.xp[RC.allegiance]+=xp;RC.essence+=ess;rewards.push('+'+xp+' '+RC.allegiance+' XP','+'+ess+' essence');rcClaimRoad(rewards);if(won){RC.daily.wins=Math.min(2,RC.daily.wins+1);if(RC.daily.wins===2&&!RC.daily.claimed){RC.daily.claimed=true;RC.essence+=100;rewards.push('Daily quest: +100 essence');}if(CHRUN&&!RC.chapter.includes(CHRUN.idx)){RC.chapter.push(CHRUN.idx);rcGrant(RC_CHAPTER[CHRUN.idx],rewards);}}const saved=rcSave();$('rcEnd').textContent=rewards.join(' · ')+(saved?'':' · Storage unavailable; rewards are session-only');rcNotice=rewards.join(' · ');grMenu();}
+    function grLoad(){let v=null;try{v=JSON.parse(localStorage.getItem('runeblade-grimoire-v1')||'null');if(v&&Array.isArray(v.schools)&&v.schools.length===2&&new Set(v.schools).size===2&&v.schools.every(x=>Object.hasOwn(GR_COL,x)))GR.schools=v.schools.slice();}catch(e){}const schools=Object.keys(GR_COL);if(rcLegal(GR.schools).length<6){outer:for(let i=0;i<schools.length;i++)for(let j=i+1;j<schools.length;j++)if(rcLegal([schools[i],schools[j]]).length>=6){GR.schools=[schools[i],schools[j]];break outer;}}const legal=rcLegal(GR.schools);GR.deck=rcDeckValid(v?.deck,GR.schools)?v.deck.slice():legal.slice(0,6);rcSave();}
     function grMenu(){
-      $('grSchools').replaceChildren(); for(const school of Object.keys(GR_COL)){const b=document.createElement('button');b.type='button';b.textContent=school;b.style.borderColor=GR_COL[school];b.classList.toggle('sel',GR.schools.includes(school));b.onclick=()=>{if(GR.schools.includes(school)){GR.schools=[school,...GR.schools.filter(x=>x!==school)];grMenu();return;}GR.schools=[GR.schools[0],school];GR.deck=GR_CARDS.filter(c=>GR.schools.includes(c.school)).map(c=>c.id);grMenu();};$('grSchools').append(b);}
-      $('grDeck').replaceChildren(); for(const id of GR.deck){const c=grCard(id),b=document.createElement('button');b.type='button';b.className='sel';b.style.borderColor=c.color;b.innerHTML='<b>'+c.name+' · '+c.cost+' mana</b><small>'+c.desc+'</small>';b.title='Tap to move to back of opening order';b.onclick=()=>{GR.deck=GR.deck.filter(x=>x!==id).concat(id);grMenu();};$('grDeck').append(b);}
-      $('grDeckInfo').textContent=GR.schools.join(' + ')+' · 6/6 cards · first 3 open in hand. Tap a card to reorder. Timeout: highest remaining health % wins.';try{localStorage.setItem('runeblade-grimoire-v1',JSON.stringify({schools:GR.schools,deck:GR.deck}));}catch(e){}
+      const legal=rcLegal(GR.schools);GR.deck=GR.deck.filter((id,i,a)=>legal.includes(id)&&a.indexOf(id)===i).slice(0,10);for(const id of legal)if(GR.deck.length<6&&!GR.deck.includes(id))GR.deck.push(id);
+      $('grSchools').replaceChildren();for(const school of Object.keys(GR_COL)){const b=document.createElement('button');b.type='button';b.textContent=school+' '+GR_CARDS.filter(c=>c.school===school&&rcOwned(c.id)).length+'/'+GR_CARDS.filter(c=>c.school===school).length;b.style.borderColor=GR_COL[school];b.classList.toggle('sel',GR.schools.includes(school));b.onclick=()=>{GR.schools=GR.schools.includes(school)?[school,...GR.schools.filter(x=>x!==school)]:[GR.schools[0],school];grMenu();};$('grSchools').append(b);}
+      const available=GR_CARDS.filter(c=>GR.schools.includes(c.school)).map(c=>c.id).filter(id=>!GR.deck.includes(id));$('grDeck').replaceChildren();for(const id of [...GR.deck,...available]){const c=grCard(id),b=document.createElement('button'),slot=GR.deck.indexOf(id),own=rcOwned(id);b.type='button';b.className=slot>=0?'sel':'';b.style.borderColor=c.color;b.innerHTML=rbArt(c)+'<b>'+(slot>=0?(slot+1)+'. ':own?'+ ':'LOCKED · ')+c.name+' · '+c.cost+' mana</b><small>'+c.speed+' · '+c.desc+'</small>';b.disabled=!own;b.title=!own?'Unlock in Rune Collection':slot>=0?'Move to last slot':'Add or replace last selected card';b.setAttribute('aria-pressed',String(slot>=0));b.onclick=()=>{GR.deck=slot>=0?(GR.deck.length>6?GR.deck.filter(x=>x!==id):GR.deck.filter(x=>x!==id).concat(id)):GR.deck.length<10?GR.deck.concat(id):GR.deck.slice(0,9).concat(id);grMenu();};$('grDeck').append(b);}
+      const valid=rcDeckValid(GR.deck,GR.schools);$('grStart').disabled=!valid;$('grDeckInfo').textContent=GR.schools.join(' + ')+' · '+GR.deck.length+' cards (6–10) · '+(valid?'First 4 open in hand. Tap selected cards to remove (minimum six).':'Choose a pair with at least six owned cards or unlock more.');$('rbDeckStats').textContent='Average mana '+(GR.deck.reduce((n,id)=>n+grCard(id).cost,0)/Math.max(1,GR.deck.length)).toFixed(1)+' · '+GR.deck.filter(id=>grCard(id).speed==='Ritual').length+' rituals · '+GR.deck.filter(id=>grCard(id).speed==='Reaction').length+' reactions';if(valid)try{localStorage.setItem('runeblade-grimoire-v1',JSON.stringify({schools:GR.schools,deck:GR.deck}));}catch(e){}rcRender();
     }
     function grScheme(v){G.scheme=v==='analog'?'analog':'classic';ANA.on=G.scheme==='analog';$('fightStage').classList.toggle('scheme-analog',ANA.on);const b=$('setScheme');if(b){b.textContent='SCHEME: '+(ANA.on?'ANALOG SABER CONTROLS':'CLASSIC CONTROLS');b.classList.toggle('off',!ANA.on);}padReset();anaReset();}
     function grLeave(){if(!GR||!GR.active)return;GR.active=false;GR.req=null;GR.gesture=null;GR.release=null;GR.feint=false;GR.aimConsumed=false;GR.paintKey='';$('grHud').hidden=true;$('chBanner').hidden=true;$('fightStage').classList.remove('gr-mode');$('anaStickLab').textContent='SABER · HOLD GUARD TO DEFEND';if(GR.oldScheme){grScheme(GR.oldScheme);GR.oldScheme=null;}}
-    function grFighter(deck){return {mana:55,hand:deck.slice(0,3),queue:deck.slice(3),cd:0,pending:null,flame:0,frostEdge:0,frost:0,haste:0,ward:0,wardAngle:0,breaker:0};}
-    function grRound(){const opp=Object.keys(GR_COL);const a=opp[(G.round+1)%5],b=opp[(G.round+3)%5];P.gr=grFighter(GR.deck);C.gr=grFighter(CHRUN?CHAPTERS[CHRUN.idx].deck.slice():GR_CARDS.filter(c=>c.school===a||c.school===b).map(c=>c.id));GR.req=null;GR.release=null;GR.gesture=null;GR.aimConsumed=false;GR.feint=false;GR.aiT=1.8;GR.notice='FIGHT · CAST WITH 1–3';GR.noticeT=2;GR.paintKey='';$('chBanner').hidden=!CHRUN;$('grHud').hidden=false;}
+    function grFighter(deck){return {mana:55,hand:deck.slice(0,4),queue:deck.slice(4),cd:0,pending:null,flame:0,frostEdge:0,frost:0,haste:0,ward:0,wardAngle:0,breaker:0,bloodblade:0,edge:0,edgePower:0,freezePower:2.5,echo:0,echoPower:0,lastSchool:'',comboT:0,hits:0,casts:0,parries:0,dodges:0,drained:0,blocks:0,ascended:false};}
+    function grRound(){const opp=Object.keys(GR_COL);const a=opp[(G.round+1)%opp.length],b=opp[(G.round+3)%opp.length];P.gr=grFighter(G.online?NET.rbMatch.p:GR.deck);C.gr=grFighter(G.online?NET.rbMatch.c:RB_PATH?.node?RB_PATH.node.deck:CHRUN?CHAPTERS[CHRUN.idx].deck.slice():GR_CARDS.filter(c=>c.school===a||c.school===b).map(c=>c.id).sort((x,y)=>grCard(x).cost-grCard(y).cost).slice(0,6));GR.req=null;GR.release=null;GR.gesture=null;GR.aimConsumed=false;GR.feint=false;GR.aiT=1.8;GR.notice='FIGHT · CAST WITH 1–4';GR.noticeT=2;GR.paintKey='';$('chBanner').hidden=!CHRUN&&!RB_PATH;$('grHud').hidden=false;if(RB_PATH?.node)$('chBanner').textContent='EXPEDITION · '+(RB_PATH.stage+1)+'/4 · '+RB_PATH.node.name;}
     function grAim(f){if(f===P&&ANA.on&&anaStick.mag>.2)return Math.atan2(anaStick.qy,anaStick.qx);return f.facing===1?0:Math.PI;}
     function grMsg(msg){GR.notice=msg;GR.noticeT=1.8;}
-    function grCue(f,msg,color){addFloat(f.x,f.y-205,msg,color,17);ring(f.x,f.y-100,color,55);if(f===P)grMsg(msg);}
+    function grCue(f,msg,color){addFloat(f.x,f.y-205,msg,color,17);ring(f.x,f.y-100,color,55);if(f===selfF())grMsg(msg);}
     function grInputOpen(){return G.mode==='fight'&&G.phase==='fight'&&!G.paused&&!CC.active&&!LOCK.active;}
-    function grCan(f,i){const g=f.gr,c=g&&Number.isInteger(i)&&i>=0&&i<3&&grCard(g.hand[i]);return !!(grInputOpen()&&c&&g.mana>=c.cost&&g.cd<=0&&!g.pending&&canAct(f)&&!f.blocking&&!(f.formT>0));}
-    function grRequest(i){if(!grActive()||!grInputOpen()||!P||!Number.isInteger(i)||i<0||i>=3||GR.req!==null||!grCan(P,i))return false;GR.req={i,angle:grAim(P),card:P.gr.hand[i],fighter:P};if(anaStick.active){GR.aimConsumed=true;GR.gesture=null;GR.release=null;}return true;}
+    function grCan(f,i){const g=f.gr,c=g&&Number.isInteger(i)&&i>=0&&i<4&&grCard(g.hand[i]);return !!(grInputOpen()&&c&&g.mana>=c.cost&&g.cd<=0&&!g.pending&&canAct(f)&&(!f.blocking||c.speed==='Reaction')&&!(f.formT>0)&&(c.id!=='pact'||f.hp>8)&&(c.id!=='dispel'||foe(f).gr?.pending));}
+    function grRequest(i){if(RBR.playback)return false;if(G.online&&NET.rbMatch){const f=selfF();if(!grActive()||!grCan(f,i)||NET.rbSlot)return false;NET.rbSlot=i+1;return true;}if(!grActive()||!grInputOpen()||!P||!Number.isInteger(i)||i<0||i>=4||GR.req!==null||!grCan(P,i))return false;GR.req={i,angle:grAim(P),card:P.gr.hand[i],fighter:P};if(anaStick.active){GR.aimConsumed=true;GR.gesture=null;GR.release=null;}return true;}
     function grClearBuffer(f){if(f.buf)for(const k of Object.keys(f.buf))f.buf[k]=0;}
-    function grCast(f,i,angle){if(!grCan(f,i))return false;const g=f.gr,c=grCard(g.hand[i]);g.mana-=c.cost;g.queue.push(c.id);g.hand[i]=g.queue.shift();g.cd=1.45;g.pending={card:c.id,t:.48,angle:Number.isFinite(angle)?angle:grAim(f),hp:f.hp};grClearBuffer(f);if(f===P){GR.gesture=null;GR.release=null;GR.aimConsumed=anaStick.active;}grCue(f,'CAST · '+c.name.toUpperCase(),c.color);return true;}
+    function grCast(f,i,angle){if(!grCan(f,i))return false;const g=f.gr,c=grCard(g.hand[i]);g.mana-=c.cost;g.queue.push(c.id);g.hand[i]=g.queue.shift();g.cd=1.45;const duration=c.speed==='Ritual'?.95:c.speed==='Quick'?.38:c.speed==='Reaction'?0:0;g.pending={card:c.id,t:duration,total:duration,angle:Number.isFinite(angle)?angle:grAim(f),hp:f.hp};grClearBuffer(f);if(f===P&&!G.online){GR.gesture=null;GR.release=null;GR.aimConsumed=anaStick.active;}grCue(f,'CAST · '+c.name.toUpperCase(),c.color);if(duration===0){const p=g.pending;g.pending=null;grResolve(f,p);}return true;}
     function grWard(f,ang){const g=f.gr;if(g.ward>0&&Math.abs(ana2WrapPi(ang-g.wardAngle))<=Math.PI/3){g.ward=0;grCue(f,'WARD ABSORBS','#ffe9a6');return true;}return false;}
-    function grSwordHit(a,d,n){if(!a.gr||!d.gr)return n;const blade=a.state==='attack';if(blade&&a.gr.flame>0){a.gr.flame=0;n+=6;grCue(a,'INFERNO BLADE','#ed7949');}if(blade&&a.gr.frostEdge>0){a.gr.frostEdge=0;d.gr.frost=2.5;grCue(d,'FROSTBOUND','#82d9fc');}if(grWard(d,Math.atan2(a.y-d.y,a.x-d.x)))n=Math.max(1,Math.round(n*.45));return n;}
+    function grAscend(f){const g=f.gr, r=rbHero(f);if(CHRUN||g.ascended||!r.test(g))return;g.ascended=true;g.mana=Math.min(100,g.mana+20);grCue(f,r.title+' ASCENDED','#f5d37c');}
+    function grSwordHit(a,d,n){if(!a.gr||!d.gr)return n;const blade=a.state==='attack';if(blade){a.gr.hits++;if(a.gr.edge>0){n+=a.gr.edgePower;a.gr.edge=0;grCue(a,'RUNE EDGE','#f1cd91');}if(a.gr.echo>0){n+=a.gr.echoPower;a.gr.echo=0;grCue(a,'ECHO ASSIST','#c9a4ff');}if(d.gr.frost>0&&a.atk?.type==='heavy'){n+=3;d.gr.frost=0;grCue(a,'SHATTER','#a2ddff');}grAscend(a);if(a.gr.bloodblade>0){a.gr.bloodblade=0;a.hp=Math.min(a.maxHp||100,a.hp+6);a.gr.drained+=6;grCue(a,'SANGUINE EDGE','#e76c8b');}}if(blade&&a.gr.flame>0){a.gr.flame=0;n+=6;grCue(a,'INFERNO BLADE','#ed7949');}if(blade&&a.gr.frostEdge>0){a.gr.frostEdge=0;d.gr.frost=a.gr.freezePower||2.5;a.gr.freezePower=2.5;grCue(d,'FROSTBOUND','#82d9fc');}if(grWard(d,Math.atan2(a.y-d.y,a.x-d.x)))n=Math.max(1,Math.round(n*.45));return n;}
     function grBolt(f,c,ang){const d=foe(f),dx=d.x-f.x,dy=(d.y-100)-(f.y-100),dist=Math.hypot(dx,dy),target=Math.atan2(dy,dx);const color=c.color;
       const reach=c.id==='curse'?290:390;
       const ex=f.x+Math.cos(ang)*Math.min(reach,dist),ey=f.y-100+Math.sin(ang)*Math.min(reach,dist);
@@ -12635,25 +12802,34 @@
       if(timedGuard(d)){grCue(d,'SPELL PARRIED','#ffe9a6');return;}if(d.gr.breaker>0){d.gr.breaker=0;grCue(d,'SPELL COUNTERED','#ffe9a6');return;}
       if(grWard(d,ana2WrapPi(target+Math.PI)))return;
       if(d.blocking){d.posture=Math.max(1,d.posture-8);grCue(d,'SPELL BLOCKED',color);return;}
-      if(c.id==='curse'){d.gr.mana=Math.max(0,d.gr.mana-14);grCue(d,'MANA DRAINED',color);return;}
-      const n=c.id==='ice'?7:c.id==='thunder'?11:10;d.hp=Math.max(0,d.hp-n);d.hurtFlash=.18;if(c.id==='ice')d.gr.frost=2.5;grCue(d,'−'+n+' '+c.name.toUpperCase(),color);if(d.hp<=0)koRound(f);
+      if(c.id==='curse'||c.kind==='drain'){d.gr.mana=Math.max(0,d.gr.mana-(c.power||14));grCue(d,'MANA DRAINED',color);return;}
+      const n=c.kind?c.power:c.id==='ice'?7:c.id==='thunder'?11:c.id==='meteor'?16:c.id==='leech'?9:10;d.hp=Math.max(0,d.hp-n);d.hurtFlash=.18;if(c.id==='ice'||c.kind==='slowbolt')d.gr.frost=2.5;if(c.id==='leech'||c.kind==='leechbolt'){f.hp=Math.min(f.maxHp||100,f.hp+4);f.gr.drained+=4;}grCue(d,'−'+n+' '+c.name.toUpperCase(),color);if(d.hp<=0)koRound(f);
     }
-    function grResolve(f,p){const c=grCard(p.card),g=f.gr;if(!c)return;runeFxAdd18(f,c,p);if(CHRUN&&f===P)chRecord(c.id);switch(c.id){case 'flame':g.flame=8;break;case 'frost':g.frostEdge=8;break;case 'haste':g.haste=3;break;case 'breaker':g.breaker=3;break;case 'shield':g.ward=4;g.wardAngle=p.angle;break;case 'heal':f.hp=Math.min(f.maxHp||100,f.hp+10);break;case 'ember':case 'surge':f.stamina=Math.min(100,f.stamina+(c.id==='surge'?25:22));break;case 'focus':case 'iceward':f.posture=Math.min(f.maxPosture||100,f.posture+(c.id==='focus'?23:20));break;case 'step':{const d=foe(f),dx=Math.cos(p.angle)*82;let x=clamp(f.x+dx,WALL_L+25,WALL_R-25);if((f.x-d.x)*(x-d.x)<=0||Math.abs(x-d.x)<50)x=f.x;f.x=x;break;}default:grBolt(f,c,p.angle);return;}grCue(f,c.name.toUpperCase(),c.color);}
-    function grTick(dt){if(!P.gr||!C.gr)return;GR.noticeT=Math.max(0,GR.noticeT-dt);for(const f of [P,C]){const g=f.gr;g.mana=Math.min(100,g.mana+dt*7);for(const k of ['cd','flame','frostEdge','frost','haste','ward','breaker'])g[k]=Math.max(0,g[k]-dt);if(g.pending){const p=g.pending;if(f.hp<p.hp||!canAct(f)||f.blocking||f.formT>0){g.pending=null;grCue(f,'CAST INTERRUPTED','#b1a1a0');}else if((p.t-=dt)<=0){g.pending=null;grResolve(f,p);if(G.phase!=='fight')return;}}}
+    function grResolve(f,p){const c=grCard(p.card),g=f.gr;if(!c)return;runeFxAdd18(f,c,p);if(CHRUN&&f===P)chRecord(c.id);else if(!G.online&&f===P)RB_MASTERY[c.id]=(RB_MASTERY[c.id]||0)+1;g.casts++;rbCombo(f,c);grAscend(f);if(c.kind){rbEffect(f,c,p);return;}switch(c.id){case 'bloodblade':g.bloodblade=8;break;case 'pact':f.hp=Math.max(1,f.hp-8);g.mana=Math.min(100,g.mana+28);break;case 'glacier':case 'resolve':f.posture=Math.min(f.maxPosture||100,f.posture+(c.id==='glacier'?30:24));break;case 'wind':f.stamina=Math.min(100,f.stamina+32);break;case 'renew':f.hp=Math.min(f.maxHp||100,f.hp+15);break;case 'dispel':{const d=foe(f);if(d.gr.pending){d.gr.pending=null;grCue(d,'SPELL UNRAVELED',c.color);}break;}case 'flame':g.flame=8;break;case 'frost':g.frostEdge=8;break;case 'haste':g.haste=3;break;case 'breaker':g.breaker=3;break;case 'shield':g.ward=4;g.wardAngle=p.angle;break;case 'heal':f.hp=Math.min(f.maxHp||100,f.hp+10);break;case 'ember':case 'surge':f.stamina=Math.min(100,f.stamina+(c.id==='surge'?25:22));break;case 'focus':case 'iceward':f.posture=Math.min(f.maxPosture||100,f.posture+(c.id==='focus'?23:20));break;case 'step':{const d=foe(f),dx=Math.cos(p.angle)*82;let x=clamp(f.x+dx,WALL_L+25,WALL_R-25);if((f.x-d.x)*(x-d.x)<=0||Math.abs(x-d.x)<50)x=f.x;f.x=x;break;}default:grBolt(f,c,p.angle);return;}grCue(f,c.name.toUpperCase(),c.color);}
+    function grTick(dt){if(!P.gr||!C.gr)return;GR.noticeT=Math.max(0,GR.noticeT-dt);for(const f of [P,C]){const g=f.gr;rbProgress(f);g.mana=Math.min(100,g.mana+dt*(g.ascended?8.5:7));for(const k of ['cd','flame','frostEdge','frost','haste','ward','breaker','bloodblade','edge','echo','comboT'])g[k]=Math.max(0,g[k]-dt);if(g.pending){const p=g.pending;if(f.hp<p.hp||!canAct(f)||f.blocking||f.formT>0){g.pending=null;grCue(f,'CAST INTERRUPTED','#b1a1a0');}else if((p.t-=dt)<=0){g.pending=null;grResolve(f,p);if(G.phase!=='fight')return;}}}
+      if(G.online){for(const f of [P,C]){const slot=f.ctl.rbSlot||0;if(slot&&G.phase==='fight')grCast(f,slot-1,f.facing===1?0:Math.PI);}for(const f of [P,C])if(f.gr.pending){grClearBuffer(f);f.ctl=emptyCtl();}return;}
       if(GR.req!=null){const q=GR.req;GR.req=null;if(q.fighter===P&&P.gr.hand[q.i]===q.card&&!grCast(P,q.i,q.angle))grMsg('NEED MANA / NEUTRAL STANCE');}
-      GR.aiT-=dt;if(GR.aiT<=0){GR.aiT=1.15+Math.random()*.65;const gap=Math.abs(P.x-C.x);let best=-1,score=0;for(let i=0;i<3;i++){if(!grCan(C,i))continue;const id=C.gr.hand[i];let v=0;if(['ice','cinder','thunder','curse'].includes(id))v=gap<310?3:0;else if(id==='heal')v=C.hp<(C.maxHp||100)-12?5:0;else if(['flame','frost'].includes(id))v=gap<190&&!C.gr[id==='flame'?'flame':'frostEdge']?4:0;else if(id==='breaker')v=!C.gr.breaker&&P.gr.mana>=25&&gap<370?3:0;else if(id==='shield')v=!C.gr.ward&&gap<230?4:0;else if(id==='focus'||id==='iceward')v=C.posture<65?4:0;else if(id==='ember'||id==='surge')v=C.stamina<65?4:0;else if(id==='step'||id==='haste')v=gap>210?2:0;v+=v?Math.random():0;if(v>score){score=v;best=i;}}if(best>=0)grCast(C,best);}
+      GR.aiT-=dt;if(GR.aiT<=0){GR.aiT=1.15+Math.random()*.65;const gap=Math.abs(P.x-C.x);let best=-1,score=0;for(let i=0;i<4;i++){if(!grCan(C,i))continue;const id=C.gr.hand[i];let v=0;const extra=grCard(id);if(extra.kind)v=rbAI(C,extra,gap);else if(['ice','cinder','thunder','curse','meteor','leech'].includes(id))v=gap<310?3:0;else if(id==='dispel')v=P.gr.pending?10:0;else if(id==='bloodblade')v=gap<190&&!C.gr.bloodblade&&C.hp<(C.maxHp||100)-6?5:0;else if(id==='pact')v=C.gr.mana<25&&C.hp>30?4:0;else if(id==='heal'||id==='renew')v=C.hp<(C.maxHp||100)-12?5:0;else if(['flame','frost'].includes(id))v=gap<190&&!C.gr[id==='flame'?'flame':'frostEdge']?4:0;else if(id==='breaker')v=!C.gr.breaker&&P.gr.mana>=25&&gap<370?3:0;else if(id==='shield')v=!C.gr.ward&&gap<230?4:0;else if(id==='focus'||id==='iceward'||id==='resolve'||id==='glacier')v=C.posture<65?4:0;else if(id==='ember'||id==='surge'||id==='wind')v=C.stamina<65?4:0;else if(id==='step'||id==='haste')v=gap>210?2:0;v+=v?Math.random():0;if(v>score){score=v;best=i;}}if(best>=0)grCast(C,best);}
       for(const f of [P,C])if(f.gr.pending){grClearBuffer(f);f.ctl=emptyCtl();if(f===P){f.ctl.ana=1;f.ctl.anaAng=ana2WrapPi(Math.atan2(Math.sin(f.gr.pending.angle),Math.cos(f.gr.pending.angle)*f.facing));}}
     }
     function grText(id,value){const el=$(id);if(el&&el.textContent!==value)el.textContent=value;}
-    function grPaint(){if(!P||!P.gr||!C.gr)return;const g=P.gr;const active=grInputOpen();const pending=C.gr.pending;const status=pending?'RIVAL CASTING · '+grCard(pending.card).name: g.pending?'CASTING · '+grCard(g.pending.card).name:GR.noticeT>0?GR.notice: 'AIM · RELEASE · CAST';grText('grMana','MANA '+Math.floor(g.mana)+' / 100 · RIVAL '+Math.floor(C.gr.mana));grText('grStatus',status);if(CHRUN)grText('chBanner','CH '+(CHRUN.idx+1)+' · '+CHAPTERS[CHRUN.idx].title.toUpperCase()+' · RUNES '+CHRUN.casts+'/'+CHAPTERS[CHRUN.idx].casts);const key=g.hand.join(',');if(GR.paintKey!==key){GR.paintKey=key;$('grHand').replaceChildren();g.hand.forEach((id,i)=>{const c=grCard(id),b=document.createElement('button');b.type='button';b.style.setProperty('--grc',c.color);b.innerHTML=c.name+'<small>'+c.cost+' ◆ · '+(i+1)+'</small>';b.title=c.desc;b.setAttribute('aria-label',c.name+' '+c.cost+' mana. '+c.desc);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();audioInit();grRequest(i);});b.addEventListener('click',e=>{if(e.detail===0)grRequest(i);});$('grHand').append(b);});}Array.from($('grHand').children).forEach((b,i)=>{const off=!active||!grCan(P,i);if(b.disabled!==off)b.disabled=off;});}
+    function grPaint(){if(!P||!P.gr||!C.gr)return;const me=selfF(),other=foe(me),g=me.gr;const active=grInputOpen();const pending=other.gr.pending;const status=pending?'RIVAL CASTING · '+grCard(pending.card).name: g.pending?'CASTING · '+grCard(g.pending.card).name:GR.noticeT>0?GR.notice: (G.online?'CASTS AIM TOWARD FACING':'AIM · RELEASE · CAST');grText('grMana','MANA '+Math.floor(g.mana)+' / 100 · RIVAL '+Math.floor(other.gr.mana)+(CHRUN?'':g.ascended?' · ASCENDED': ' · '+rbHero(me).label(g)));$('grMana').style.setProperty('--rbMana',Math.floor(g.mana)+'%');grText('grStatus',status);if(CHRUN)grText('chBanner','CH '+(CHRUN.idx+1)+' · '+CHAPTERS[CHRUN.idx].title.toUpperCase()+' · RUNES '+CHRUN.casts+'/'+CHAPTERS[CHRUN.idx].casts);const key=g.hand.join(',');if(GR.paintKey!==key){GR.paintKey=key;$('grHand').replaceChildren();g.hand.forEach((id,i)=>{const c=grCard(id),b=document.createElement('button');b.type='button';b.style.setProperty('--grc',c.color);b.innerHTML='<span class="rbCost">'+c.cost+' ◆</span>'+c.name+'<small>'+c.speed+' · '+(i+1)+'</small>';b.title=c.desc;b.setAttribute('aria-label',c.name+' '+c.cost+' mana. '+c.desc);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();audioInit();grRequest(i);});b.addEventListener('click',e=>{if(e.detail===0)grRequest(i);});$('grHand').append(b);});}Array.from($('grHand').children).forEach((b,i)=>{const off=!active||!grCan(me,i);if(b.disabled!==off)b.disabled=off;});}
     const grSectorNames=['FORWARD','LOW DIAGONAL','LOW / RISING','REAR LOW','REAR','REAR HIGH','OVERHEAD','HIGH DIAGONAL'];
     function grRelease(ok){if(!GR)return;if(GR.req){GR.release=null;GR.gesture=null;GR.aimConsumed=false;return;}if(ok&&!GR.aimConsumed&&!GR.gesture&&P&&anaStick.mag>.55&&ana3Eligible(P)&&!keys.KeyL&&!btnState.block){const a=Math.atan2(anaStick.qy,anaStick.qx*P.facing);GR.gesture={start:G.tick,angle:a,last:a,arc:0,net:0,path:[a],max:anaStick.mag,facing:P.facing};}GR.release=ok&&!GR.aimConsumed&&GR.gesture?GR.gesture:null;GR.gesture=null;GR.aimConsumed=false;}
     function grAnalogPoll(){GR.feint=false;const f=P;if(!ANA.on||!f||!f.blade||GR.aimConsumed||f.gr&&f.gr.pending||G.phase!=='fight'||G.paused||CC.active||LOCK.active||keys.KeyL||btnState.block){GR.gesture=null;GR.release=null;return;}const mag=anaStick.mag,ang=Math.atan2(anaStick.qy,anaStick.qx*f.facing);if(anaStick.active&&mag>.35){const sector=(Math.round(ang/(Math.PI/4))+8)%8;$('anaStickLab').textContent=grSectorNames[sector]+' · RELEASE TO STRIKE';if(!GR.gesture)GR.gesture={start:G.tick,angle:ang,last:ang,arc:0,net:0,path:[ang],max:mag,facing:f.facing};const g=GR.gesture;if(g.facing!==f.facing){GR.gesture=null;return;}const d=ana2WrapPi(ang-g.last);g.arc+=Math.abs(d);g.net+=d;g.last=ang;g.max=Math.max(g.max,mag);if(g.path.length<40)g.path.push(g.path[g.path.length-1]+d);if(f.state==='attack'&&f.atk&&f.atk.type==='heavy'&&f.atk.t<f.atk.def.startup&&Math.abs(ana2WrapPi(ang-(f._grStartAngle??ang)))>2.1){GR.feint=true;GR.gesture=null;GR.release=null;return;}}else if(!anaStick.active&&!GR.release){GR.gesture=null;$('anaStickLab').textContent='AIM · RELEASE · GUARD';}
       if(!GR.release)return;const g=GR.release;GR.release=null;if(!ana3Eligible(f)||G.tick<ANA3.refr||g.max<.55||g.facing!==f.facing)return;const a=g.last,sector=(Math.round(a/(Math.PI/4))+8)%8;const fam=sector===2||sector===1||sector===3?'low':sector===6||sector===5||sector===7?'overhead':sector===4?'left':'right';const heavy=G.tick-g.start>=25||g.arc>1.65;const sweep=g.arc>.7&&Math.abs(g.net)/g.arc>.65;const sign=sweep?Math.sign(g.net):(fam==='overhead'?1:-1);const path=sweep?g.path:[a-sign*.85,a-sign*.4,a];f._grStartAngle=a;ana3Fire(fam,heavy,f,Math.max(.7,Math.min(g.arc,2.8)),sign,a,path);
     }
+    const RB_HERO={vader:{title:'IRON SCOURGE',test:g=>g.hits>=5&&g.casts>=1,label:g=>`HITS ${g.hits}/5 · RUNES ${g.casts}/1`},obi:{title:'DAWNKEEPER',test:g=>g.parries>=2&&g.casts>=2,label:g=>`PARRIES ${g.parries}/2 · RUNES ${g.casts}/2`},maul:{title:'ASHBRINGER',test:g=>g.hits>=4&&g.casts>=2,label:g=>`HITS ${g.hits}/4 · RUNES ${g.casts}/2`},ahsoka:{title:'VOIDWALKER',test:g=>g.dodges>=3&&g.hits>=2,label:g=>`DASHES ${g.dodges}/3 · HITS ${g.hits}/2`},dooku:{title:'WINTER WARDEN',test:g=>g.blocks>=3&&g.casts>=2,label:g=>`BLOCKS ${g.blocks}/3 · RUNES ${g.casts}/2`},sidious:{title:'STORMCALLER',test:g=>g.casts>=5,label:g=>`RUNES ${g.casts}/5`},inaam:{title:'RUNE SOVEREIGN',test:g=>g.hits>=3&&g.casts>=3,label:g=>`HITS ${g.hits}/3 · RUNES ${g.casts}/3`}};
+    function rbHero(f){return RB_HERO[f.char]||RB_HERO.inaam;}
+    function rbProgress(f){const g=f.gr,st=f.stats||{};if(!g.base)g.base={parries:st.parries||0,blocks:st.blocks||0};const parries=Math.max(0,(st.parries||0)-g.base.parries),blocks=Math.max(0,(st.blocks||0)-g.base.blocks);if(parries>g.parries){g.mana=Math.min(100,g.mana+5);if(g.lastSchool==='Storm'&&g.comboT>0){g.edge=5;g.edgePower=4;grCue(f,'THUNDER COUNTER','#f2d478');}}if(blocks>g.blocks&&g.lastSchool==='Radiance'&&g.comboT>0){g.ward=2;g.wardAngle=f.facing===1?0:Math.PI;grCue(f,'DIVINE RETALIATION','#ffe9a6');}g.parries=parries;g.blocks=blocks;if(f.state==='dash'&&!g.wasDash)g.dodges++;g.wasDash=f.state==='dash';grAscend(f);}
+    function rbCombo(f,c){const g=f.gr,prev=g.comboT>0?g.lastSchool:'';g.lastSchool=c.school;g.comboT=4;if(prev==='Inferno'&&c.school==='Storm'){g.edge=5;g.edgePower=4;grCue(f,'FIRESTORM','#ffb86b');}else if(prev==='Void'&&c.school==='Storm'){g.breaker=Math.max(g.breaker,2);grCue(f,'ARCANE RIFT','#bb9aff');}else if(prev==='Bloodbound'&&c.school==='Inferno'){g.bloodblade=5;grCue(f,'CRIMSON INFERNO','#f7788d');}else if(prev==='Radiance'&&c.school==='Frost'){g.ward=3;g.wardAngle=f.facing===1?0:Math.PI;grCue(f,'GLACIAL AEGIS','#bfe7ff');}}
+    function rbEffect(f,c,p){const g=f.gr,d=foe(f),n=c.power;switch(c.kind){case 'edge':g.edge=7;g.edgePower=n;break;case 'frostedge':g.frostEdge=7;g.freezePower=n;break;case 'stamina':f.stamina=Math.min(100,f.stamina+n);break;case 'posture':f.posture=Math.min(f.maxPosture||100,f.posture+n);break;case 'heal':f.hp=Math.min(f.maxHp||100,f.hp+n);break;case 'haste':g.haste=n;break;case 'ward':g.ward=n;g.wardAngle=p.angle;break;case 'counter':g.breaker=n;break;case 'summon':g.echo=5;g.echoPower=n;break;case 'step':{const x=clamp(f.x+Math.cos(p.angle)*n,WALL_L+25,WALL_R-25);if((f.x-d.x)*(x-d.x)>0&&Math.abs(x-d.x)>=50)f.x=x;break;}default:grBolt(f,c,p.angle);return;}grCue(f,c.name.toUpperCase(),c.color);}
+    function rbAI(f,c,gap){switch(c.kind){case 'bolt':case 'slowbolt':case 'drain':case 'leechbolt':return gap<300?3:0;case 'heal':return f.hp<(f.maxHp||100)-c.power?5:0;case 'stamina':return f.stamina<65?4:0;case 'posture':return f.posture<65?4:0;case 'ward':case 'counter':return gap<250&&!f.gr.ward&&!f.gr.breaker?3:0;case 'edge':case 'frostedge':case 'summon':return gap<190&&!f.gr.edge&&!f.gr.echo?4:0;default:return gap>220?2:0;}}
+    let rbArtSerial=0;
+    function rbArt(c){const i=GR_CARDS.indexOf(c),t=(i*47)%360,k=c.kind||'bolt',sym=k==='heal'?'<path d="M60 18V72M33 45H87"/>':k==='ward'||k==='counter'?'<path d="M60 13L86 24V48Q86 67 60 79Q34 67 34 48V24Z"/>':k==='summon'?'<path d="M35 70Q25 31 60 19Q95 31 85 70L71 61L60 77L49 61Z"/><circle cx="50" cy="43" r="3"/><circle cx="70" cy="43" r="3"/>':k==='edge'||k==='frostedge'?'<path d="M29 75L75 25L91 13L80 32L37 82M25 62L48 84M24 87L32 79"/>':'<path d="M22 75L54 35L58 51L97 15L73 59L65 44L39 79"/>';const grad="rbG"+(++rbArtSerial);return `<svg class="rbArt" viewBox="0 0 120 90" aria-hidden="true"><defs><radialGradient id="${grad}"><stop stop-color="${c.color}" stop-opacity=".42"/><stop offset="1" stop-color="#10131c"/></radialGradient></defs><rect width="120" height="90" rx="5" fill="url(#${grad})"/><path d="M0 78L19 43 31 62 48 31 71 64 90 38 120 78V90H0Z" fill="#0c111c" opacity=".73"/><path d="M0 86L120 86" stroke="${c.color}" opacity=".5"/><g fill="${c.color}" opacity=".75">${Array.from({length:9},(_,j)=>`<circle cx="${(i*11+j*29)%115+2}" cy="${(i*7+j*17)%80+3}" r="${j%3===0?1.2:.65}"/>`).join('')}</g><g fill="none" stroke="${c.color}" opacity=".35"><circle cx="60" cy="45" r="34"/><circle cx="60" cy="45" r="27"/><path transform="rotate(${t} 60 45)" d="M60 6L95 65H25ZM60 84L25 25H95Z"/><path d="M5 5L27 5M5 5V27M115 85H93M115 85V63"/></g><g stroke="${c.color}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" fill="none">${sym}</g></svg>`;}
     grLoad();grMenu();
-    $('grStart').addEventListener('click',()=>{if(G.mode!=='menu'||G.online||GR.active)return;audioInit();persistLastSetup();G.online=false;RUN=null;G.versus=false;G.cpuChar=chosenRival;G.winTarget=2;document.body.classList.remove('versus-on');NET_SABERS=null;_saberSig='';GR.oldScheme=G.scheme;GR.active=true;grScheme('analog');$('fightStage').classList.add('gr-mode');G.mode='fight';wipeGo();fadeOutMenuTheme();$('menu').classList.add('hidden');$('endScreen').classList.add('hidden');fitArena();tryLockLandscape();startMatch();});
-    window.addEventListener('keydown',e=>{if(grActive()&&grInputOpen()&&!e.repeat&&/^Digit[123]$/.test(e.code)){e.preventDefault();grRequest(Number(e.code.slice(-1))-1);}});
+    $('grStart').addEventListener('click',()=>{if(RB_PATH&&!RB_PATH.node)rbPathLeave();if(G.mode!=='menu'||G.online||GR.active||!rcDeckValid(GR.deck,GR.schools))return;audioInit();persistLastSetup();G.online=false;RUN=null;G.versus=false;G.cpuChar=chosenRival;G.winTarget=2;document.body.classList.remove('versus-on');NET_SABERS=null;_saberSig='';GR.oldScheme=G.scheme;GR.active=true;grScheme('analog');$('fightStage').classList.add('gr-mode');G.mode='fight';wipeGo();fadeOutMenuTheme();$('menu').classList.add('hidden');$('endScreen').classList.add('hidden');fitArena();tryLockLandscape();startMatch();});
+    window.addEventListener('keydown',e=>{if(grActive()&&grInputOpen()&&!e.repeat&&/^Digit[1234]$/.test(e.code)){e.preventDefault();grRequest(Number(e.code.slice(-1))-1);}});
     window.addEventListener('blur',()=>{if(GR){GR.gesture=null;GR.release=null;GR.req=null;GR.aimConsumed=false;}});
 
     /* ============= RUNEBLADE 1.7 — THE SHATTERED CROWN ============= */
@@ -12675,7 +12851,7 @@
       if(!chUnlocked(chSelected))chSelected=0;
       const cleared=CHSAVE.medals.filter(n=>n>0).length,stars=CHSAVE.medals.reduce((a,b)=>a+b,0);
       $('chProgress').textContent=cleared+' / 5 seals recovered · '+stars+' / 15 medals · '+CHSAVE.wins+' wins'+(chSaved?'':' · Session only: storage unavailable');
-      const list=$('chList');list.replaceChildren();CHAPTERS.forEach((r,i)=>{const b=document.createElement('button');b.type='button';b.disabled=!chUnlocked(i);b.classList.toggle('sel',i===chSelected);b.setAttribute('aria-pressed',String(i===chSelected));const seal=document.createElement('span');seal.className='chSeal';seal.textContent=chUnlocked(i)?String(i+1):'◆';const label=document.createElement('span');const t=document.createElement('b');t.textContent=r.title;const sub=document.createElement('small');sub.textContent=chUnlocked(i)?CHARS[r.fighter].name+' · '+DIFF[r.diff].name:'Clear previous chapter';label.append(t,sub);const score=document.createElement('span');score.className='chStars';score.textContent='★'.repeat(CHSAVE.medals[i])+'☆'.repeat(3-CHSAVE.medals[i]);b.append(seal,label,score);b.onclick=()=>{chSelected=i;chRender();};list.append(b);});
+      const list=$('chList');let map=$('rbMap');if(!map){map=document.createElement('div');map.id='rbMap';map.className='rbMap';list.before(map);}map.replaceChildren();CHAPTERS.forEach((r,i)=>{const e=document.createElement('span');e.className=CHSAVE.medals[i]?'done':'';e.textContent=(CHSAVE.medals[i]?'✓ ':chUnlocked(i)?'→ ':'◇ ')+(i+1)+' · '+r.title;map.append(e);});list.replaceChildren();CHAPTERS.forEach((r,i)=>{const b=document.createElement('button');b.type='button';b.disabled=!chUnlocked(i);b.classList.toggle('sel',i===chSelected);b.setAttribute('aria-pressed',String(i===chSelected));const seal=document.createElement('span');seal.className='chSeal';seal.textContent=chUnlocked(i)?String(i+1):'◆';const label=document.createElement('span');const t=document.createElement('b');t.textContent=r.title;const sub=document.createElement('small');sub.textContent=chUnlocked(i)?CHARS[r.fighter].name+' · '+DIFF[r.diff].name:'Clear previous chapter';label.append(t,sub);const score=document.createElement('span');score.className='chStars';score.textContent='★'.repeat(CHSAVE.medals[i])+'☆'.repeat(3-CHSAVE.medals[i]);b.append(seal,label,score);b.onclick=()=>{chSelected=i;chRender();};list.append(b);});
       const r=CHAPTERS[chSelected],detail=$('chDetail');detail.replaceChildren();const head=document.createElement('b');head.textContent=r.title+' · '+ARENA_NAMES[r.arena];const story=document.createElement('p');story.textContent=r.story;const goals=document.createElement('p');goals.textContent='Medals: win the match; resolve '+r.casts+' spells and win; win without dropping a round. '+r.hp+' rival HP · First to '+r.target+' round'+(r.target===1?'':'s')+'. Rival schools: '+[...new Set(r.deck.map(id=>grCard(id).school))].join(' + ')+'.';detail.append(head,story,goals);$('chStart').textContent=CHSAVE.medals[chSelected]?'REPLAY CHAPTER':'BEGIN CHAPTER';$('chStart').disabled=!chUnlocked(chSelected);
       const mastery=$('chMastery');mastery.replaceChildren();GR_CARDS.forEach(c=>{const row=document.createElement('div');row.className='chMasteryRow';const a=document.createElement('span');a.textContent=c.name;a.style.color=c.color;const b=document.createElement('span');const n=CHSAVE.mastery[c.id]||0;b.textContent=chRank(n)+' · '+n+' resolved';row.append(a,b);mastery.append(row);});
     }
@@ -12683,7 +12859,7 @@
     function chRecord(id){if(!CHRUN||!grCard(id))return;CHRUN.casts++;CHRUN.mastery[id]=(CHRUN.mastery[id]||0)+1;}
     function chTuneRound(){const r=CHAPTERS[CHRUN.idx];C.maxHp=r.hp;C.hp=C.dispHp=r.hp;C.maxPosture=r.posture;C.posture=r.posture;$('chBanner').hidden=false;$('chBanner').textContent='CHAPTER '+(CHRUN.idx+1)+' · '+r.title.toUpperCase();}
     function chConfigure(i){const r=CHAPTERS[i];CHRUN.idx=i;G.cpuChar=r.fighter;G.diff=r.diff;G.winTarget=r.target;aiArchSel=r.arch;ADAPT.on=false;G.arena=r.arena;amb=[];arenaFx.bolt=0;arenaFx.next=rand(2,5);tintLights();}
-    function chBegin(i){if(!chUnlocked(i)||G.mode!=='menu'||G.online)return;audioInit();persistLastSetup();CHRUN={idx:i,old:{diff:G.diff,arch:aiArchSel,arena:G.arena,adapt:ADAPT.on},casts:0,mastery:{},result:null};G.online=false;RUN=null;G.versus=false;document.body.classList.remove('versus-on');NET_SABERS=null;_saberSig='';GR.oldScheme=G.scheme;GR.active=true;grScheme('analog');$('fightStage').classList.add('gr-mode');chConfigure(i);G.mode='fight';wipeGo();fadeOutMenuTheme();$('menu').classList.add('hidden');$('endScreen').classList.add('hidden');fitArena();tryLockLandscape();startMatch();}
+    function chBegin(i){if(!chUnlocked(i)||G.mode!=='menu'||G.online)return;if(!rcDeckValid(GR.deck,GR.schools)){showPanel('panelGrimoire');rcNotice='Build a legal 6–10 card deck before entering the campaign.';grMenu();return;}audioInit();persistLastSetup();CHRUN={idx:i,old:{diff:G.diff,arch:aiArchSel,arena:G.arena,adapt:ADAPT.on},casts:0,mastery:{},result:null};G.online=false;RUN=null;G.versus=false;document.body.classList.remove('versus-on');NET_SABERS=null;_saberSig='';GR.oldScheme=G.scheme;GR.active=true;grScheme('analog');$('fightStage').classList.add('gr-mode');chConfigure(i);G.mode='fight';wipeGo();fadeOutMenuTheme();$('menu').classList.add('hidden');$('endScreen').classList.add('hidden');fitArena();tryLockLandscape();startMatch();}
     function chEnd(won){if(!CHRUN||CHRUN.result)return;const r=CHAPTERS[CHRUN.idx],i=CHRUN.idx;const n=won?1+Number(CHRUN.casts>=r.casts)+Number(G.winsC===0):0;CHSAVE.attempts++;if(won){CHSAVE.wins++;CHSAVE.medals[i]=Math.max(CHSAVE.medals[i],n);}for(const [id,count] of Object.entries(CHRUN.mastery))CHSAVE.mastery[id]=(CHSAVE.mastery[id]||0)+count;chPersist();CHRUN.result={won,medals:n};chSelected=won&&i<CHAPTERS.length-1?i+1:i;
       $('endTitle').textContent=won?(i===CHAPTERS.length-1?'THE CROWN RESTORED':'SEAL RECOVERED'):'THE SEAL HOLDS';$('endSub').textContent=r.title+' · '+('★'.repeat(n)+'☆'.repeat(3-n));$('endRun').textContent='Spells resolved: '+CHRUN.casts+' / '+r.casts+' · '+(won&&G.winsC===0?'Flawless match. ':'')+(won&&i<CHAPTERS.length-1?'Next chapter unlocked.':won?'All five chapters conquered. Replay any chapter to earn missing medals.':'Retry this chapter or return to the campaign.');$('endAdapt').textContent='Fixed campaign difficulty · Mastery recorded'+(chSaved?'.':' for this session only.');$('rematchBtn').textContent=won?(i<CHAPTERS.length-1?'NEXT CHAPTER':'REPLAY FINALE'):'RETRY CHAPTER';$('changeBtn').textContent='CAMPAIGN';$('endMenuBtn').textContent='CAMPAIGN';
     }
@@ -12702,7 +12878,7 @@
     const R18_ARENAS={duel:'#e5c58c',temple:'#ba93e9',fortress:'#c8c0aa',ashen:'#ff914a',frozen:'#90dcff',verdant:'#9bcf87',twinsuns:'#ffcf76',hangar:'#a3a5ff'};
     function runeFxAdd18(f,c,p){
       if(!f||!c||!p||G.reducedMotion)return;
-      const bolt=['ice','cinder','thunder','curse'].includes(c.id), d=foe(f), reach=c.id==='curse'?290:390;
+      const bolt=['ice','cinder','thunder','curse','meteor','leech'].includes(c.id)||['bolt','slowbolt','leechbolt','drain'].includes(c.kind), d=foe(f), reach=c.id==='curse'?290:390;
       const dist=bolt&&d?Math.hypot(d.x-f.x,d.y-f.y):0;
       R18.events.push({f,card:c.id,school:c.school,color:c.color,angle:p.angle,x:f.x,y:f.y-100,ex:f.x+Math.cos(p.angle)*Math.min(reach,dist),ey:f.y-100+Math.sin(p.angle)*Math.min(reach,dist),age:0,life:bolt?.42:.67,bolt});
       if(R18.events.length>8)R18.events.shift();
@@ -12741,10 +12917,10 @@
       g.save();g.globalAlpha=1;g.translate(VW/2,VH/2);g.scale(CAM.z,CAM.z);g.translate(-CAM.x,-CAM.y);
       if(typeof grActive==='function'&&grActive()){
         for(const f of [P,C]){if(!f.gr)continue;const z=f.gr,p=z.pending;
-          if(p){const c=grCard(p.card);if(c){const u=clamp(1-p.t/.48,0,1);runeFxGlyph18(g,f.x,f.y-94,25+13*u,c.color,.38+.45*u,clock*.65,eco);g.globalAlpha=.65;g.strokeStyle=c.color;g.lineWidth=2;g.beginPath();g.moveTo(f.x+Math.cos(p.angle)*45,f.y-94+Math.sin(p.angle)*45);g.lineTo(f.x+Math.cos(p.angle)*64,f.y-94+Math.sin(p.angle)*64);g.stroke();}}
+          if(p){const c=grCard(p.card);if(c){const u=clamp(1-p.t/(p.total||.48),0,1);runeFxGlyph18(g,f.x,f.y-94,25+13*u,c.color,.38+.45*u,clock*.65,eco);g.globalAlpha=.65;g.strokeStyle=c.color;g.lineWidth=2;g.beginPath();g.moveTo(f.x+Math.cos(p.angle)*45,f.y-94+Math.sin(p.angle)*45);g.lineTo(f.x+Math.cos(p.angle)*64,f.y-94+Math.sin(p.angle)*64);g.stroke();}}
           if(z.ward>0){g.globalAlpha=.52;g.strokeStyle='#ffe3a0';g.lineWidth=3;g.beginPath();g.arc(f.x,f.y-94,63,z.wardAngle-Math.PI/3,z.wardAngle+Math.PI/3);g.stroke();}
           if(z.breaker>0)runeFxCircle18(g,f.x,f.y-94,47,'#b78cff',.45);
-          if(z.flame>0||z.frostEdge>0){const col=z.flame>0?'#ff794c':'#91daff';runeFxCircle18(g,f.x,GROUND+2,28,col,.48,.23);}
+          if(z.echo>0){g.save();g.globalAlpha=.5;g.strokeStyle='#c9a4ff';g.lineWidth=2;const ex=f.x-f.facing*32,ey=f.y-90;g.beginPath();g.arc(ex,ey-19,8,0,TAU);g.moveTo(ex,ey-10);g.lineTo(ex,ey+19);g.moveTo(ex-12,ey+2);g.lineTo(ex+12,ey-2);g.moveTo(ex,ey+19);g.lineTo(ex-9,ey+35);g.moveTo(ex,ey+19);g.lineTo(ex+9,ey+35);g.stroke();g.restore();}if(z.ascended)runeFxGlyph18(g,f.x,GROUND+2,34,'#f5d37c',.4,clock*.4,eco);if(z.bloodblade>0)runeFxCircle18(g,f.x,GROUND+2,29,'#e76c8b',.6);if(z.flame>0||z.frostEdge>0){const col=z.flame>0?'#ff794c':'#91daff';runeFxCircle18(g,f.x,GROUND+2,28,col,.48,.23);}
         }
         for(const e of R18.events){e.age+=dt;const u=clamp(e.age/e.life,0,1);if(e.bolt)runeFxBolt18(g,e,u,eco);else{runeFxGlyph18(g,e.x,e.y,25+45*u,e.color,(1-u)*.67,clock*.75,eco);runeFxCircle18(g,e.f.x,GROUND+2,18+65*u,e.color,(1-u)*.60,.24);}}
         R18.events=R18.events.filter(e=>e.age<e.life);
@@ -12753,7 +12929,50 @@
       g.restore();g.globalAlpha=1;
     }
     window.__runeFx18={get effects(){return R18.events.length;},arenas:Object.keys(R18_ARENAS)};
-    window.__runeRelease20={version:'2.0',check(){const ids=GR_CARDS.map(c=>c.id);const validDeck=d=>Array.isArray(d)&&d.length===6&&new Set(d).size===6&&d.every(id=>ids.includes(id));return {uniqueCards:ids.length===15&&new Set(ids).size===15,validCosts:GR_CARDS.every(c=>Number.isFinite(c.cost)&&c.cost>0&&c.cost<=100),playerDeck:validDeck(GR.deck)&&GR.deck.every(id=>GR.schools.includes(grCard(id).school)),campaignDecks:CHAPTERS.every(r=>validDeck(r.deck)),campaignProgress:CHSAVE.medals.every((n,i)=>Number.isInteger(n)&&n>=0&&n<=3&&(!n||i===0||CHSAVE.medals[i-1]>0))};}};
+    var RB_PATH=null;const RB_NODES=[
+      [{name:'Ember Pass',fighter:'maul',arena:'ashen',hp:95,posture:100,school:'Inferno',boon:'mana'},{name:'Frost Gate',fighter:'dooku',arena:'frozen',hp:95,posture:100,school:'Frost',boon:'heal'}],
+      [{name:'Shadow Citadel',fighter:'ahsoka',arena:'fortress',hp:108,posture:105,school:'Void',boon:'ward'},{name:'Dawn Sanctuary',fighter:'obi',arena:'twinsuns',hp:106,posture:110,school:'Radiance',boon:'heal'}],
+      [{name:'Blood Court',fighter:'vader',arena:'duel',hp:120,posture:110,school:'Bloodbound',boon:'mana'},{name:'Storm Spire',fighter:'sidious',arena:'temple',hp:118,posture:115,school:'Storm',boon:'ward'}],
+      [{name:'The Rune Sovereign',fighter:'sidious',arena:'temple',hp:142,posture:125,school:'Storm',boon:'heal'}]
+    ];
+    var RB_MASTERY={};try{const m=JSON.parse(localStorage.getItem('rb-mastery-v3')||'{}');for(const c of GR_CARDS)if(Number.isSafeInteger(m[c.id])&&m[c.id]>=0)RB_MASTERY[c.id]=m[c.id];}catch(e){}let RB_HIST=[],RB_PATH_CLEARS=0;try{let h=JSON.parse(localStorage.getItem('rb-local-history-v3')||'[]');if(Array.isArray(h))RB_HIST=h.filter(v=>v&&typeof v.date==='string'&&typeof v.mode==='string'&&typeof v.won==='boolean').slice(0,30);RB_PATH_CLEARS=rcNum(Number(localStorage.getItem('rb-path-clears-v3')));}catch(e){}
+    function rbHistoryPaint(){const el=$('rbHistory');el.replaceChildren();for(const h of RB_HIST){const e=document.createElement('p');e.className='psub';e.textContent=h.date+' · '+h.mode+' · '+(h.won?'Victory':'Defeat')+' · '+h.score;el.append(e);}if(!RB_HIST.length)el.textContent='No finished rune duels yet.';$('rbPathRecord').textContent=RB_PATH_CLEARS+' expeditions cleared · Local profile';}
+    function rbLogMatch(won){if(!GR.active||G.versus||TR||NET.desynced)return;RB_HIST.unshift({date:new Date().toLocaleDateString(),mode:G.online?'Casual online (unverified)':RB_PATH?'Expedition':CHRUN?'Chronicle':'Grimoire practice',won,score:G.winsP+'–'+G.winsC});RB_HIST=RB_HIST.slice(0,30);try{localStorage.setItem('rb-local-history-v3',JSON.stringify(RB_HIST));localStorage.setItem('rb-mastery-v3',JSON.stringify(RB_MASTERY));}catch(e){}rbHistoryPaint();}
+    function rbPathNode(stage,choice){const n=RB_NODES[stage][choice]||RB_NODES[stage][0],pool=GR_CARDS.filter(c=>c.school===n.school).map(c=>c.id);return {...n,deck:pool.slice(0,6)};}
+    function rbPathBegin(){if(G.mode!=='menu'||!rcDeckValid(GR.deck,GR.schools))return;const el=$('rbPathRecord');el.replaceChildren();for(let i=0;i<2;i++){const b=document.createElement('button');b.className='obtn';b.type='button';b.textContent=RB_NODES[0][i].name;b.onclick=()=>{if(G.mode==='menu'&&rcDeckValid(GR.deck,GR.schools)){RB_PATH={stage:0,node:null,carry:100,mana:0,ward:0,done:false,old:{diff:G.diff,arena:G.arena,arch:aiArchSel,adapt:ADAPT.on}};rbPathFight(i,true);rbHistoryPaint();}};el.append(b);} }
+    function rbPathFight(choice,first){const path=RB_PATH;if(!path)return;path.node=rbPathNode(path.stage,choice);const n=path.node;if(!first){if(n.boon==='heal')path.carry=Math.min(100,path.carry+20);if(n.boon==='mana')path.mana=Math.min(25,path.mana+10);path.ward=n.boon==='ward'?4:0;}G.online=false;G.versus=false;G.cpuChar=n.fighter;G.diff=path.stage>=2?2:1;G.winTarget=1;G.arena=n.arena;ADAPT.on=false;aiArchSel=path.stage%2?'counter':'aggro';tintLights();if(first){audioInit();persistLastSetup();GR.oldScheme=G.scheme;GR.active=true;grScheme('analog');$('fightStage').classList.add('gr-mode');G.mode='fight';wipeGo();$('menu').classList.add('hidden');tryLockLandscape();}fadeOutMenuTheme();$('endScreen').classList.add('hidden');fitArena();startMatch();}
+    function rbPathEnd(won){const p=RB_PATH;if(!p||p.done)return;p.carry=Math.max(25,Math.min(100,Math.round(P.hp)));p.done=!won||p.stage===3;$('endTitle').textContent=p.done?(won?'EXPEDITION CONQUERED':'EXPEDITION ENDED'):'REALM CONQUERED';$('endSub').textContent=p.node.name+' · '+(won?'Victory':'Defeat');$('endRun').textContent='Stage '+(p.stage+1)+'/4 · '+p.carry+' health carried forward';$('rematchBtn').textContent=p.done?'RETURN TO GRIMOIRE':'TAKE FIRST ROUTE';if(p.done){if(won){RB_PATH_CLEARS++;RC.essence+=200;rcSave();try{localStorage.setItem('rb-path-clears-v3',String(RB_PATH_CLEARS));}catch(e){}$('rcEnd').textContent+=' · Expedition clear +200 essence';rbHistoryPaint();}return;}const el=document.createElement('div');el.id='rbPathChoices';el.className='rbTools';RB_NODES[p.stage+1].forEach((n,i)=>{const b=document.createElement('button');b.type='button';b.textContent=n.name+' · '+(n.boon==='heal'?'+20 HP':n.boon==='mana'?'+10 starting mana':'Starting ward');b.onclick=()=>rbPathAdvance(i);el.append(b);});$('rcEnd').after(el);}
+    function rbPathAdvance(choice){if(!RB_PATH||RB_PATH.done||G.phase!=='over')return;RB_PATH.stage++;rbPathFight(choice,false);}
+    function rbPathLeave(){if(!RB_PATH)return;const o=RB_PATH.old;G.diff=o.diff;G.arena=o.arena;aiArchSel=o.arch;ADAPT.on=o.adapt;RB_PATH=null;const el=$('rbPathChoices');if(el)el.remove();tintLights();rbHistoryPaint();}
+    $('rbPathStart').onclick=rbPathBegin;rbHistoryPaint();rcRender();
+    let RB_PRESETS=[];try{const v=JSON.parse(localStorage.getItem('rb-presets-v3')||'[]');if(Array.isArray(v))RB_PRESETS=v.slice(0,6).map(x=>rcDeckValid(x?.deck,x?.schools)?x:null);}catch(e){}function rbPresetPaint(){const el=$('rbPresets');el.replaceChildren();for(let i=0;i<6;i++){const o=document.createElement('option');o.value=i;o.textContent='Deck '+(i+1)+(RB_PRESETS[i]?' · '+RB_PRESETS[i].schools.join('/'):' · empty');el.append(o);}}rbPresetPaint();$('rbSaveDeck').onclick=()=>{if(!rcDeckValid(GR.deck,GR.schools))return;const i=+$('rbPresets').value;RB_PRESETS[i]={deck:GR.deck.slice(),schools:GR.schools.slice()};try{localStorage.setItem('rb-presets-v3',JSON.stringify(RB_PRESETS));}catch(e){}rbPresetPaint();$('rbPresets').value=i;rcNotice='Preset saved.';rcRender();};$('rbLoadDeck').onclick=()=>{const v=RB_PRESETS[+$('rbPresets').value];if(v&&rcDeckValid(v.deck,v.schools)){GR.deck=v.deck.slice();GR.schools=v.schools.slice();grMenu();}};$('rbFilter').onchange=rcRender;$('rbOwnedFilter').onchange=rcRender;$('rbDraft').onclick=()=>{const all=Object.keys(GR_COL),pairs=[];for(let i=0;i<all.length;i++)for(let j=i+1;j<all.length;j++)if(rcLegal([all[i],all[j]]).length>=6)pairs.push([all[i],all[j]]);if(!pairs.length)return;GR.schools=pairs[Math.floor(Math.random()*pairs.length)];const pool=rcLegal(GR.schools);for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}GR.deck=pool.slice(0,Math.min(8,pool.length));grMenu();rcNotice='Draft practice deck assembled from your collection. Review it before entering.';rcRender();};
+    window.__runeRelease20={version:'3.1-competitive-preview',check(){const ids=GR_CARDS.map(c=>c.id);const validDeck=d=>Array.isArray(d)&&d.length>=6&&d.length<=10&&new Set(d).size===d.length&&d.every(id=>ids.includes(id));return {uniqueCards:ids.length===60&&new Set(ids).size===60,validCosts:GR_CARDS.every(c=>Number.isFinite(c.cost)&&c.cost>0&&c.cost<=100),playerDeck:rcDeckValid(GR.deck,GR.schools),campaignDecks:CHAPTERS.every(r=>validDeck(r.deck)),campaignProgress:CHSAVE.medals.every((n,i)=>Number.isInteger(n)&&n>=0&&n<=3&&(!n||i===0||CHSAVE.medals[i-1]>0))};}};
+    window.__runeCollection22={get profile(){return JSON.parse(JSON.stringify(RC));},checkDeck:(d,s)=>rcDeckValid(d,s),cards:GR_CARDS.map(c=>({...c,rarity:rcRarity(c.id),craftCost:RC_COST[rcRarity(c.id)]})),online:'experimental casual lockstep; no verified rewards'};
+    window.__rb3={get state(){return {mode:G.mode,phase:G.phase,online:G.online,slot:G.localSlot,hash:G.online?stateHash(OF.tick):null,tick:OF.tick,p:P?.gr,c:C?.gr,desync:NET.desynced};},packRoundtrip(slot){return unpackCtl(packCtl({...emptyCtl(),rbSlot:slot})).rbSlot;},cards:GR_CARDS.length};
+    /* RuneBlade competitive release: separate server-owned collection, match queue, replays. */
+const RBR={token:'',profile:null,deck:[],socket:null,match:null,paused:false,reconnect:null,attempt:0,playback:null};
+const rbRankName=n=>n<850?'Iron':n<1000?'Bronze':n<1150?'Silver':n<1300?'Gold':n<1500?'Platinum':n<1700?'Diamond':n<1900?'Master':n<2200?'Grandmaster':'Rune Sovereign';
+const rbrMsg=t=>$('rbrStatus').textContent=t;
+async function rbrApi(path,body){const r=await fetch('/api/'+path,{method:body===undefined?'GET':'POST',headers:{'Content-Type':'application/json',...(RBR.token?{Authorization:'Bearer '+RBR.token}:{})},...(body===undefined?{}:{body:JSON.stringify(body)})});const d=await r.json();if(!r.ok)throw Error(d.error||'Server request failed');return d;}
+function rbrSetProfile(p){RBR.profile=p;RBR.deck=RBR.deck.filter(x=>p.owned.includes(x));if(!rbWireDeck(RBR.deck))RBR.deck=p.deck.slice();rbrPaint();}
+function rbrPaint(){const p=RBR.profile;$('rbrSigned').hidden=!p;$('rbrAuth').hidden=!!p;if(!p)return;$('rbrProfile').textContent=`${p.name} · ${rbRankName(p.rating)} ${p.rating} · ${p.essence} essence · ${p.owned.length}/60 cards · ${p.wins}W / ${p.losses}L · Season ${p.season}`;$('rbrRoad').textContent=Object.entries(p.xp).map(([k,x])=>k+' '+x+' XP').join(' · ');$('rbrDeckCount').textContent=RBR.deck.length+' / 6–10 · '+(rbWireDeck(RBR.deck)?'Legal deck':'Select 6–10 cards, max two schools');$('rbrCardList').replaceChildren();for(const c of GR_CARDS){const b=document.createElement('button');b.className='rbCard';b.style.borderColor=c.color;b.innerHTML=rbArt(c)+'<b>'+c.name+'</b><small>'+c.school+' · '+c.cost+' mana · '+rcRarity(c.id)+'<br>'+c.desc+'<br>'+(p.owned.includes(c.id)?RBR.deck.includes(c.id)?'IN DECK · '+(RBR.deck.indexOf(c.id)+1):'ADD TO DECK':'CRAFT · '+RC_COST[rcRarity(c.id)]+' essence')+'</small>';b.setAttribute('aria-pressed',String(RBR.deck.includes(c.id)));b.disabled=!!RBR.match||!!RBR.socket||(!p.owned.includes(c.id)&&p.essence<RC_COST[rcRarity(c.id)]);b.onclick=async()=>{try{if(!p.owned.includes(c.id)){rbrSetProfile(await rbrApi('craft',{id:c.id}));rbrMsg('Card crafted.');}else{if(RBR.deck.includes(c.id))RBR.deck=RBR.deck.filter(x=>x!==c.id);else if(RBR.deck.length<10&&new Set([...RBR.deck,c.id].map(x=>grCard(x).school)).size<=2)RBR.deck.push(c.id);else throw Error('Maximum 10 cards from two schools. Remove a card first.');rbrPaint();}}catch(e){rbrMsg(e.message);}};$('rbrCardList').append(b);} $('rbrQueue').disabled=!rbWireDeck(RBR.deck)||!!RBR.socket||!!RBR.match;$('rbrCup').disabled=$('rbrQueue').disabled;$('rbrCancel').disabled=!RBR.socket||!!RBR.match;}
+async function rbrAuth(kind){try{const name=$('rbrName').value.trim(),password=$('rbrPass').value;const d=await rbrApi(kind,{name,password});RBR.token=d.token;$('rbrPass').value='';rbrSetProfile(d.profile);rbrMsg('Signed in. Your ranked collection is separate from offline saves.');await rbrLeaderboard();await rbrHistory();}catch(e){rbrMsg(e.message);}}
+async function rbrHistory(){try{const d=await rbrApi('history');const el=$('rbrHistory');el.replaceChildren();for(const m of d.matches){const b=document.createElement('button');b.className='obtn';b.type='button';b.textContent=m.p+' vs '+m.c+' · '+(m.winner||'void')+' · '+m.score+(m.replay?' · WATCH':' · no replay');b.disabled=!m.replay;b.onclick=()=>{$('rbrReplayId').value=m.id;rbrGetReplay(true);};el.append(b);}if(!d.matches.length)el.textContent='No competitive match history yet.';}catch(e){rbrMsg(e.message);}}
+async function rbrLeaderboard(){try{const d=await rbrApi('leaderboard');$('rbrBoard').replaceChildren();for(const x of d.players){const e=document.createElement('div');e.textContent=`${x.position}. ${x.name} · ${rbRankName(x.rating)} ${x.rating} · ${x.wins}W ${x.losses}L`;$('rbrBoard').append(e);}if(!d.players.length)$('rbrBoard').textContent='No ranked players yet.'; }catch(e){rbrMsg(e.message);}}
+function rbrClose(){clearTimeout(RBR.reconnect);RBR.reconnect=null;const ws=RBR.socket;RBR.socket=null;if(NET.ws===ws)NET.ws=null;if(ws)ws.close();RBR.match=null;RBR.paused=false;RBR.attempt=0;rbrPaint();}
+function rbrSend(d){if(RBR.socket?.readyState===1)RBR.socket.send(JSON.stringify(d));}
+function rbrQueue(cup=false){if(!RBR.token||!rbWireDeck(RBR.deck)||RBR.socket||G.mode!=='menu')return;onlineDisconnect(true);rbrConnect(cup);}
+function rbrConnect(cup=false){if(!/^https?:$/.test(location.protocol)){rbrMsg('Ranked requires the bundled server. Open its web address, not the downloaded file.');return;}const ws=new WebSocket((location.protocol==='https:'?'wss:':'ws:')+'//'+location.host+'/rank');RBR.socket=ws;RBR.paused=!!RBR.match;rbrPaint();ws.onopen=()=>{rbrSend({type:'auth',token:RBR.token,resume:RBR.match?.id||null,deck:RBR.deck,hero:NET.myChar,queue:cup?'cup':'ranked',tick:OF.tick});};ws.onmessage=ev=>{let m;try{m=JSON.parse(ev.data);}catch{return;}if(ws!==RBR.socket)return;if(m.type==='queued'){rbrMsg(m.message);return;}if(m.type==='error'){rbrMsg(m.error);if(RBR.match){rbrClose();onlineToLobby(m.error);NET.room=null;NET.oppId=null;onlineUi(m.error);}else rbrClose();return;}if(m.type==='start'){RBR.match={id:m.id,side:m.side};RBR.paused=false;RBR.attempt=0;NET.ws=ws;NET.host=m.side==='P';NET.oppId=m.side==='P'?'C':'P';NET.room='RANKED';NET.rbPeer={rb:'rb3',deck:m.side==='P'?m.cfg.rb.c:m.cfg.rb.p};$('rbOnlineMode').value='rune';G.versus=false;RUN=null;CHRUN=null;if(RB_PATH)rbPathLeave();onlineStartMatch(m.cfg);rbrMsg('Ranked duel started.');return;}if(m.type==='paused'){RBR.paused=true;netBanner('RECONNECTING · 30 SECOND GRACE',true);return;}if(m.type==='resumed'){RBR.paused=false;RBR.attempt=0;NET.ws=ws;netBannerHide();if(G.online&&G.phase!=='over'){const from=Math.max(3,OF.tick-100),a=[];for(let i=from;i<=OF.sentUpTo;i++){if(!OF.localBuf.has(i))break;a.push(OF.localBuf.get(i));}if(a.length)netSend({k:'in',f:from,i:a});}return;}if(m.type==='runeblade:state'){onlineOnRelay(m);return;}if(m.type==='result'){const text=m.message;if(m.profile)rbrSetProfile(m.profile);if(G.online&&G.phase!=='over'){if(m.winner==='P'){G.winsP=2;}else if(m.winner==='C'){G.winsC=2;}else{G.winsP=0;G.winsC=0;}endMatch();} $('endOnlineNote').textContent=text;$('rematchBtn').textContent='RETURN TO MENU';rbrMsg(text);if(m.id)$('rbrReplayId').value=m.id;if(m.next){RBR.match=null;RBR.paused=false;onlineToLobby('Cup final pending');NET.room=null;NET.oppId=null;onlineUi('Awaiting cup final');rbrPaint();}else rbrClose();rbrLeaderboard();rbrHistory();return;}};ws.onclose=()=>{if(ws!==RBR.socket)return;RBR.socket=null;if(NET.ws===ws)NET.ws=null;if(RBR.match&&RBR.attempt<12){RBR.paused=true;RBR.attempt++;netBanner('RECONNECTING · DO NOT CLOSE THE GAME',true);RBR.reconnect=setTimeout(()=>rbrConnect(),1500);}else{rbrMsg('Connection closed.');rbrClose();}};ws.onerror=()=>ws.close();}
+function rbrFinish(){if(RBR.match&&RBR.socket){rbrSend({type:'finished',tick:OF.tick,score:[G.winsP,G.winsC]});$('endOnlineNote').textContent='Awaiting server replay verification…';$('rematchBtn').textContent='WAITING FOR VERIFICATION';}}
+function rbrExit(){if(RBR.playback){RBR.playback=null;$('replayBar').hidden=true;NET.rbMatch=null;NET.ws=null;onlineToLobby('Replay closed.');return true;}if(RBR.match){rbrSend({type:'leave'});rbrClose();onlineToLobby('Ranked match left.');NET.room=null;NET.oppId=null;onlineUi();return true;}if(NET.room==='RANKED'){onlineToLobby('Back to online menu.');NET.room=null;NET.oppId=null;onlineUi();return true;}return false;}
+function rbrReplayStart(data,manual=false){if(!data||!data.cfg||!data.cfg.rb||!rbWireDeck(data.cfg.rb.p)||!rbWireDeck(data.cfg.rb.c)||!Array.isArray(data.p)||!Array.isArray(data.c)||data.p.length>50000||data.c.length>50000||[...data.p,...data.c].some(x=>!Number.isSafeInteger(x)||x<0||x>5368709119))throw Error('Invalid replay');RBR.playback={data,manual};NET.host=true;NET.oppId='C';NET.rbPeer={rb:'rb3',deck:data.cfg.rb.c};$('rbOnlineMode').value='rune';G.versus=false;RUN=null;CHRUN=null;if(RB_PATH)rbPathLeave();onlineStartMatch(data.cfg);for(let i=3;i<data.p.length;i++)OF.localBuf.set(i,data.p[i]);for(let i=3;i<data.c.length;i++)OF.remoteBuf.set(i,data.c[i]);$('replayBar').hidden=manual;$('replayState').textContent='VERIFIED INPUT REPLAY · P1 VIEW';}
+function rbrReplayStep(n=1000){let count=0;while(G.phase!=='over'&&count++<n){if(G.phase==='fight'&&!onlineCanRun())break;tickSim(SIM_STEP);}return {phase:G.phase,tick:OF.tick,round:G.round,score:[G.winsP,G.winsC],hash:stateHash(OF.tick),hp:[P.hp,C.hp],count};}
+window.__rbWitness={start:rbrReplayStart,step:rbrReplayStep,cards:()=>GR_CARDS.map(c=>({id:c.id,school:c.school,rarity:rcRarity(c.id)})),starter:RC_START.slice(),neutral:packCtl(emptyCtl())};
+async function rbrGetReplay(watch){try{if(watch&&(RBR.socket||G.mode!=='menu'))throw Error('Leave the queue and return to the menu first.');const id=$('rbrReplayId').value.trim();if(!id)throw Error('Enter a replay ID');const d=await rbrApi('replay/'+encodeURIComponent(id));if(watch){rbrReplayStart(d);return;}const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:'application/json'}));a.download='RuneBlade-'+id+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}catch(e){rbrMsg(e.message);}}
+$('rbrRegister').onclick=()=>rbrAuth('register');$('rbrLogin').onclick=()=>rbrAuth('login');$('rbrLogout').onclick=()=>{if(RBR.match)return;rbrClose();rbrApi('logout',{}).catch(()=>{});RBR.token='';RBR.profile=null;rbrPaint();rbrMsg('Signed out.');};$('rbrQueue').onclick=()=>rbrQueue();$('rbrCup').onclick=()=>rbrQueue(true);$('rbrCancel').onclick=()=>{rbrClose();rbrMsg('Queue cancelled.');};$('rbrRefresh').onclick=()=>{rbrLeaderboard();rbrHistory();};$('rbrSave').onclick=async()=>{try{rbrSetProfile(await rbrApi('deck',{deck:RBR.deck}));rbrMsg('Ranked deck saved.');}catch(e){rbrMsg(e.message);}};$('rbrWatch').onclick=()=>rbrGetReplay(true);$('rbrDownload').onclick=()=>rbrGetReplay(false);$('replayExit').onclick=()=>{ $('replayBar').hidden=true;rbrExit();};$('replayPause').onclick=()=>{if(RBR.playback){G.paused=!G.paused;$('replayPause').textContent=G.paused?'PLAY':'PAUSE';}};
+
+document.addEventListener('click',e=>{const nav=e.target.closest('.mnav');if(nav&&nav.dataset.panel!=='panelOnline'&&RBR.socket&&!RBR.match){rbrClose();rbrMsg('Queue cancelled.');}},true);document.addEventListener('click',e=>{if(RBR.socket&&!RBR.match&&['createRoomBtn','joinRoomBtn'].includes(e.target.id)){rbrClose();}},true);
+
     window.__grimoire16={cards:GR_CARDS,get state(){return {active:GR.active,deck:GR.deck.slice(),p:P&&P.gr,c:C&&C.gr}},start:()=>$('grStart').click()};
 </script>
   </body>
