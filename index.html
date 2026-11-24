@@ -4986,8 +4986,12 @@
        FINISHING MOVES — a second removable feature layer (added after
        v1.0 at the user's order, on top of Card Clash; independent of it).
        Everything lives between __FINISHER_START / __FINISHER_END plus
-       three one-line hooks marked __FINISHER_HOOK (tickSim top guard,
-       the roundEnd update branch, and the roundEnd match-end branch).
+       one-line hooks marked __FINISHER_HOOK (tickSim top guard,
+       the roundEnd update branch, the roundEnd match-end branch, and
+       — since the DECAPITATION rework — one line in drawFighter's head
+       section, where the engine's own _goreSever hand stump already
+       lives: it draws a neck stump when the module's _finxHeadOff
+       flag is set).
        Strip the module + those hooks and match end is exactly v1.0
        (which already has its own short FIN presentation cinematic —
        this module layers AFTER it, it does not replace it).
@@ -5021,10 +5025,27 @@
        screen, blood dripping off the winner, plus this module's own
        screen-space camera splatter overlay that fades slowly.
        Per-fighter element (from their character) tints the extra FX
-       and picks the collapse: Ember / Storm launch the loser,
-       Frost / Grave drop them in two stages (hitstun kneel, then
-       fall). Sound: the engine's clash + hit + KO SFX layered at
-       the kill moment; no new audio files.
+       around the kill. Sound: the engine's clash + hit + KO SFX
+       layered at the kill moment; no new audio files.
+
+       DECAPITATION (user order, v1.2 rework): the kill moment IS a
+       beheading. The signature strike is a horizontal slash at neck
+       level (a blade-coloured streak particle through the neck,
+       winner raised-pose) and at the kill instant finxSeverHead()
+       takes the head OFF on every render layer the loser uses —
+       goreSever() itself only severs the saber hand, it has no head
+       path. Drawn fighters: _finxHeadOff + the drawFighter hook's
+       neck stump. Code-built 3D fighters: fantasyFight head group
+       hidden. GLB rigs: bones.head hidden (part-kit pivots) or
+       scaled to nothing (skinned bones — the engine's own hand-sever
+       trick). A module-owned head prop, painted per character on a
+       small canvas, launches off with spin, streams blood, bounces
+       and rolls on the ground and stays where it lands through the
+       results screen. The headless body stays standing ~0.7s with a
+       pulsing arterial fountain from the neck stump (repeated
+       upward bloodBurst + per-tick spurt particles for ~1.5s), then
+       collapses into its pool. All head changes are restored by
+       finxRestoreHeads() on the next round reset.
        Flag: localStorage 'runeblade.finisher.v1' ('0' = OFF, else ON,
        the default). Settings toggle: FINISHING MOVES. ================ */
     const FINX_KEY='runeblade.finisher.v1';
@@ -5035,7 +5056,8 @@
     const FINX_ICON={up:'\u25b2 UP',down:'\u25bc DOWN',light:'LIGHT',heavy:'HEAVY'};
     const FINX={active:false,phase:'window',t:0,cineT:0,endT:0,winner:null,loser:null,
       seq:[],prog:0,cpu:false,cpuWill:false,cpuStepT:0,baseX:0,doneKey:'',
-      struck:false,launched:false,landed:false,bannerShown:false,prev:{},el:null,styleEl:null};
+      struck:false,launched:false,landed:false,bannerShown:false,collapsed:false,raisedPose:false,
+      head:null,headObj:null,headFighter:null,fountainT:0,fountStep:0,prev:{},el:null,styleEl:null};
     function finxSetEnabled(v){
       finxEnabled=!!v;
       try{ window.localStorage.setItem(FINX_KEY,finxEnabled?'1':'0'); }catch(e){ /* storage blocked — session only */ }
@@ -5070,6 +5092,7 @@
       FINX.cpuWill=FINX.cpu&&Math.random()<0.5; /* ~50%: sometimes it just lets you fall */
       FINX.cpuStepT=0; FINX.struck=false; FINX.launched=false; FINX.landed=false; FINX.bannerShown=false;
       FINX.prev={};
+      finxRestoreHeads(); finxHeadRemove(); FINX.head=null; FINX.fountainT=0; FINX.collapsed=false; FINX.raisedPose=false;
       L.y=GROUND; L.vy=0; L.vx=0; L.blocking=false; L.atk=null; setState(L,'stagger',true); L.stateT=0; /* dizzied, swaying */
       W.vx=0; if(W.state!=='idle')setState(W,'idle',true);
       announce('END IT!<small>'+W.cfg.short+' — FINISH THE DUEL</small>',1700);
@@ -5096,40 +5119,171 @@
     function finxStartCine(){
       FINX.phase='cine'; FINX.cineT=0;
       finxHudHide();
+      if(FINX.winner){ FINX.winner._fin='raise'; FINX.raisedPose=true; } /* blade high before the neck slash — poseFor's own presentation flag */
       DIRECTOR.kick=Math.max(DIRECTOR.kick,.3); /* camera pushes in for the execution */
     }
     function finxKillMoment(){
       const W=FINX.winner, L=FINX.loser; if(!W||!L)return;
       const elem=FINX_ELEM[W.char]||'grave';
-      const cx=L.x, cy=L.y-95;
-      SFX.clash(cx); SFX.hit(cx); SFX.ko();
+      /* DECAPITATION: the signature strike is a horizontal slash at
+         NECK level — every other finisher beat hangs off this point */
+      const nx=L.x, ny=L.y-124;
+      SFX.clash(nx); SFX.hit(nx); SFX.ko();
       shake=Math.max(shake,9); setHitstop(4);
-      sparks(cx,cy,bladeCol(W),30,520); ring(cx,cy,bladeCol(W),110); emberBurst(cx,cy,bladeCol(W),14);
+      /* the slash itself: long horizontal blade streaks through the
+         neck (drawParticles' streak branch), winner's blade colour */
+      particles.push({x:nx-W.facing*74,y:ny,vx:W.facing*1500,vy:0,t:0,life:.16,color:bladeCol(W),size:5,grav:0,type:'slash'});
+      particles.push({x:nx-W.facing*48,y:ny+3,vx:W.facing*1200,vy:0,t:0,life:.22,color:'#ffffff',size:2.4,grav:0,type:'slash'});
+      sparks(nx,ny,bladeCol(W),30,520); ring(nx,ny,bladeCol(W),110); emberBurst(nx,ny,bladeCol(W),14);
+      finxSeverHead(L,W,nx,ny); /* the head comes OFF */
+      FINX.fountainT=1.5; FINX.fountStep=0;
       /* ---- GORE: an order of magnitude past a normal hit ---- */
       if(typeof bloodBurst==='function'){
-        for(let i=0;i<5;i++)bloodBurst(cx+rand(-8,8),cy+rand(-14,14),W.facing,-0.35,20); /* fountains */
+        for(let i=0;i<5;i++)bloodBurst(nx+rand(-8,8),ny+rand(-10,10),W.facing,-0.35,20); /* fountains */
       }
       for(let i=0;i<26;i++){ /* arterial spray, engine blood particles */
-        particles.push({x:cx,y:cy,vx:W.facing*rand(40,190),vy:-rand(160,380),t:0,life:rand(.5,1.05),
+        particles.push({x:nx,y:ny,vx:W.facing*rand(40,190),vy:-rand(160,380),t:0,life:rand(.5,1.05),
           color:(typeof BLOOD_COLS!=='undefined'?BLOOD_COLS[i%3]:'#8f1212'),size:rand(2.2,5),grav:900,type:'blood'});
       }
-      if(typeof goreSever==='function')goreSever(L); /* no-op if the KO already severed */
-      if(typeof bloodDecal==='function'){ bloodDecal(cx,2.4); bloodDecal(cx+rand(-30,30),1.8); } /* the pool starts spreading */
+      if(typeof goreSever==='function')goreSever(L); /* the hand sever too, if the KO had not already taken it */
+      if(typeof bloodDecal==='function'){ bloodDecal(nx,2.4); bloodDecal(nx+rand(-30,30),1.8); } /* the pool starts spreading */
       finxSplatterShow();
       /* blood on the winner: drips off their side of the arena */
       for(let i=0;i<7;i++)particles.push({x:W.x+W.facing*rand(16,30),y:W.y-rand(60,110),vx:rand(-12,12),vy:rand(8,42),t:0,life:rand(.4,.8),color:'#8f1212',size:rand(1.8,3.4),grav:340,type:'blood'});
-      if(elem==='ember')emberBurst(cx,cy,'#ff7a3c',22); /* burning blood / embers */
-      if(elem==='storm')sparks(cx,cy,'#ffe81f',24,560);
-      if(elem==='frost')sparks(cx,cy,'#9fd8ff',20,380);
-      addFloat(cx,cy-84,'FINISH HIM','#ff5a4e',20);
-      if(elem==='ember'||elem==='storm'){
-        FINX.launched=true; L.vx=W.facing*330; L.vy=-320; setState(L,'hitstun_air',true); /* launched by the strike */
-      }else{
-        setState(L,'hitstun',true); L.stateT=-0.55; L.vx=W.facing*90; /* kneel first — the drop comes at cine t>=1.05 */
+      if(elem==='ember')emberBurst(nx,ny,'#ff7a3c',22); /* burning blood / embers */
+      if(elem==='storm')sparks(nx,ny,'#ffe81f',24,560);
+      if(elem==='frost')sparks(nx,ny,'#9fd8ff',20,380);
+      addFloat(nx,ny-58,'FINISH HIM','#ff5a4e',20);
+      /* the headless body stays ON ITS FEET with the fountain going —
+         the collapse is timed in finxTick (cine t>=1.15) */
+      setState(L,'hitstun',true); L.stateT=0; L.vx=W.facing*26; L.vy=0;
+    }
+    /* ================= DECAPITATION =================
+       goreSever() only severs the saber HAND (a wrist point, a glove
+       prop, hand bones at the model layer) — it has no head path, so
+       the head work is the module's own, layer by layer. */
+    function finxHeadBoneFor(L){
+      /* the loser's own rig, A or B in a mirror match — the same
+         selection syncFighter3D makes. Skinned rigs (Eldryn /
+         Drakthar) map a real head BONE; the part-kit rigs
+         (Vorgrath / INAAM) map a head PIVOT group. */
+      const ch=L.char, mirror=(typeof P!=='undefined'&&typeof C!=='undefined'&&P&&C&&P.char===ch&&C.char===ch&&L===C);
+      let bones=null, kind='vis';
+      if(ch==='obi'){ bones=mirror?obiBones2:obiBones; kind='scale'; }
+      else if(ch==='vader'){ bones=mirror?vaderBones2:vaderBones; kind='scale'; }
+      else if(ch==='maul'){ bones=mirror?maulBones2:maulBones; }
+      else if(ch==='inaam'){ bones=mirror?inaamBones2:inaamBones; }
+      if(!bones||!bones.head)return null;
+      return {o:bones.head,kind:kind};
+    }
+    function finxSeverHead(L,W,nx,ny){
+      L._finxHeadOff=true; FINX.headFighter=L; /* drawn layer: stump via the drawFighter __FINISHER_HOOK */
+      try{ /* code-built 3D fighters: the fantasy head group */
+        const slot=(typeof P!=='undefined'&&L===P)?'P':'C';
+        const fr=(typeof fantasyFight!=='undefined')?fantasyFight[slot]:null;
+        if(fr&&fr.ch===L.char&&fr.head){ fr.head.visible=false; FINX.headObj={o:fr.head,kind:'vis'}; }
+      }catch(e){ /* layer absent — the prop still flies */ }
+      if(!FINX.headObj){
+        try{ /* GLB rigs: hide the pivot, or scale the skinned bone
+                to nothing — the engine's own hand-sever trick */
+          const hb=finxHeadBoneFor(L);
+          if(hb&&hb.o){ if(hb.kind==='scale')hb.o.scale.setScalar(0.001); else hb.o.visible=false; FINX.headObj=hb; }
+        }catch(e){ /* rig not loaded — drawn layer + prop carry it */ }
       }
+      finxHeadMake(L,W,nx,ny);
+    }
+    function finxRestoreHeads(){
+      if(FINX.headObj){ try{ if(FINX.headObj.kind==='scale')FINX.headObj.o.scale.setScalar(1); else FINX.headObj.o.visible=true; }catch(e){} FINX.headObj=null; }
+      if(FINX.headFighter){ FINX.headFighter._finxHeadOff=false; FINX.headFighter=null; }
+    }
+    function finxHeadPaint(g,ch){
+      /* a severed head, painted per character on a 56px canvas:
+         face/helmet cues lifted from drawFighter's own palettes */
+      const cx=28, cy=25, r=16;
+      const disc=(x,y,rr,col)=>{ g.fillStyle=col; g.beginPath(); g.arc(x,y,rr,0,TAU); g.fill(); };
+      if(ch==='vader'){ /* the helmet comes off with the head */
+        disc(cx,cy,r+2,'#1b1b21'); disc(cx,cy+3,r-2,'#111116');
+        g.fillStyle='#05050a'; g.beginPath(); g.moveTo(cx-6,cy+2); g.lineTo(cx+6,cy+2); g.lineTo(cx,cy+10); g.closePath(); g.fill();
+      }else if(ch==='maul'){ /* tattooed red face, crown of horns */
+        disc(cx,cy,r,'#a02118');
+        g.fillStyle='#0a0a0c'; g.beginPath(); g.ellipse(cx,cy-6,8,5,0,0,TAU); g.fill();
+        g.beginPath(); g.ellipse(cx-5,cy+5,3,4.4,.5,0,TAU); g.fill();
+        g.beginPath(); g.ellipse(cx+5,cy+5,3,4.4,-.5,0,TAU); g.fill();
+        g.fillStyle='#d8cfb8';
+        for(const hx of [-10,-5,0,5,10]){ const hh=hx===0?12:9; g.beginPath(); g.moveTo(cx+hx-2.2,cy-r+4); g.lineTo(cx+hx+2.2,cy-r+4); g.lineTo(cx+hx,cy-r+4-hh); g.closePath(); g.fill(); }
+      }else if(ch==='ahsoka'){ /* montrals + orange face */
+        g.fillStyle='#e8e4da';
+        g.beginPath(); g.moveTo(cx-11,cy-8); g.lineTo(cx-3,cy-9); g.lineTo(cx-6.5,cy-r-7); g.closePath(); g.fill();
+        g.beginPath(); g.moveTo(cx+3,cy-9); g.lineTo(cx+11,cy-8); g.lineTo(cx+6.5,cy-r-7); g.closePath(); g.fill();
+        disc(cx,cy,r-1,'#d97b3f');
+        g.fillStyle='rgba(240,238,230,.9)'; g.beginPath(); g.ellipse(cx,cy-3,6.6,4.6,0,0,TAU); g.fill();
+      }else if(ch==='sidious'){ /* hood, pale face in its shadow */
+        disc(cx,cy,r+3,'#0b0b10'); disc(cx+2,cy+2,r-5,'#cfc4ae');
+        g.fillStyle='#e8c33a'; g.beginPath(); g.arc(cx+5,cy,1.5,0,TAU); g.fill(); g.beginPath(); g.arc(cx-1,cy,1.2,0,TAU); g.fill();
+      }else if(ch==='inaam'){ /* grey hood up, dark beard */
+        disc(cx,cy,r+2.5,'#5b5e63'); disc(cx,cy+1,r-.5,'#3f4247'); disc(cx+1,cy+1,r-5.5,'#b07a52');
+        g.fillStyle='#17130f'; g.beginPath(); g.ellipse(cx+1,cy+8.5,8.6,6.2,0,0,Math.PI); g.fill();
+      }else if(ch==='dooku'){ /* silver hair, grey beard */
+        disc(cx,cy,r,'#e3c39a');
+        g.fillStyle='#b9b4a8'; g.beginPath(); g.arc(cx,cy-3,r+.5,Math.PI*1.02,Math.PI*1.98); g.fill();
+        g.fillStyle='#a9a499'; g.beginPath(); g.moveTo(cx-6.5,cy+7); g.lineTo(cx+6.5,cy+7); g.lineTo(cx+2.5,cy+16); g.lineTo(cx-2.5,cy+16); g.closePath(); g.fill();
+      }else{ /* obi / default: skin, grey-brown hair, beard */
+        disc(cx,cy,r,'#e8b98d');
+        g.fillStyle='#8d8578'; g.beginPath(); g.arc(cx,cy-3,r+.5,Math.PI*1.02,Math.PI*1.98); g.fill();
+        g.fillStyle='#cfc8ba'; g.beginPath(); g.moveTo(cx-7,cy+8); g.lineTo(cx+7,cy+8); g.lineTo(cx+3,cy+15); g.lineTo(cx-3,cy+15); g.closePath(); g.fill();
+      }
+      /* the cut: dark red neck underside */
+      g.fillStyle='#6e0b0b'; g.beginPath(); g.ellipse(cx,cy+r-1,9,3.6,0,0,TAU); g.fill();
+      g.fillStyle='#8f1212'; g.beginPath(); g.ellipse(cx,cy+r-1,5.5,2.2,0,0,TAU); g.fill();
+    }
+    function finxHeadMake(L,W,nx,ny){
+      finxHeadRemove();
+      const el=document.createElement('canvas'); el.width=56; el.height=56;
+      el.style.cssText='position:fixed;z-index:58;pointer-events:none;width:52px;height:52px;left:0;top:0;';
+      try{ finxHeadPaint(el.getContext('2d'),L.char); }catch(e){ /* a plain prop still flies */ }
+      document.body.appendChild(el);
+      FINX.head={el:el,x:nx,y:ny-4,vx:W.facing*rand(180,250),vy:-rand(300,390),rot:0,vr:W.facing*rand(6,10),landed:false,rest:false,dripT:0};
+      finxHeadPos();
+    }
+    function finxHeadPos(){
+      const h=FINX.head; if(!h||!h.el)return;
+      const r=cv.getBoundingClientRect(); if(!r.width)return;
+      const sx=(h.x-CAM.x)*CAM.z+VW/2, sy=(h.y-CAM.y)*CAM.z+VH/2;
+      h.el.style.transform='translate('+(r.left+sx/VW*r.width-26)+'px,'+(r.top+sy/VH*r.height-26)+'px) rotate('+h.rot+'rad)';
+    }
+    function finxHeadStep(dt){
+      const h=FINX.head; if(!h)return;
+      if(!h.rest){
+        h.vy+=1500*dt; h.x+=h.vx*dt; h.y+=h.vy*dt; h.rot+=h.vr*dt;
+        h.dripT-=dt; /* blood streams off the flying head */
+        if(h.dripT<=0){ h.dripT=0.045;
+          particles.push({x:h.x+rand(-6,6),y:h.y+rand(4,12),vx:-h.vx*0.12+rand(-16,16),vy:rand(20,70),t:0,life:rand(.3,.55),color:'#8f1212',size:rand(1.8,3.4),grav:700,type:'blood'});
+        }
+        if(h.y>=GROUND-8){
+          h.y=GROUND-8;
+          const imp=Math.abs(h.vy);
+          if(imp>110){ /* wet impact burst + a pool where it lands */
+            if(typeof bloodBurst==='function')bloodBurst(h.x,GROUND-4,0,-1,10);
+            if(typeof bloodDecal==='function')bloodDecal(h.x,1.5);
+            shake=Math.max(shake,2.5);
+          }
+          h.landed=true;
+          if(imp<110){ h.vy=0; h.vx*=0.55; h.vr=h.vx*0.05; if(Math.abs(h.vx)<22){ h.vx=0; h.vr=0; h.rest=true; } }
+          else{ h.vy=-imp*0.34; h.vx*=0.6; h.vr*=0.55; }
+        }
+      }
+      finxHeadPos();
+    }
+    function finxHeadRemove(){
+      if(FINX.head&&FINX.head.el){ try{ FINX.head.el.remove(); }catch(e){} }
+      FINX.head=null;
     }
     function finxFinish(){
       FINX.active=false; FINX.doneKey=finxKey();
+      if(FINX.raisedPose&&FINX.winner)FINX.winner._fin=null; FINX.raisedPose=false;
+      /* the severed head stays OFF and the prop stays where it landed
+         through the results screen — finxRoundReset restores all of
+         it when the next match/round is set up */
       finxHudHide(); finxBannerHide();
       /* the tickSim match-end branch runs later this same tick and,
          with FINX inactive and doneKey set, falls through to the
@@ -5138,6 +5292,8 @@
     function finxCancel(){
       if(!FINX.active)return;
       FINX.active=false; FINX.doneKey=finxKey();
+      if(FINX.raisedPose&&FINX.winner)FINX.winner._fin=null; FINX.raisedPose=false;
+      finxRestoreHeads(); finxHeadRemove();
       finxHudHide(); finxBannerHide(); finxSplatterHide();
     }
     /* called by the __FINISHER_HOOK on the startRound hook line: the
@@ -5147,6 +5303,7 @@
     function finxRoundReset(){
       if(typeof G!=='undefined'&&G&&G.round===1)FINX.doneKey='';
       if(FINX.active)finxCancel();
+      finxRestoreHeads(); finxHeadRemove(); /* last match's head/heads back on for the new round */
     }
     function finxTick(dt){
       if(!FINX.active)return;
@@ -5189,21 +5346,24 @@
         const target=L.x-W.facing*64;
         if(t<0.4){ const dx=target-W.x; W.x+=clamp(dx,-900*dt,900*dt); if(Math.random()<0.35)ring(W.x,W.y-4,bladeCol(W),46); /* rune circle kindling under the winner */ }
         if(!FINX.struck&&t>=0.45){ FINX.struck=true; finxKillMoment(); }
-        if(FINX.launched&&!FINX.landed){
-          L.vy+=1500*dt; L.x+=L.vx*dt; L.y+=L.vy*dt;
-          if(L.y>=GROUND){ L.y=GROUND; L.vy=0; L.vx=0; FINX.landed=true; setState(L,'defeated',true);
-            if(typeof bloodDecal==='function')bloodDecal(L.x,2.2);
-            if(typeof bloodBurst==='function')bloodBurst(L.x,GROUND-6,W.facing,-0.4,14); shake=Math.max(shake,5); }
+        if(FINX.head)finxHeadStep(dt); /* the severed head flies, bounces, rolls, rests */
+        if(FINX.struck&&FINX.fountainT>0){ /* arterial fountain from the neck stump, ~1.5s of pulsing spurts */
+          FINX.fountainT-=dt; FINX.fountStep-=dt;
+          const fnx=L.x, fny=L.y-124;
+          for(let fi=0;fi<2;fi++)particles.push({x:fnx+rand(-4,4),y:fny,vx:rand(-36,36),vy:-rand(300,470),t:0,life:rand(.45,.8),
+            color:(typeof BLOOD_COLS!=='undefined'?BLOOD_COLS[fi%3]:'#8f1212'),size:rand(2,4.6),grav:980,type:'blood'});
+          if(FINX.fountStep<=0){ FINX.fountStep=0.3; if(typeof bloodBurst==='function')bloodBurst(fnx,fny,0,-1,11); }
         }
-        if(FINX.struck&&!FINX.launched&&t>=1.05&&L.state!=='defeated'){
-          setState(L,'defeated',true); /* stage two of the fall: the drop */
-          if(typeof bloodDecal==='function')bloodDecal(L.x,2.0);
+        if(FINX.struck&&!FINX.collapsed&&t>=1.15){
+          FINX.collapsed=true; setState(L,'defeated',true); /* the headless body finally drops */
+          if(typeof bloodDecal==='function')bloodDecal(L.x,2.2);
+          if(typeof bloodBurst==='function')bloodBurst(L.x,GROUND-6,W.facing,-0.4,12); shake=Math.max(shake,4);
         }
         if(FINX.struck&&t>=1.2&&Math.random()<0.3){ /* blood still dripping off the winner */
           particles.push({x:W.x+W.facing*rand(16,30),y:W.y-rand(60,110),vx:0,vy:rand(10,36),t:0,life:rand(.35,.6),color:'#6e0b0b',size:rand(1.6,3),grav:340,type:'blood'});
         }
         if(t>=1.5&&!FINX.bannerShown){ FINX.bannerShown=true; finxBannerShow(); if(W.state!=='idle')setState(W,'idle',true); }
-        if(t>=2.6)finxFinish();
+        if(((t>=2.6&&(!FINX.head||FINX.head.rest))||t>=4.2))finxFinish(); /* hold until the head comes to rest (hard cap 4.2s) */
       }else if(FINX.phase==='fail'){
         FINX.endT+=dt;
         if(FINX.endT>=0.7)finxFinish();
@@ -5270,7 +5430,7 @@
       const anchor=document.getElementById('setCardClash')||document.getElementById('setBladeLock'); if(!anchor)return;
       const row=anchor.closest('.setRow'); if(!row||!row.parentNode)return;
       const r=document.createElement('div'); r.className='setRow';
-      r.innerHTML='<span class="slab">FINISHING MOVES</span><button class="togBtn" id="setFinisher">FINISHING MOVES: ON</button><span class="sdesc">At MATCH end only: instead of falling, the loser stands dizzied for a few seconds while the winner gets an END IT prompt — walk into mid-range and enter your fighter&rsquo;s 3-rune sequence (Up / Down / Light / Heavy) to perform a finishing move: a dash-in execution with heavy gore, a spreading blood pool and a RUNEBLADE FINISH. Wrong input or too slow and they just collapse, exactly as before. A CPU winner attempts it about half the time. Never in Training. Online duels are unchanged in this version. OFF = match end exactly as before.</span>';
+      r.innerHTML='<span class="slab">FINISHING MOVES</span><button class="togBtn" id="setFinisher">FINISHING MOVES: ON</button><span class="sdesc">At MATCH end only: instead of falling, the loser stands dizzied for a few seconds while the winner gets an END IT prompt — walk into mid-range and enter your fighter&rsquo;s 3-rune sequence (Up / Down / Light / Heavy) to perform a finishing move: a dash-in DECAPITATION — the head comes off and rolls, an arterial fountain, a spreading blood pool and a RUNEBLADE FINISH. Wrong input or too slow and they just collapse, exactly as before. A CPU winner attempts it about half the time. Never in Training. Online duels are unchanged in this version. OFF = match end exactly as before.</span>';
       row.parentNode.insertBefore(r,row.nextSibling);
       r.querySelector('#setFinisher').addEventListener('click',()=>{ try{ audioInit(); }catch(e){} finxSetEnabled(!finxEnabled); });
       const b=r.querySelector('#setFinisher');
@@ -8435,7 +8595,11 @@
       }
       /* head */
       const headY=hipY-52;
-      if(vader){
+      if(f._finxHeadOff){ /* __FINISHER_HOOK: decapitated by the Finishing Moves layer — neck stump only; the head itself is that module's flying prop (and the 3D layers hide theirs) */
+        g.fillStyle='#5d0808'; g.beginPath(); g.ellipse(0,headY+13,7.5,3.6,0,0,TAU); g.fill();
+        g.fillStyle='#8f1212'; g.beginPath(); g.ellipse(0,headY+12,4.6,2.2,0,0,TAU); g.fill();
+        g.fillStyle='#6e0b0b'; g.fillRect(-1.1,headY+13,2.2,5);
+      }else if(vader){
         g.fillStyle=hurt?'#4a4a56':'#1b1b21';
         g.beginPath(); g.arc(0,headY,13,Math.PI,0); g.fill();
         g.beginPath(); g.moveTo(-12,headY); g.lineTo(12,headY); g.lineTo(7,headY+15); g.lineTo(-7,headY+15); g.closePath(); g.fill();
