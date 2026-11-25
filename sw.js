@@ -1,10 +1,10 @@
-/* RuneBlade 9.4 — offline shell only. Never caches account, API or match traffic. */
-const CACHE = 'runeblade-shell-9.4';
+/* RuneBlade 9.5 — offline shell only. Never caches account, API or match traffic. */
+const CACHE = 'runeblade-shell-9.5';
 const ROOT = new URL('./', self.registration.scope);
 const SHELL = ['', 'config.js', 'manifest.webmanifest', 'icon-180.png', 'icon-192.png', 'icon-512.png'];
 const urls = SHELL.map(p => new URL(p, ROOT).href);
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(urls)));
+  event.waitUntil(caches.open(CACHE).then(async cache => { await cache.add(ROOT.href); await Promise.allSettled(urls.slice(1).map(url => cache.add(url))); await self.skipWaiting(); }));
 });
 self.addEventListener('activate', event => {
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k.startsWith('runeblade-shell-') && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
