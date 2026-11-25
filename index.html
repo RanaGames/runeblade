@@ -1060,6 +1060,8 @@ window.addEventListener('error',function(e){if(!window.__rbBootReady&&e.message)
 #fightStage.forced #rbDualStack{--dual:clamp(112px,32vw,154px)!important}
 #fightStage.ana-sz-s #rbDualStack{--dual:108px!important}#fightStage.ana-sz-l #rbDualStack{--dual:154px!important}
 #fightStage #rbAttackStick .rbAttackBase{border-color:#e5b872;}
+
+#fightStage.rb102Direct .guardHud,#fightStage.rb102Direct .rb653Stat:has(.mbar.posture){display:none!important}
 </style>
   <link rel="manifest" href="manifest.webmanifest" />
 <script>if(location.protocol==="https:"||location.protocol==="http:"){var rbConfig=document.createElement("script");rbConfig.src="config.js";rbConfig.async=true;document.head.appendChild(rbConfig);}</script>
@@ -1597,9 +1599,9 @@ body #finxHud .finxTitle{top:8%;font:800 clamp(23px,5vw,42px)/1.1 Georgia;color:
                   <button class="abtn" data-arena="hangar"><canvas class="athumb" data-athumb="hangar" width="112" height="63"></canvas>OBSIDIAN COURT</button>
                 </div>
                 <div class="diffRow"><span class="lab">MATCH</span><span class="valChip">BEST OF 3 &middot; FIRST TO 2 ROUNDS &middot; 99 SECONDS</span></div>
-                <label style="display:flex;align-items:center;gap:9px;padding:10px;margin:8px 0;border:1px solid #b99a62;border-radius:8px;background:#211d19;color:#f2d6a0;font-size:13px"><input type="checkbox" id="rb10Toggle" checked style="width:22px;height:22px;accent-color:#bf9652"> <span><b>TRUE BLADE · EXPERIMENTAL</b><br><small>One sword stick · physical blade contacts · offline 1v1</small></span></label>
+                <label style="display:flex;align-items:center;gap:9px;padding:10px;margin:8px 0;border:1px solid #b99a62;border-radius:8px;background:#211d19;color:#f2d6a0;font-size:13px"><input type="checkbox" id="rb10Toggle" checked disabled hidden> <span><b>TRUE BLADE · EXPERIMENTAL</b><br><small>Blade contact = clash · body contact = damage · offline 1v1</small></span></label>
                 <button id="startBtn">BEGIN DUEL</button>
-                <div class="fineprint">Thumb stick on mobile — push to move, hold back to block &middot; full keyboard on desktop &middot; fan-made demo</div>
+                <div class="fineprint">Left stick moves · right stick moves the sword · no guard, no parry · contact decides the result</div>
               </section>
               <section class="mpanel" id="panelOnline">
                 <div class="phead"><button class="backBtn" type="button">&#8249; MENU</button><h2 class="ptitle"><span class="sw">ONLINE DUEL</span> &mdash; LOCKSTEP VERSUS</h2></div>
@@ -7092,18 +7094,19 @@ three/build/three.module.js:
     function rb93Delta(a,b){return Math.atan2(Math.sin(b-a),Math.cos(b-a));}
     function rb660MakeAttack(id,queue,fighter){
       const el=$(id),knob=el.querySelector('.rbAttackKnob'),label=el.querySelector('.rbAttackLabel');
-      let pid=null,angle=null,last=null,anchor=null,arc=0,pressedAt=0,lastMoved=0,lastFire=-Infinity,raf=0,attempted=false,travel=0,charged=false;
+      let pid=null,angle=null,last=null,anchor=null,arc=0,pressedAt=0,lastMoved=0,lastFire=-Infinity,raf=0,attempted=false,travel=0,charged=false,directSpeed=0;
       const active=()=>G.mode==='fight'&&G.phase==='fight'&&!G.paused&&!LOCK.active&&!CINE.active&&!CC.active&&!RBR.playback;
       const tracking=()=>active()||(id==='rbAttackStick'&&G.mode==='fight'&&!G.paused&&!RBR.playback&&(LOCK.active||(FINX.active&&FINX.phase==='window'&&FINX.winner===P)));
       const quant=a=>{const f=fighter();return f&&a!==null?rb41Quant(Math.atan2(Math.sin(a),Math.cos(a)*(f.facing||1))):null;};
-      const emit=(a,heavy,sweep=null)=>{const f=fighter(),now=performance.now();if(!active()||!f||f.hp<=0||(f===P&&rbBowDrawing(P))||rb90Bow(f)?.channel||queue.length||now-lastFire<RB97_INTERVAL)return false;
+      const emit=(a,heavy,sweep=null)=>{if(id==='rbAttackStick'&&rb10Active()){lastFire=performance.now();attempted=true;return true;}const f=fighter(),now=performance.now();if(!active()||!f||f.hp<=0||(f===P&&rbBowDrawing(P))||rb90Bow(f)?.channel||queue.length||now-lastFire<RB97_INTERVAL)return false;
         const q=quant(a);if(q===null)return false;queue.push({name:heavy?'heavy':'light',angle:q,dir:rb63Dir(q),wait:0,sweep:rb10Active()&&sweep?{from:quant(sweep.from),to:quant(sweep.to),sign:sweep.sign*(f.facing||1)}:null});attempted=true;lastFire=now;return true;};
       const clearSweep=()=>{anchor=null;arc=0;charged=false;};
-      const paint=()=>{if(pid===null)return;const now=performance.now(),ready=angle!==null&&now-lastMoved>=RB97_CHARGE;el.classList.toggle('heavy',ready);rb49Text(label,now-lastFire<220?'SLASH!':angle===null?'DRAG TO AIM':ready?'HEAVY READY':'AIM · SWIPE');raf=requestAnimationFrame(paint);};
-      const release=()=>{const old=pid;pid=null;try{if(old!==null&&el.hasPointerCapture(old))el.releasePointerCapture(old);}catch(_){}angle=null;last=null;clearSweep();pressedAt=0;lastMoved=0;attempted=false;travel=0;cancelAnimationFrame(raf);el.classList.remove('live','heavy');knob.style.transform='translate(-50%,-50%)';rb49Text(label,'SWORD');};
+      const paint=()=>{if(pid===null)return;const now=performance.now(),ready=angle!==null&&now-lastMoved>=RB97_CHARGE;el.classList.toggle('heavy',!rb10Active()&&ready);rb49Text(label,rb10Active()&&id==='rbAttackStick'?'SWORD':(now-lastFire<220?'SLASH!':angle===null?'DRAG TO AIM':ready?'HEAVY READY':'AIM · SWIPE'));raf=requestAnimationFrame(paint);};
+      const release=()=>{const old=pid;pid=null;try{if(old!==null&&el.hasPointerCapture(old))el.releasePointerCapture(old);}catch(_){}angle=null;last=null;directSpeed=0;clearSweep();pressedAt=0;lastMoved=0;attempted=false;travel=0;cancelAnimationFrame(raf);el.classList.remove('live','heavy');knob.style.transform='translate(-50%,-50%)';rb49Text(label,'SWORD');};
       const reset=()=>{release();lastFire=-Infinity;};
       reset.held=()=>tracking()&&pid!==null;
       reset.aim=()=>reset.held()?quant(angle):null;
+      reset.speed=()=>reset.held()&&performance.now()-lastMoved<100?directSpeed:0;
       reset.steady=()=>reset.held()&&angle!==null&&performance.now()-lastMoved>=180;
       const sample=e=>{const r=el.getBoundingClientRect(),rot=$('fightStage').classList.contains('forced');let x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;if(rot){const a=x;x=y;y=-a;}
         const sx=el.clientWidth/Math.max(1,rot?r.height:r.width),sy=el.clientHeight/Math.max(1,rot?r.width:r.height);x*=sx;y*=sy;
@@ -7111,9 +7114,10 @@ three/build/three.module.js:
         const a=mag>=radius*RB97_DEAD?Math.atan2(y,x):null;
         const now=performance.now(),t=Number.isFinite(e.timeStamp)?e.timeStamp:now,pt={x:x*k/radius,y:y*k/radius,a,t};
         // Preserve aim across the central deadzone; never hand the blade back to defence mid-drag.
-        if(a!==null)angle=a;
+        const priorAngle=angle;if(a!==null)angle=a;
         if(last){const gap=Math.max(8,t-last.t),dist=Math.hypot(pt.x-last.x,pt.y-last.y),d=a!==null&&last.a!==null?rb93Delta(last.a,a):0;
           if(dist>.018||Math.abs(d)>.035){
+            directSpeed=a!==null&&priorAngle!==null?Math.abs(rb93Delta(priorAngle,a))/(gap/1000):0;
             const wasCharged=now-lastMoved>=RB97_CHARGE;travel+=dist;
             // Do not turn a slow reposition after a hold into an artificial high-speed heavy.
             // Real fast follow-up samples can still use the charge earned before the motion.
@@ -7940,7 +7944,7 @@ three/build/three.module.js:
         /* ANALOG STAGE B channels (see the stamp above): ana = this
            ctl's fighter is analog-driven; anaAng = desired blade
            angle in facing space, or null for a neutral stick */
-        ana: anaCtlOn, anaAng: anaCtlAng, swordSweep:rb63Press?.sweep||null,
+        ana: anaCtlOn, anaAng: anaCtlAng, swordSweep:rb63Press?.sweep||null, directTouch:rb10Active()&&rb660AttackReset.held(), directSpeed:rb10Active()?rb660AttackReset.speed():0,
         /* STAGE 2 DEF channel: GUARD modifier held this tick (local
            analog only — see the stamp above) */
         guard: anaGuardHeld,
@@ -7952,7 +7956,15 @@ three/build/three.module.js:
         ana3: grActive()?null:(ANA3.fire||null)
       };
     }
-    function rbPrecisionCtl(f,c){if(!c||!f)return c;c.ana=1;if(c.light||c.heavy){c.block=0;c.guard=0;}else if(c.block){c.guard=1;if(!Number.isFinite(c.anaAng))c.anaAng=rb41Quant(ana2GuardAng(c.down?'low':c.dir||f.dirSel));}return c;}
+    function rb103ClearDefence(f,c){
+      if(c){c.block=0;c.guard=0;c.feint=0;}
+      f.blocking=false;f.blockLow=false;f.parryAttempt=false;f.holdT=0;f.meetT=0;f.bindT=0;
+      f.blockStun=0;f.parryLockT=0;f.guardChangeT=0;f.riposteT=0;f.counterT=0;
+      if(f.state==='guardbreak')setState(f,'idle');
+    }
+    function rbPrecisionCtl(f,c){if(!c||!f)return c;c.ana=1;
+      if(rb10Active()){rb103ClearDefence(f,c);if(f===P){c.light=0;c.heavy=0;f.buf.light=0;f.buf.heavy=0;f.atk=null;if(f.state==='attack')setState(f,'idle');}return c;}
+      if(c.light||c.heavy){c.block=0;c.guard=0;}else if(c.block){c.guard=1;if(!Number.isFinite(c.anaAng))c.anaAng=rb41Quant(ana2GuardAng(c.down?'low':c.dir||f.dirSel));}return c;}
     // Apply only to the current simulation tick, never to future online input samples.
     function rb98ReleaseGuard(f){
       if(!f||!f.ctl||f.ctl.block)return;
@@ -8563,7 +8575,7 @@ three/build/three.module.js:
        fed through the fighters' input buffers (bufferTick). */
     let hitstopTicks=0, slowmoTicks=0, slowmoPhase=0;
     const SLOWMO_DIV=3; /* slow-mo runs the fighters 1 tick in 3 */
-    function setHitstop(n){ if(n>hitstopTicks)hitstopTicks=n; }
+    function setHitstop(n){ if(rb10Active())return; if(n>hitstopTicks)hitstopTicks=n; }
     function setSlowmo(n){ if(n>slowmoTicks){ slowmoTicks=n; slowmoPhase=0; } }
     /* on a frozen (hit-stop / slow-mo) tick the fighters do not update,
        but their CURRENT inputs still latch into the input buffer and
@@ -8990,6 +9002,7 @@ three/build/three.module.js:
     function bladeStanceEligible(f){
       if(!f||f._fin||f._duel)return false;
       if(typeof LOCK!=='undefined'&&LOCK&&LOCK.active)return false;
+      if(rb10Active()&&f===P&&!rbBowDrawing(f)&&!f.gr?.pending&&!isOut(f)&&!isDown(f)&&f.state!=='choked')return true;
       if(f.meetT>0||f.bindT>0)return false;
       const st=f.state;
       return st==='idle'||st==='walk'||st==='crouch'||!!f.blocking;
@@ -9005,6 +9018,7 @@ three/build/three.module.js:
     function stepBlade(f,dt){
       if(!f||!f.blade)return;
       const b=f.blade, c=f.ctl;
+      if(rb10Active()&&f===P&&bladeStanceEligible(f)){b.ana=true;if(Number.isFinite(c?.anaAng)&&c.directTouch){b.des=b.ang=c.anaAng;}b.prev=b.ang;b.vel=0;return;}
       b.prev=b.ang;
       /* ana LATCHES for the life of the fighter: round-end / intro
          ticks feed empty ctls, and a latched analog fighter eases
@@ -9196,38 +9210,60 @@ three/build/three.module.js:
       }return null;
     }
     function rb10Halt(f,ang,q){if(f.atk){f.atk.contactAng=ang;f.atk.contactT=f.atk.t;f.atk.contactX=q.x;f.atk.contactY=q.y;}}
+    function rb103Body(f,o,d,q,type){
+      RB10.last={label:q.zone.toUpperCase()+' HIT',tick:G.tick,x:q.x,y:q.y};
+      // Only the measured body contact can cause health loss. No directional defence fallback.
+      rb103ClearDefence(f,f.ctl);rb103ClearDefence(o,o.ctl);
+      return resolveStrike(f,o,d,{type,anaBypass:true,body:q,directSword:true});
+    }
+    function rb103Clash(f,o,q){
+      RB10.last={label:'BLADE CLASH',tick:G.tick,x:q.x,y:q.y};
+      if(f.atk){f.atkHasHit=true;f.atk.rb700Result='block';}
+      if(o.atk&&o.state==='attack'){o.atkHasHit=true;o.atk.rb700Result='block';}
+      SFX.clash(q.x);contactFX('clash',q.x,q.y,false);
+      addFloat(q.x,q.y-30,'BLADE CLASH','#ffe5a2',18);
+      // No health loss, posture loss, guard break, parry window, forced pose or hitstop.
+    }
     function rb10Resolve(f,o,dt){
       const a=f.atk,q=rb10Sweep(f,o,dt);if(!q)return false;
       f.atkHasHit=true;
-      if(q.kind==='body'){
-        RB10.last={label:q.zone.toUpperCase()+' HIT',tick:G.tick,x:q.x,y:q.y};
-        a.rb700Result=resolveStrike(f,o,a.def,{type:a.type,anaBypass:true,body:q});return true;
-      }
-      // Physical contact always stops this swing, even against an idle sword.
-      const dual=o.state==='attack'&&o.atk&&!o.atkHasHit&&!!getHitbox(o);
-      const guard=!!(o===P?Number.isFinite(o.ctl?.anaAng)&&!o.ctl?.light&&!o.ctl?.heavy:o.ctl?.block&&o.blocking), fresh=o!==P&&guard&&o.parryLockT<=0&&G.tick-o.guardSetTick<=TUNING.PARRY_WINDOW_TICKS;
-      const label=dual?'BLADE CLASH':fresh?'PARRY':guard?'GUARD DEFLECT':'PASSIVE DEFLECT';
-      RB10.last={label,tick:G.tick,x:q.x,y:q.y};
-      rb10Halt(f,q.attAng,q);a.rb700Result=fresh&&!dual?'parry':'block';
-      const heavy=a.type==='heavy'||a.type==='light3',post=a.def.postureDamage??a.def.post??12;
-      const recoil=(Math.sign(ana2WrapPi(q.defAng-q.attAng))||1)*.24;
-      if(dual){
-        o.atkHasHit=true;o.atk.rb700Result='block';rb10Halt(o,q.defAng,q);
-        f.posture=Math.max(0,f.posture-7);o.posture=Math.max(0,o.posture-7);
-        f.vx=-f.facing*85;o.vx=-o.facing*85;
-      }else if(fresh){
-        o.stats.parries++;if(o.parryAttempt)o.stats.parryAttempts++;o.parryAttempt=false;o.riposteT=.9;o.counterT=.9;
-        f.posture=Math.max(0,f.posture-post*.8);f.bindAng=q.attAng;f.bindT=.25;setState(f,'stagger');f.stateT=-.38;f.vx=-f.facing*110;
-      }else{
-        o.stats.blocks++;const cost=post*(guard?.65:1.25)*effMods(o).postTakenMul*postTakenTraitMul(o);
-        o.posture=Math.max(0,o.posture-cost);o.vx=f.facing*(heavy?100:55);
-        if(o.atk&&o.state==='attack'){o.atkHasHit=true;rb10Halt(o,q.defAng,q);o.atk.rb700Result='block';}
-        else{o.bindAng=ana2WrapPi(q.defAng+recoil);o.bindT=.16;if(o.blade)o.blade.ang=o.bindAng;}
-        if(o.posture<=0){o.blocking=false;setState(o,'guardbreak');o.stateT=-TUNING.GUARDBREAK_TICKS/TUNING.SIM_HZ;noteGB(f,o);}
-      }
-      SFX.clash(q.x);contactFX(fresh&&!dual?'parry':'clash',q.x,q.y,heavy);
-      addFloat(q.x,q.y-30,label,'#ffe5a2',18);setHitstop(dual||fresh?4:2);shake=Math.max(shake,heavy?4:2);
+      if(q.kind==='body')a.rb700Result=rb103Body(f,o,a.def,q,a.type);
+      else rb103Clash(f,o,q);
       return true;
+    }
+    // Contact-only: deliberate angular motion at ANY speed can connect.
+    // A contact latch prevents holding a blade against a target from repeatedly scoring damage.
+    function rb102Direct(f,o,dt){
+      if(!rb10Active()||f!==P||!f.blade)return;
+      const m=f._rb102||(f._rb102={held:false,face:f.facing,contact:null});
+      const c=f.ctl,held=!!c?.directTouch,aim=c?.anaAng;
+      rb103ClearDefence(f,c);
+      if(!held||!Number.isFinite(aim)||!bladeStanceEligible(f)||rbBowDrawing(f)||G.phase!=='fight'){
+        m.held=false;m.contact=null;return;
+      }
+      const b=f.blade,old=b.ang,delta=ana2WrapPi(aim-old),same=m.held&&m.face===f.facing;
+      m.held=true;m.face=f.facing;b.ana=true;b.prev=old;b.ang=b.des=aim;b.vel=same?delta/dt:0;
+      if(!same){m.contact=null;return;}
+      if(isOut(o)||Math.abs(o.x-f.x)>300){m.contact=null;return;}
+      const target=rb10DefSegments(o),box=getHurtbox(o);
+      const end=rb10NearestContact(simBladeSegments(f),target,box);
+      if(Math.abs(delta)<.045){if(!end)m.contact=null;return;}
+      // Ignore an already-resolved overlap until the blades or body have separated.
+      let q=null,latched=m.contact,steps=Math.max(2,Math.ceil(Math.abs(delta)/.035));
+      for(let i=0;i<=steps;i++){
+        b.ang=ana2WrapPi(old+delta*i/steps);
+        const hit=rb10NearestContact(simBladeSegments(f),target,box);
+        if(!hit){latched=null;continue;}
+        if(!latched){q=hit;break;}
+        // A blade intercepted this sweep; never also damage the body during the same overlap.
+      }
+      b.ang=aim;m.contact=end?(q?.kind||latched||end.kind):null;
+      if(!q)return;
+      f.stats.thrown=(f.stats.thrown||0)+1;
+      if(q.kind==='blade'){rb103Clash(f,o,q);return;}
+      const base=(MOVES[f.char]||ATK).light||ATK.light,fm=effMods(f),dir=rb63Dir(aim);
+      const d={...base,direction:dir,damage:Math.max(1,Math.round(base.damage*fm.lightDmgMul*fm.dmgMul))};
+      SFX.slash(f,false);rb103Body(f,o,d,q,'light');
     }
     function sweptBladeHit(f,def,dt){
       if(!f.atk||f.state!=='attack')return false;
@@ -9944,7 +9980,7 @@ three/build/three.module.js:
         bloodBurst(body?body.x:cx,body?body.y:cy,bx,by,dmg);
       }
       if(grActive())dmg=grSwordHit(att,def,dmg);
-       if(att.state==='attack'&&dmg>0)dmg=rb86Damage(att,def,dmg,true);
+       if((att.state==='attack'||opts.directSword)&&dmg>0)dmg=rb86Damage(att,def,dmg,true);
       def.hp=Math.max(0,def.hp-dmg); def.hurtFlash=.18;
       impactPose15.set(def,{tick:G.tick,dir:atkDirOf(atkDef),weight:clamp(DMG/12,.35,1.3)});
       if(def.hp<=0)att._lastBlow={dir:atkDirOf(atkDef),type:atkDef.type||aType,weapon:weaponTypeOf(att)}; /* STAGE 5 B3: the killing blow, recorded for finisher matching — a presentation field (underscore), never hashed; fresh fighters each round reset it */
@@ -11063,6 +11099,7 @@ three/build/three.module.js:
     /* ================= FIGHTER UPDATE ================= */
     function fighterUpdate(f,dt){
       const o=foe(f), c=f.ctl, p=f.prev;
+      if(rb10Active())rb103ClearDefence(f,c);
       rb98ReleaseGuard(f);
       f.stateT+=dt;
       if(f.hurtFlash>0)f.hurtFlash-=dt;
@@ -11414,7 +11451,7 @@ three/build/three.module.js:
             const s1Near=Math.abs(f.x-o.x)<=300;
             if(hb&&a.activeTick<0)a.activeTick=G.tick;
             if(rb10Active()){
-              if(hb&&s1Near&&o.invulnT<=0&&!isOut(o))rb10Resolve(f,o,dt);
+              if(hb&&s1Near&&!isOut(o))rb10Resolve(f,o,dt);
             }else{
             /* ---- STAGE 2 CLASH/BIND: two live saber hitboxes
                overlapping in the same window bind BEFORE either can
@@ -14920,6 +14957,7 @@ three/build/three.module.js:
       if(WB)wbHud();
       if(grActive())grPaint();
       if(!P||!C)return;
+      $('fightStage').classList.toggle('rb102Direct',rb10Active());
       /* UI CLEANUP: the pressed-state saber glow follows the LOCAL
          fighter — online: your slot's fighter; local play: P1 */
       { const lf=(typeof G!=='undefined'&&G&&G.online&&G.localSlot==='C')?C:P;
@@ -14945,7 +14983,7 @@ three/build/three.module.js:
       };
       bind(P,'L'); bind(C,'R');
       rb49Text(hudEls.timer,Math.max(0,Math.ceil(G.timer)));
-      rb49Text(hudEls.roundLab,'ROUND '+G.round);rb49Text($('rbHudMode'),rb10Active()?'TRUE BLADE · 2.5D':WB?(WB.runes?'ARCANE ALLIANCE':'WARBOUND'):grActive()?'RUNE DUEL':G.online?'ONLINE DUEL':TR?'TRAINING':'CLASSIC');$('timerBox').classList.toggle('rbUrgent',G.timer<=10);
+      rb49Text(hudEls.roundLab,'ROUND '+G.round);rb49Text($('rbHudMode'),rb10Active()?'CONTACT ONLY · 10.3':WB?(WB.runes?'ARCANE ALLIANCE':'WARBOUND'):grActive()?'RUNE DUEL':G.online?'ONLINE DUEL':TR?'TRAINING':'CLASSIC');$('timerBox').classList.toggle('rbUrgent',G.timer<=10);
       /* STAGE 2 choke prompt: a timing read, not a mash — the bar
          drains over the fixed hold; when the escape window opens
          the prompt flashes blue: ONE Block press breaks free */
@@ -15804,8 +15842,8 @@ three/build/three.module.js:
         else if(slowmoTicks>0){ slowmoTicks--; slowmoPhase++; if(slowmoPhase%SLOWMO_DIV!==0)frozen=true; }
         if(CC.active){ ccTick(dt); stepBlade(P,dt); stepBlade(C,dt); } /* __CARDCLASH_HOOK: the card fight replaces both fighter updates, exactly as the blade lock does */
         else if(LOCK.active){ lockTick(dt); stepBlade(P,dt); stepBlade(C,dt); /* BLADE LOCK: the contest replaces both fighter updates; projectiles hold. ANALOG STAGE B: the blade state still steps — in tracking mode only (the lock makes every stance ineligible), so it follows the lock geometry and re-seeds cleanly when the lock breaks */ }
-        else if(frozen){ if(grActive()&&G.online)for(const f of [P,C])if(f.ctl.rbSlot&&f.ctl.rbSlot<=4&&!f.gr.bufferSlot){f.gr.bufferSlot=f.ctl.rbSlot;f.gr.bufferAim=f.ctl.anaAng;} bufferTick(P); bufferTick(C); }
-        else { rb87Read(); rb90BowTick(dt); rbBowPrepare(dt); if(grActive())grTick(dt); if(G.phase!=='fight'){if(G.online)onlineAfterTick();return;} rbBowArcherPrepare(dt); fighterUpdate(P,dt); fighterUpdate(C,dt); separateFighters(); projUpdate(dt); stepBlade(P,dt); stepBlade(C,dt); rbBowStep(dt); rb86Tick(dt); rb87Tick(dt); /* ANALOG STAGE B: authoritative blade step, same tick as the fighter updates it follows */ }
+        else if(frozen){ if(grActive()&&G.online)for(const f of [P,C])if(f.ctl.rbSlot&&f.ctl.rbSlot<=4&&!f.gr.bufferSlot){f.gr.bufferSlot=f.ctl.rbSlot;f.gr.bufferAim=f.ctl.anaAng;} bufferTick(P); bufferTick(C);if(rb10Active()&&P.ctl.directTouch&&bladeStanceEligible(P)&&Number.isFinite(P.ctl.anaAng)){P.blade.ang=P.blade.des=P.ctl.anaAng;P.blade.ana=true;} }
+        else { rb87Read(); rb90BowTick(dt); rbBowPrepare(dt); if(grActive())grTick(dt); if(G.phase!=='fight'){if(G.online)onlineAfterTick();return;} rbBowArcherPrepare(dt); fighterUpdate(P,dt); rb102Direct(P,C,dt); if(G.phase!=='fight')return; fighterUpdate(C,dt); separateFighters(); projUpdate(dt); stepBlade(P,dt); stepBlade(C,dt); rbBowStep(dt); rb86Tick(dt); rb87Tick(dt); /* ANALOG STAGE B: authoritative blade step, same tick as the fighter updates it follows */ }
         if(G.online)onlineAfterTick();
       }else if(G.phase==='roundEnd'){
         G.roundEndT+=dt;
@@ -17212,7 +17250,7 @@ three/build/three.module.js:
       try{
         audioInit();
         persistLastSetup();
-        RB10.enabled=$('rb10Toggle').checked; G.online=false; RUN=null; G.versus=false; G.cpuChar=chosenRival; G.winTarget=2;
+        RB10.enabled=true; G.online=false; RUN=null; G.versus=false; G.cpuChar=chosenRival; G.winTarget=2;
         document.body.classList.remove('versus-on');
         NET_SABERS=null; _saberSig=''; G.mode='fight';
         wipeGo(); fadeOutMenuTheme();
@@ -17229,7 +17267,7 @@ three/build/three.module.js:
       }finally{startDuelBtn.dataset.launching='0';}
     });
     $('startBtn').addEventListener('click',()=>{
-      RB10.enabled=$('rb10Toggle').checked;
+      RB10.enabled=true;
       audioInit(); persistLastSetup(); G.online=false; RUN=null; G.versus=false; G.cpuChar=chosenRival; G.winTarget=2; document.body.classList.remove('versus-on'); NET_SABERS=null; _saberSig=''; G.mode='fight'; wipeGo(); fadeOutMenuTheme();
       $('menu').classList.add('hidden'); $('endScreen').classList.add('hidden');
       fitArena(); tryLockLandscape();
@@ -18270,7 +18308,7 @@ three/build/three.module.js:
       /* FLICK + BLADE LOCK harness surface */
       flickP1:flickP1,flickP2:flickP2,flickFire:flickFire,flickResolveDir:flickResolveDir,wireFlickButton:wireFlickButton,
       LOCK:LOCK,bladeLockEligible:bladeLockEligible,startBladeLock:startBladeLock,lockTick:lockTick,endBladeLock:endBladeLock,lockAccum:lockAccum,lockInputAngle:lockInputAngle,lockCpuAccum:lockCpuAccum,setBladeLock:setBladeLock,
-      RB10:RB10,rb10Active:rb10Active,rb10NearestContact:rb10NearestContact,rb10Sweep:rb10Sweep,rb10Resolve:rb10Resolve,resolveStrike:resolveStrike,guardDirOf:guardDirOf,atkDirOf:atkDirOf,parryCheck:parryCheck,emptyCtl:emptyCtl,
+      RB10:RB10,rb102Direct:rb102Direct,rb10Active:rb10Active,rb10NearestContact:rb10NearestContact,rb10Sweep:rb10Sweep,rb10Resolve:rb10Resolve,resolveStrike:resolveStrike,guardDirOf:guardDirOf,atkDirOf:atkDirOf,parryCheck:parryCheck,emptyCtl:emptyCtl,
       /* GORE harness surface */
       setGore:setGore,goreSever:goreSever,clearGore:clearGore,bloodBurst:bloodBurst,get bloodDecals(){return bloodDecals;},get goreProps(){return goreProps;},get goreScorch(){return goreScorch;},
       /* ANALOG STAGE A harness surface: scheme + stick state + the
