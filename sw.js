@@ -1,5 +1,5 @@
-/* RuneBlade 9.7 — offline shell only. Never caches account, API or match traffic. */
-const CACHE = 'runeblade-shell-9.7';
+/* RuneBlade 9.8 — offline shell only. Never caches account, API or match traffic. */
+const CACHE = 'runeblade-shell-9.8';
 const ROOT = new URL('./', self.registration.scope);
 const SHELL = ['', 'config.js', 'manifest.webmanifest', 'icon-180.png', 'icon-192.png', 'icon-512.png'];
 const urls = SHELL.map(p => new URL(p, ROOT).href);
